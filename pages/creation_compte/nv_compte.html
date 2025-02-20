@@ -1,0 +1,111 @@
+<!-- connexion.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <div class="form-box">
+        <form class="form">
+            <span class="title">Se connecter</span>
+            <span class="subtitle">Entrez vos identifiants pour accéder à votre compte.</span>
+            <div class="form-container">
+                <input type="email" class="input" placeholder="E-mail">
+                <input type="password" class="input" placeholder="Mot de passe">
+            </div>
+            <button>Connexion</button>
+        </form>
+        <div class="form-section">
+            <p>Pas encore de compte ? <a href="nv_compte.html">Inscrivez-vous ici.</a></p>
+        </div>
+    </div>
+</body>
+</html>
+
+<!-- nv_compte.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <div class="form-box">
+        <form class="form">
+            <span class="title">Créer un nouveau compte</span>
+            <span class="subtitle">Inscrivez-vous gratuitement avec votre e-mail.</span>
+            <div class="form-container">
+                <input type="text" class="input" placeholder="Prénom">
+                <input type="text" class="input" placeholder="Nom">
+                <input type="email" class="input" placeholder="E-mail">
+                <input type="password" class="input" placeholder="Mot de passe">
+                <select class="input">
+                    <option selected disabled>Domaine(s) de stage recherché(s)</option>
+                    <option>Informatique</option>
+                    <option>Électronique</option>
+                    <option>Marketing</option>
+                </select>
+                <select class="input">
+                    <option selected disabled>Localité(s) recherchée(s)</option>
+                    <option>Alger</option>
+                    <option>Constantine</option>
+                    <option>Oran</option>
+                </select>
+            </div>
+            <button>S'inscrire</button>
+        </form>
+        <div class="form-section">
+            <p>Déjà inscrit ? <a href="connexion.html">Connectez-vous ici.</a></p>
+        </div>
+    </div>
+</body>
+</html>
+
+/* style.css */
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.form-box {
+    max-width: 400px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.input {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #0066ff;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #005ce6;
+}
