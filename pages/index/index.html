@@ -15,7 +15,6 @@
                 <li><a href="#">ENTREPRISE</a></li>
             </ul>    
 
-            <!-- Logo au centre -->
             <div class="nav-logo">
                 <img src="/images/logo.png" alt="Logo du Site">
             </div>
@@ -28,11 +27,26 @@
     </header>
 
     <section class="hero">
+        <video id="background-video" autoplay loop muted class="background-video">
+            <source src="./styles/bckg.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas les vidéos HTML5.
+        </video>
         <div class="overlay"></div>
         <div class="hero-content">
             <h1>PRENDS TON <br> FUTUR EN MAIN : <br> CESI TA CHANCE !</h1>
             <a href="#" class="btn">OFFRES DE STAGE</a>
         </div>
     </section>
+    <footer>
+        <p>&copy; 2025 CESI. Tous droits réservés.</p>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var video = document.getElementById('background-video');
+            if (video) {
+                video.play();
+            }
+        });
+    </script>
 </body>
 </html>
