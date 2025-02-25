@@ -40,3 +40,41 @@ button {
 button:hover {
     background-color: #005ce6;
 }
+
+.navbar {
+    background: #fff;
+    padding: 15px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.nav-left, .nav-right {
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+.nav-left li, .nav-right li {
+    margin: 0 15px;
+}
+
+.nav-left a, .nav-right a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.nav-left a:hover, .nav-right a:hover {
+    color: #a67c52;
+}
+
+.nav-logo img {
+    height: 50px;
+}
