@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription</title>
     <link rel="stylesheet" href="./styles/styles.css">
+</head>
+<body>
+
     <nav class="navbar">
         <ul class="nav-left">
             <li><a href="../index/index.html">ACCUEIL</a></li>
@@ -23,28 +26,26 @@
             <li><a href="../creation_compte/connexion.html">CONNEXION</a></li>
         </ul>
     </nav>
-</head>
-<body>
+
     <div class="form-box">
-        <form class="form">
+        <form class="form" action="inscription.php" method="POST">
             <span class="title">Créer un nouveau compte</span>
             <span class="subtitle">Inscrivez-vous gratuitement avec votre e-mail.</span>
             <div class="form-container">
-                <input type="text" class="input" placeholder="Prénom">
-                <input type="text" class="input" placeholder="Nom">
-                <input type="email" class="input" placeholder="E-mail">
-                <input type="password" class="input" placeholder="Mot de passe">
-                <select class="input" title="Domaine(s) de stage recherché(s)">
+                <input type="text" class="input" name="prenom" placeholder="Prénom" required>
+                <input type="text" class="input" name="nom" placeholder="Nom" required>
+                <input type="email" class="input" name="email" placeholder="E-mail" required>
+                <input type="password" class="input" name="password" placeholder="Mot de passe" required>
+                
+                <select class="input" name="domaine_stage" required>
                     <option selected disabled>Domaine(s) de stage recherché(s)</option>
                     <option>Informatique</option>
                     <option>Électronique</option>
                     <option>Marketing</option>
                 </select>
-                <select class="input" title="Localité(s) recherchée(s)">
-                    <option selected disabled>Localité(s) recherchée(s)</option>
-                    <option>Alger</option>
-                    <option>Constantine</option>
-                    <option>Oran</option>
+
+                <select class="input" name="localite" id="localite" required>
+                    <option selected disabled>Chargement des villes...</option>
                 </select>
             </div>
             <button type="submit">S'inscrire</button>
@@ -53,6 +54,45 @@
             <p>Déjà inscrit ? <a href="connexion.html">Connectez-vous ici.</a></p>
         </div>
     </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const selectLocalite = document.getElementById("localite");
+
+        fetch("https://geo.api.gouv.fr/communes?fields=nom&format=json&geometry=centre")
+            .then(response => {
+                console.log("Réponse API reçue :", response);
+                if (!response.ok) {
+                    throw new Error("Erreur HTTP, statut : " + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("Données reçues :", data); // Voir ce qui est récupéré
+
+                selectLocalite.innerHTML = '<option selected disabled>Localité(s) recherchée(s)</option>';
+                
+                if (data.length === 0) {
+                    console.warn("⚠️ Aucune ville récupérée !");
+                    selectLocalite.innerHTML = '<option selected disabled>Aucune ville trouvée</option>';
+                    return;
+                }
+
+                data.forEach(ville => {
+                    let option = document.createElement("option");
+                    option.value = ville.nom;
+                    option.textContent = ville.nom;
+                    selectLocalite.appendChild(option);
+                });
+
+                console.log("Ajout des villes terminé !");
+            })
+            .catch(error => {
+                console.error("❌ Erreur lors du chargement des villes :", error);
+                selectLocalite.innerHTML = '<option selected disabled>Impossible de charger les villes</option>';
+            });
+    });
+</script>
+
 </body>
 </html>
-

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offres de Stage</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Nos Offres de Stage</h1>
+    </header>
+
+    <div class="container">
+        <div id="offres-container">
+            <!-- Offres chargées dynamiquement -->
+        </div>
+    </div>
+
+    <script>
+        fetch("get_offres.php")
+            .then(response => response.json())
+            .then(data => {
+                let container = document.getElementById("offres-container");
+                container.innerHTML = ""; 
+
+                data.forEach(offer => {
+                    let card = `
+                        <div class="offre-card">
+                            <h3>${offer.entreprise}</h3>
+                            <p><strong>Ville :</strong> ${offer.ville} (${offer.code_postal})</p>
+                            <p><strong>Domaine :</strong> ${offer.domaine}</p>
+                            <p><strong>Durée :</strong> ${offer.duree}</p>
+                            <p><strong>Niveau :</strong> ${offer.niveau}</p>
+                        </div>
+                    `;
+                    container.innerHTML += card;
+                });
+            })
+            .catch(error => console.error("Erreur :", error));
+    </script>
+
+</body>
+</html>
