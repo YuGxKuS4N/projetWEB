@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription</title>
-    <link rel="stylesheet" href="./styles/styles.css">
+    <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 </head>
 <body>
+
+    <div class="background-overlay"></div>
 
     <nav class="navbar">
         <ul class="nav-left">
@@ -24,27 +26,28 @@
         </div>
 
         <ul class="nav-right">
-            <li><a href="../creation_compte/connex/connexion.html">CONNEXION</a></li>
+            <li><a href="../creation_compte/connexion/connexion.html">CONNEXION</a></li>
         </ul>
     </nav>
 
     <div class="form-box">
         <form class="form" action="inscription.php" method="POST">
-            <span class="title">Créer un nouveau compte</span>
+            <span class="title">Créer un compte</span>
             <span class="subtitle">Inscrivez-vous gratuitement avec votre e-mail.</span>
             <div class="form-container">
                 <input type="text" class="input" name="prenom" placeholder="Prénom" required>
                 <input type="text" class="input" name="nom" placeholder="Nom" required>
                 <input type="email" class="input" name="email" placeholder="E-mail" required>
                 <input type="password" class="input" name="password" placeholder="Mot de passe" required>
-                
+                <input type="password" class="input" name="confirm_password" placeholder="Confirmez le mot de passe" required>
+
                 <select class="input" name="domaine_stage" required>
-                    <option selected disabled>Domaine(s) de stage recherché(s)</option>
-                    <option>Systeme Réseau </option>
-                    <option>Developpement Web</option>
-                    <option>Developpement Mobile</option>
-                    <option>Developpement Logiciel</option> 
-                    <option>Cyberseucrité</option>
+                    <option selected disabled>Domaine(s) de stage</option>
+                    <option>Systèmes & Réseaux</option>
+                    <option>Développement Web</option>
+                    <option>Développement Mobile</option>
+                    <option>Développement Logiciel</option>
+                    <option>Cybersécurité</option>
                     <option>Intelligence Artificielle</option>
                     <option>Big Data</option>
                 </select>
@@ -56,7 +59,6 @@
                     <option value="Marseille">Marseille</option>
                     <option value="Bordeaux">Bordeaux</option>
                     <option value="Lille">Lille</option>
-                    <!-- Ajoutez d'autres villes et départements ici -->
                 </select>
             </div>
             <button type="submit">S'inscrire</button>
