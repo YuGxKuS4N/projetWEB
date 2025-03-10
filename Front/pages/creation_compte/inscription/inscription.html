@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription</title>
     <link rel="stylesheet" href="./styles/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 </head>
 <body>
 
@@ -22,8 +24,7 @@
         </div>
 
         <ul class="nav-right">
-            <li><a href="../creation_compte/inscription/inscription.html">S'INSCRIRE</a></li>
-            <li><a href="../creation_compte/connexion/connexion.html">CONNEXION</a></li>
+            <li><a href="../creation_compte/connex/connexion.html">CONNEXION</a></li>
         </ul>
     </nav>
 
@@ -45,7 +46,13 @@
                 </select>
 
                 <select class="input" name="localite" id="localite" required>
-                    <option selected disabled>Chargement des villes...</option>
+                    <option selected disabled>Localité(s) recherchée(s)</option>
+                    <option value="Paris">Paris</option>
+                    <option value="Lyon">Lyon</option>
+                    <option value="Marseille">Marseille</option>
+                    <option value="Bordeaux">Bordeaux</option>
+                    <option value="Lille">Lille</option>
+                    <!-- Ajoutez d'autres villes et départements ici -->
                 </select>
             </div>
             <button type="submit">S'inscrire</button>
@@ -58,39 +65,10 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const selectLocalite = document.getElementById("localite");
-
-        fetch("https://geo.api.gouv.fr/communes?fields=nom&format=json&geometry=centre")
-            .then(response => {
-                console.log("Réponse API reçue :", response);
-                if (!response.ok) {
-                    throw new Error("Erreur HTTP, statut : " + response.status);
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log("Données reçues :", data); // Voir ce qui est récupéré
-
-                selectLocalite.innerHTML = '<option selected disabled>Localité(s) recherchée(s)</option>';
-                
-                if (data.length === 0) {
-                    console.warn("⚠️ Aucune ville récupérée !");
-                    selectLocalite.innerHTML = '<option selected disabled>Aucune ville trouvée</option>';
-                    return;
-                }
-
-                data.forEach(ville => {
-                    let option = document.createElement("option");
-                    option.value = ville.nom;
-                    option.textContent = ville.nom;
-                    selectLocalite.appendChild(option);
-                });
-
-                console.log("Ajout des villes terminé !");
-            })
-            .catch(error => {
-                console.error("❌ Erreur lors du chargement des villes :", error);
-                selectLocalite.innerHTML = '<option selected disabled>Impossible de charger les villes</option>';
-            });
+        const choices = new Choices(selectLocalite, {
+            searchEnabled: true,
+            itemSelectText: '',
+        });
     });
 </script>
 
