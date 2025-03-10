@@ -9,7 +9,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-image: url('fond_co.jpg');
+    background-image: url('../../../../images/fond_co.jpg');
     background-size: cover; /* Pour que l'image couvre toute la page */
     background-position: center; /* Centrer l'image */
     background-attachment: fixed; /* Empêche l'image de se déplacer lors du défilement */
@@ -45,6 +45,7 @@ body {
 button {
     background-color: #0066ff;
     color: #fff;
+    margin-top: 5%;
     padding: 10px;
     border: none;
     border-radius: 5px;
