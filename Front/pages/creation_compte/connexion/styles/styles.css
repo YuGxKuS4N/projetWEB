@@ -91,6 +91,6 @@ button:hover {
 }
 
 .nav-logo img {
-    height: 100px; /* Taille du logo ajustée */
+    height: 200px; /* Taille du logo ajustée */
     width: auto; /* L'image garde sa proportion */
 }
