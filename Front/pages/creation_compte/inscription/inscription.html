@@ -41,6 +41,22 @@
                 <input type="password" class="input" name="password" placeholder="Mot de passe" required>
                 <input type="password" class="input" name="confirm_password" placeholder="Confirmez le mot de passe" required>
 
+                <!-- Nouveau champ : Date de naissance -->
+                <input type="date" class="input" name="date_naissance" placeholder="Date de naissance" required>
+
+                <!-- Nouveau champ : Numéro de téléphone -->
+                <input type="tel" class="input" name="telephone" placeholder="Numéro de téléphone" pattern="[0-9]{10}" required>
+
+                <!-- Nouveau champ : Année d'étude -->
+                <select class="input" name="annee_etude" required>
+                    <option selected disabled>Année d'étude</option>
+                    <option value="1">1ère année</option>
+                    <option value="2">2ème année</option>
+                    <option value="3">3ème année</option>
+                    <option value="4">4ème année</option>
+                    <option value="5">5ème année</option>
+                </select>
+
                 <select class="input" name="domaine_stage" required>
                     <option selected disabled>Domaine(s) de stage</option>
                     <option>Systèmes & Réseaux</option>
