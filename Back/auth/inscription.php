@@ -10,7 +10,7 @@
  *
  * Sécurité :
  * - Les entrées utilisateur sont nettoyées pour éviter les attaques XSS.
- * - Les mots de passe sont hashés avec `password_hash` avant d'être stockés.
+ * - Les mots de passe sont hashés avec SHA-256 avant d'être stockés.
  * - Les requêtes SQL utilisent des requêtes préparées pour éviter les injections SQL.
  */
 
@@ -44,8 +44,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die("Les mots de passe ne correspondent pas !");
         }
 
-        // Hashage sécurisé du mot de passe
-        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+        // Hashage sécurisé du mot de passe avec SHA-256
+        $hashed_password = hash('sha256', $password);
 
         // Vérification de l'unicité de l'e-mail
         $stmt = $conn->prepare("SELECT id FROM utilisateurs WHERE email = ?");
@@ -92,8 +92,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bind_result($id, $prenom, $nom, $hashed_password);
             $stmt->fetch();
 
-            // Vérification du mot de passe
-            if (password_verify($password, $hashed_password)) {
+            // Vérification du mot de passe avec SHA-256
+            if (hash('sha256', $password) === $hashed_password) {
                 // Connexion réussie : Initialisation de la session et du cookie
                 $_SESSION['user_id'] = $id;
                 $_SESSION['prenom'] = $prenom;
