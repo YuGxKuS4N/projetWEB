@@ -1,97 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background-image: url('../../../../images/fond_co.jpg');
-    background-size: cover; /* Pour que l'image couvre toute la page */
-    background-position: center; /* Centrer l'image */
-    background-attachment: fixed; /* Empêche l'image de se déplacer lors du défilement */
+/* Styles pour aligner les onglets horizontalement */
+.tabs {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden;
+    justify-content: center; /* Centrer les onglets horizontalement */
+    gap: 10px; /* Espacement entre les onglets */
+    margin-bottom: 20px; /* Espacement en bas des onglets */
 }
 
-.form-box {
-    max-width: 400px;
-    background: rgba(255, 255, 255, 0.9); /* Fond blanc semi-transparent pour contraster avec l'image */
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
-    width: 90%; /* Pour les écrans plus petits, s'adapte bien */
-}
-
-.form {
-    display: flex;
-    flex-direction: column;
-}
-
-.input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
+.tab-button {
+    background-color: #f0f0f0;
     border: 1px solid #ddd;
     border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #333;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-button {
+.tab-button:hover {
     background-color: #0066ff;
     color: #fff;
-    margin-top: 5%;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
 }
 
-button:hover {
-    background-color: #005ce6;
+.tab-button.active {
+    background-color: #0066ff;
+    color: #fff;
+    border-color: #005ce6;
 }
 
-.navbar {
-    background: rgb(255, 255, 255); /* Barre de navigation avec fond blanc */
-    padding: 10px 50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    height: 80px; /* Hauteur fixe de la navbar */
+/* Contenu des onglets */
+.tab-content {
+    display: none; /* Masquer les contenus par défaut */
 }
 
-.nav-left, .nav-right {
-    list-style: none;
-    display: flex;
-    align-items: center;
-}
-
-.nav-left li, .nav-right li {
-    margin: 0 10px;
-}
-
-.nav-left a, .nav-right a {
-    text-decoration: none;
-    color: #333;
-    font-weight: 600;
-    transition: color 0.3s;
-}
-
-.nav-left a:hover, .nav-right a:hover {
-    color: #a67c52;
-}
-
-.nav-logo img {
-    height: 200px; /* Le logo prend toute la hauteur de la navbar */
-    width: auto; /* L'image garde sa proportion */
+.tab-content.active {
+    display: block; /* Afficher uniquement le contenu actif */
 }
