@@ -4,6 +4,10 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f4f4f4;
+  background-image: url('../../../../images/fond_co.jpg');
+    background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 .background-overlay {
@@ -40,10 +44,10 @@ body {
   font-weight: bold;
 }
 
+/* Logo centré */
 .nav-logo img {
-  height: 40px;
+  height: 100px;
 }
-
 /* FORM BOX */
 .form-box {
   width: 50%;
