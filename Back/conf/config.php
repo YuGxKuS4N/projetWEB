@@ -1,8 +1,8 @@
 <?php
 $servername = "localhost";
 $username = "root"; // Remplace par ton utilisateur MySQL
-$password = ""; // Ton mot de passe MySQL
-$dbname = "nom_de_ta_base"; // Remplace par le nom de ta base de données
+$password = "projet213"; // Ton mot de passe MySQL
+$dbname = "projetweb"; // Remplace par le nom de ta base de données
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
