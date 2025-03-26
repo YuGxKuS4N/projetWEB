@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion</title>
     <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
     <nav class="navbar">
         <ul class="nav-left">
             <li><a href="../../index/index.html">ACCUEIL</a></li>
@@ -23,15 +25,14 @@
             <li><a href="../connexion/connexion.html">CONNEXION</a></li>
         </ul>
     </nav>
-</head>
-<body>
+
     <div class="form-box">
-        <form class="form">
+        <form class="form" action="connexion.php" method="POST">
             <span class="title">Se connecter</span>
             <span class="subtitle">Entrez vos identifiants pour accéder à votre compte.</span>
             <div class="form-container">
-                <input type="email" class="input" placeholder="E-mail">
-                <input type="password" class="input" placeholder="Mot de passe">
+                <input type="email" class="input" name="email" placeholder="E-mail" required>
+                <input type="password" class="input" name="password" placeholder="Mot de passe" required>
             </div>
             <button type="submit">Connexion</button>
         </form>
