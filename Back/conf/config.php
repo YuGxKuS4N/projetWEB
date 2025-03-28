@@ -1,6 +1,6 @@
 <?php
-$servername = "localhost";
-$username = "root"; // Remplace par ton utilisateur MySQL
+$servername = "86.71.46.25:213";
+$username = "hotel"; // Remplace par ton utilisateur MySQL
 $password = "projet213"; // Ton mot de passe MySQL
 $dbname = "projetweb"; // Remplace par le nom de ta base de données
 
