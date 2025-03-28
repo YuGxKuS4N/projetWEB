@@ -1,23 +1,41 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Career Bloom - Offres de Stage</title>
-  <link rel="stylesheet" href="styles/page.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offres de Stage</title>
+  <link rel="stylesheet" href="styles/page.css">
+  <style>
+    .offer-card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+    .postuler-btn {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .postuler-btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
 </head>
 <body>
   <header>
     <div class="logo">WEB4ALL</div>
     <nav>
-      <a href="../../index/index.html">Accueil</a>
-      <a href="#">Offres de stage</a>
+      <a href="../index/index.html">Accueil</a>
       <a href="../entreprise/entreprise.html">Entreprises</a>
       <a href="../utilisateurs/utilisateurs.html">Utilisateurs</a>
       <a href="../contact/contact.html">Nous contacter</a>
       <a href="favoris.html">Favoris</a>
     </nav>
-    <button class="connect-btn">ESPACE CANDIDAT</button>
   </header>
 
   <main>
@@ -34,31 +52,36 @@
     document.addEventListener("DOMContentLoaded", () => {
       const offersContainer = document.getElementById("offers-container");
 
-      fetch("../../Back/stage/get_stages.php")
+      fetch("../../Back/stage/get_stage.php")
         .then(response => response.json())
         .then(stages => {
+          if (stages.error) {
+            console.error(stages.error);
+            offersContainer.innerHTML = "<p>Erreur lors du chargement des stages.</p>";
+            return;
+          }
+
           stages.forEach(stage => {
             const offerCard = document.createElement("div");
             offerCard.classList.add("offer-card");
             offerCard.innerHTML = `
-              <img class="offer-image" src="${stage.image}" alt="${stage.entreprise}" />
-              <div class="offer-info">
-                <h3>Entreprise : ${stage.entreprise}</h3>
-                <p>Ville : ${stage.ville}</p>
-                <p>Domaine : ${stage.domaine}</p>
-                <p>Durée stage : ${stage.duree}</p>
-                <p>Niveau : ${stage.niveau}</p>
-                <button class="postuler-btn" onclick="postulerOffre(${stage.id})">Postuler</button>
-              </div>
+              <h3>${stage.titre}</h3>
+              <p><strong>Entreprise :</strong> ${stage.entreprise}</p>
+              <p><strong>Lieu :</strong> ${stage.lieu}</p>
+              <p><strong>Durée :</strong> ${stage.duree} mois</p>
+              <button class="postuler-btn" onclick="redirectToPostuler(${stage.id})">Postuler</button>
             `;
             offersContainer.appendChild(offerCard);
           });
         })
-        .catch(error => console.error("Erreur lors du chargement des stages :", error));
+        .catch(error => {
+          console.error("Erreur lors du chargement des stages :", error);
+          offersContainer.innerHTML = "<p>Erreur lors du chargement des stages.</p>";
+        });
     });
 
-    // Rediriger vers la page de candidature avec l'ID du stage
-    function postulerOffre(stageId) {
+    // Rediriger vers la page de candidature
+    function redirectToPostuler(stageId) {
       window.location.href = `postuler.html?stage_id=${stageId}`;
     }
   </script>

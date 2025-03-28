@@ -1,0 +1,83 @@
+<?php
+// filepath: c:\projetWEB\Back\stage\get_stage_details.php
+header('Content-Type: application/json');
+
+// Classe pour gérer la connexion à la base de données
+class Database {
+    private $host = "127.0.0.1"; // Adresse locale
+    private $username = "root"; // Nom d'utilisateur MySQL
+    private $password = "projet213"; // Mot de passe MySQL
+    private $dbname = "projetweb"; // Nom de la base de données
+    private $port = 8080; // Port redirigé via SSH
+    private $conn;
+
+    // Méthode pour établir la connexion
+    public function connect() {
+        $this->conn = new mysqli($this->host, $this->username, $this->password, $this->dbname, $this->port);
+
+        if ($this->conn->connect_error) {
+            die(json_encode(["error" => "Connexion échouée : " . $this->conn->connect_error]));
+        }
+
+        return $this->conn;
+    }
+}
+
+// Classe pour gérer les stages
+class Stage {
+    private $conn;
+
+    public function __construct($db) {
+        $this->conn = $db;
+    }
+
+    // Méthode pour récupérer les détails d'un stage
+    public function getStageDetails($stageId) {
+        $sql = "
+            SELECT 
+                Offre_Stage.id_offre AS id,
+                Offre_Stage.titre AS titre,
+                Offre_Stage.description AS description,
+                Offre_Stage.date_publi AS date_publi,
+                Offre_Stage.date_debut AS date_debut,
+                Offre_Stage.duree AS duree,
+                Offre_Stage.lieu_stage AS lieu,
+                Entreprise.nom_entreprise AS entreprise,
+                Entreprise.secteur AS secteur
+            FROM Offre_Stage
+            LEFT JOIN Entreprise ON Offre_Stage.id_entreprise_fk = Entreprise.id_entreprise
+            WHERE Offre_Stage.id_offre = ?
+        ";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $stageId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            return $result->fetch_assoc();
+        } else {
+            return ["error" => "Stage non trouvé"];
+        }
+    }
+}
+
+// Vérifier si l'ID du stage est fourni
+if (!isset($_GET['stage_id']) || !is_numeric($_GET['stage_id'])) {
+    echo json_encode(["error" => "ID du stage invalide ou manquant."]);
+    exit;
+}
+
+$stageId = intval($_GET['stage_id']);
+
+// Initialiser la connexion à la base de données
+$database = new Database();
+$db = $database->connect();
+
+// Récupérer les détails du stage
+$stage = new Stage($db);
+$details = $stage->getStageDetails($stageId);
+
+// Retourner les détails au format JSON
+echo json_encode($details);
+?>
