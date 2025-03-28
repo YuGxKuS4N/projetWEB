@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Career Bloom - Offres de Stage</title>
+  <link rel="stylesheet" href="styles/page.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">WEB4ALL</div>
+    <nav>
+      <a href="../../index/index.html">Accueil</a>
+      <a href="#">Offres de stage</a>
+      <a href="../entreprise/entreprise.html">Entreprises</a>
+      <a href="../utilisateurs/utilisateurs.html">Utilisateurs</a>
+      <a href="../contact/contact.html">Nous contacter</a>
+      <a href="favoris.html">Favoris</a>
+    </nav>
+    <button class="connect-btn">ESPACE CANDIDAT</button>
+  </header>
+
+  <main>
+    <section class="offers">
+      <h2>Nos Offres de Stage</h2>
+      <div id="offers-container" class="offers-list">
+        <!-- Les offres seront chargées dynamiquement ici -->
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Charger les stages depuis la base de données
+    document.addEventListener("DOMContentLoaded", () => {
+      const offersContainer = document.getElementById("offers-container");
+
+      fetch("../../Back/stage/get_stages.php")
+        .then(response => response.json())
+        .then(stages => {
+          stages.forEach(stage => {
+            const offerCard = document.createElement("div");
+            offerCard.classList.add("offer-card");
+            offerCard.innerHTML = `
+              <img class="offer-image" src="${stage.image}" alt="${stage.entreprise}" />
+              <div class="offer-info">
+                <h3>Entreprise : ${stage.entreprise}</h3>
+                <p>Ville : ${stage.ville}</p>
+                <p>Domaine : ${stage.domaine}</p>
+                <p>Durée stage : ${stage.duree}</p>
+                <p>Niveau : ${stage.niveau}</p>
+                <button class="postuler-btn" onclick="postulerOffre(${stage.id})">Postuler</button>
+              </div>
+            `;
+            offersContainer.appendChild(offerCard);
+          });
+        })
+        .catch(error => console.error("Erreur lors du chargement des stages :", error));
+    });
+
+    // Rediriger vers la page de candidature avec l'ID du stage
+    function postulerOffre(stageId) {
+      window.location.href = `postuler.html?stage_id=${stageId}`;
+    }
+  </script>
+</body>
+</html>
