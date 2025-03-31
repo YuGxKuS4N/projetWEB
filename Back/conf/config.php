@@ -6,17 +6,17 @@ use phpseclib3\Net\SSH2;
 use phpseclib3\Crypt\RSA;
 
 // Informations de connexion
-$hostname = '86.71.46.25';  // Adresse de ton serveur SSH
-$port = 213;  // Port SSH
-$username = 'abousalih';  // Ton nom d'utilisateur SSH
-$password = '4243';  // Remplace par ton mot de passe SSH
+$hostname = '86.71.46.25';  
+$port = 213;
+$username = 'abousalih';
+$password = '4243';  
 
-// Informations de connexion MySQL
-$mysql_hostname = '127.0.0.1';  // Adresse de la base MySQL
-$mysql_port = 3306;  // Port MySQL
-$mysql_username = 'root';  // Ton nom d'utilisateur MySQL
-$mysql_password = 'projet213';  // Ton mot de passe MySQL
-$mysql_dbname = 'projetweb';  // Le nom de ta base de données
+
+$mysql_hostname = '127.0.0.1'; 
+$mysql_port = 3306; 
+$mysql_username = 'root';  
+$mysql_password = 'projet213';  
+$mysql_dbname = 'projetweb'; 
 
 // Création de l'objet SSH
 $ssh = new SSH2($hostname, $port);
