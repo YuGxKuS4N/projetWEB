@@ -1,0 +1,7 @@
+#! /bin/sh
+#
+# Created by configure
+
+'./configure' \
+'--with-ssh2=/usr/local/opt/libssh2' \
+"$@"

@@ -1,0 +1,12 @@
+{
+    "name": "projetweb/projetweb",
+    "description": "projet",
+    "authors": [
+        {
+            "name": "tounsi"
+        }
+    ],
+    "require": {
+        "phpseclib/phpseclib": "^3.0"
+    }
+}
