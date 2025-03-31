@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil - WEB4ALL</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .header {
+            background-color: #fff;
+            padding: 15px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .nav {
+            background-color: #003399;
+            padding: 10px;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            width: 50%;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .info {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: black;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .btn-secondary {
+            background-color: #ccc;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">WEB4ALL</div>
+    <div class="nav">ACCUEIL | STAGE | ENTREPRISE | PROFIL</div>
+    
+    <div class="container" id="profile-container">
+        <h2 id="profile-title"></h2>
+        <div id="dynamic-content">
+            <!-- Contenu dynamique chargé ici -->
+        </div>
+    </div>
+
+    <script>
+        // Récupérer les informations de l'utilisateur connecté
+        const userType = sessionStorage.getItem('user_type'); // Type d'utilisateur (candidat, pilote, entreprise)
+        const userId = sessionStorage.getItem('user_id'); // ID de l'utilisateur
+
+        if (!userType || !userId) {
+            alert('Vous devez être connecté pour accéder à cette page.');
+            window.location.href = '../connexion/connexion.html'; // Rediriger vers la page de connexion
+        }
+
+        // Charger les données dynamiques en fonction du type d'utilisateur
+        function chargerDonnees(type, id) {
+            fetch(`../../back/auth/get_data.php?type=${type}&user_id=${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    const content = document.getElementById('dynamic-content');
+                    if (type === 'candidat') {
+                        if (data.length > 0) {
+                            content.innerHTML = `
+                                <h3>Mes Candidatures</h3>
+                                ${data.map(candidature => `
+                                    <p><strong>${candidature.titre}</strong> - Statut : ${candidature.statut}</p>
+                                `).join('')}
+                            `;
+                        } else {
+                            content.innerHTML = '<p>Aucune candidature trouvée.</p>';
+                        }
+                    } else if (type === 'pilote') {
+                        if (data.length > 0) {
+                            content.innerHTML = `
+                                <h3>Activité des Élèves</h3>
+                                ${data.map(eleves => `
+                                    <p><strong>${eleves.nom} ${eleves.prenom}</strong> - Candidatures : ${eleves.nb_candidatures}</p>
+                                `).join('')}
+                            `;
+                        } else {
+                            content.innerHTML = '<p>Aucune activité trouvée pour vos élèves.</p>';
+                        }
+                    } else if (type === 'entreprise') {
+                        if (data.length > 0) {
+                            content.innerHTML = `
+                                <h3>Mes Offres Publiées</h3>
+                                ${data.map(offre => `
+                                    <p><strong>${offre.titre}</strong> - Statut : ${offre.statut}</p>
+                                `).join('')}
+                            `;
+                        } else {
+                            content.innerHTML = '<p>Aucune offre publiée.</p>';
+                        }
+                    }
+                })
+                .catch(error => console.error('Erreur lors de la récupération des données :', error));
+        }
+
+        // Charger le contenu en fonction du type d'utilisateur
+        const profileTitle = document.getElementById('profile-title');
+        if (userType === 'candidat') {
+            profileTitle.textContent = 'Espace Candidat';
+            chargerDonnees('candidat', userId);
+        } else if (userType === 'pilote') {
+            profileTitle.textContent = 'Espace Pilote';
+            chargerDonnees('pilote', userId);
+        } else if (userType === 'entreprise') {
+            profileTitle.textContent = 'Espace Recruteur';
+            chargerDonnees('entreprise', userId);
+        } else {
+            profileTitle.textContent = 'Type d\'utilisateur inconnu';
+            document.getElementById('dynamic-content').innerHTML = '<p>Type d\'utilisateur inconnu ou non connecté.</p>';
+        }
+    </script>
+</body>
+</html>
