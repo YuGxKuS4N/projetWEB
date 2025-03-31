@@ -1,21 +1,20 @@
 <?php
 /**
  * Fichier : candidature.php
- * Description : Ce fichier gère la soumission des candidatures par les étudiants.
- *               Il vérifie les données du formulaire, téléverse les fichiers (CV et lettre de motivation),
- *               enregistre les informations dans la base de données, et retourne une réponse JSON.
+ * Description : Ce fichier gère la soumission des candidatures par les étudiants connectés.
+ *               Il utilise l'ID du stagiaire connecté pour enregistrer la candidature.
+ *               Les fichiers (CV et lettre de motivation) sont téléversés et les informations
+ *               sont enregistrées dans la base de données.
  * 
  * Fonctionnalités :
  * - Connexion à la base de données via la classe `Database`.
  * - Validation des données du formulaire (champs obligatoires, email, etc.).
  * - Téléversement sécurisé des fichiers (CV et lettre de motivation).
- * - Gestion des étudiants existants ou création d'un nouvel étudiant.
  * - Enregistrement de la candidature dans la table `Candidature`.
  * 
  * Entrées :
  * - Méthode POST : Données du formulaire de candidature, incluant :
  *   - `stage_id` : ID de l'offre de stage.
- *   - `prenom`, `nom`, `email`, `telephone` : Informations personnelles.
  *   - Fichiers téléversés : `cv` (CV) et `motivation` (lettre de motivation).
  * 
  * Sorties :
@@ -30,14 +29,16 @@
  * 
  * Dépendances :
  * - Fichier de configuration : `../conf/config.php` (pour la connexion à la base de données).
- * - Base de données : Tables `Etudiant`, `Candidature`, et `Offre_Stage`.
+ * - Base de données : Tables `Candidature` et `Offre_Stage`.
  * 
  * Auteur : [Votre Nom]
  * Date : [Date de création]
  */
 
+session_start(); // Démarrer la session pour accéder à l'ID de l'utilisateur connecté
 header('Content-Type: application/json');
 require '../conf/config.php';
+require '../auth/connexion.php'; // Inclure le fichier connexion.php pour gérer la session
 
 // Classe pour gérer la connexion à la base de données
 class Database {
@@ -65,22 +66,16 @@ $conn = $database->connect();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $errors = [];
+
+    // Vérifier si l'utilisateur est connecté
+    if (!isset($_SESSION['user_id'])) {
+        echo json_encode(["error" => "Vous devez être connecté pour postuler."]);
+        exit;
+    }
+
+    $etudiantId = $_SESSION['user_id']; // Récupérer l'ID du stagiaire connecté
     $stageId = intval($_POST['stage_id']);
-    $prenom = trim($_POST['prenom']);
-    $nom = trim($_POST['nom']);
-    $email = trim($_POST['email']);
-    $telephone = trim($_POST['telephone']);
     $dateCandidature = date('Y-m-d'); // Date actuelle
-
-    // Vérifier les champs obligatoires
-    if (empty($prenom) || empty($nom) || empty($email) || empty($telephone)) {
-        $errors[] = "Tous les champs sont obligatoires.";
-    }
-
-    // Vérifier le format de l'email
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = "L'adresse e-mail n'est pas valide.";
-    }
 
     // Vérifier et téléverser le CV
     $cvPath = uploadFile($_FILES['cv'], 'uploads/cv/', $errors);
@@ -89,41 +84,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $motivationPath = uploadFile($_FILES['motivation'], 'uploads/motivation/', $errors);
 
     if (empty($errors)) {
-        // Vérifier si l'étudiant existe déjà dans la table `Etudiant`
-        $stmt = $conn->prepare("SELECT id_etudiant FROM Etudiant WHERE email = ?");
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        if ($result->num_rows > 0) {
-            // L'étudiant existe déjà
-            $etudiant = $result->fetch_assoc();
-            $etudiantId = $etudiant['id_etudiant'];
-        } else {
-            // Insérer un nouvel étudiant
-            $stmt = $conn->prepare("INSERT INTO Etudiant (nom, prenom, email, date_naissance) VALUES (?, ?, ?, ?)");
-            $dateNaissance = '2000-01-01'; // Valeur par défaut si la date de naissance n'est pas fournie
-            $stmt->bind_param("ssss", $nom, $prenom, $email, $dateNaissance);
-            if ($stmt->execute()) {
-                $etudiantId = $stmt->insert_id;
-            } else {
-                $errors[] = "Erreur lors de l'enregistrement de l'étudiant.";
-            }
-        }
-
         // Enregistrer la candidature dans la table `Candidature`
-        if (empty($errors)) {
-            $stmt = $conn->prepare("
-                INSERT INTO Candidature (id_etudiant_fk, id_offre_fk, date_candidature, statut_candidature, commentaire, id_entreprise_fk)
-                VALUES (?, ?, ?, 'en attente', NULL, (SELECT id_entreprise_fk FROM Offre_Stage WHERE id_offre = ?))
-            ");
-            $stmt->bind_param("iisi", $etudiantId, $stageId, $dateCandidature, $stageId);
+        $stmt = $conn->prepare("
+            INSERT INTO Candidature (id_etudiant_fk, id_offre_fk, date_candidature, statut_candidature, commentaire, id_entreprise_fk, cv_path, motivation_path)
+            VALUES (?, ?, ?, 'en attente', NULL, (SELECT id_entreprise_fk FROM Offre_Stage WHERE id_offre = ?), ?, ?)
+        ");
+        $stmt->bind_param("iissss", $etudiantId, $stageId, $dateCandidature, $stageId, $cvPath, $motivationPath);
 
-            if ($stmt->execute()) {
-                echo json_encode(["success" => "Votre candidature a été envoyée avec succès."]);
-            } else {
-                $errors[] = "Erreur lors de l'enregistrement de la candidature.";
-            }
+        if ($stmt->execute()) {
+            echo json_encode(["success" => "Votre candidature a été envoyée avec succès."]);
+        } else {
+            $errors[] = "Erreur lors de l'enregistrement de la candidature.";
         }
 
         $stmt->close();
