@@ -10,7 +10,7 @@
   <div class="header">WEB4ALL</div>
   <div class="container">
     <h2 id="stage-title">Titre du poste</h2>
-    <form action="../../Back/stage/apply.php" method="POST" enctype="multipart/form-data">
+    <form action="../../Back/stage/candidature.php" method="POST" enctype="multipart/form-data">
       <input type="hidden" id="stage-id" name="stage_id">
       <div class="form-group">
         <label for="prenom">Prénom</label>
@@ -51,7 +51,7 @@
 
     // Charger les détails du stage
     document.addEventListener("DOMContentLoaded", () => {
-      fetch(`../../Back/stage/get_stage_details.php?stage_id=${stageId}`)
+      fetch(`../../Back/stage/get_stage.php?stage_id=${stageId}`)
         .then(response => response.json())
         .then(stage => {
           document.getElementById("stage-title").textContent = `Postuler pour : ${stage.entreprise} (${stage.ville})`;
