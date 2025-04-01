@@ -1,5 +1,15 @@
 <?php
-require_once '../../Controllers/get_stage.php'; // Inclusion du contrôleur pour récupérer les stages
+session_start();
+require_once '../../Controllers/c_connexion.php'; // Inclusion du contrôleur pour gérer la connexion
+
+// Vérifier si l'utilisateur est connecté
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
+    header("Location: ../creation_compte/connexion.php"); // Rediriger vers la page de connexion si non connecté
+    exit();
+}
+
+// Récupérer le rôle de l'utilisateur
+$role = $_SESSION['role'];
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -12,16 +22,11 @@ require_once '../../Controllers/get_stage.php'; // Inclusion du contrôleur pour
 <body>
     <header>
         <nav class="navbar">
-            <ul class="nav-left">
-                <li><a href="../stage/stage.php">STAGE</a></li>
-            </ul>    
-
             <div class="nav-logo">
                 <a href="acceuil.php">
                     <img src="../../../Public/images/logo.png" alt="Logo du Site">
                 </a>
             </div>
-
             <ul class="nav-right">
                 <li><a href="../creation_compte/inscription.php">S'INSCRIRE</a></li>
                 <li><a href="../creation_compte/connexion.php">CONNEXION</a></li>
@@ -36,8 +41,28 @@ require_once '../../Controllers/get_stage.php'; // Inclusion du contrôleur pour
         </video>
         <div class="overlay"></div>
         <div class="hero-content">
-            <h1>PRENDS TON <br> FUTUR EN MAIN : <br> CESI TA CHANCE !</h1>
-            <a href="../stage/stage.php" class="btn">OFFRES DE STAGE</a>
+            <h1>
+                <?php
+                // Afficher un titre différent en fonction du rôle
+                if ($role === 'etudiant') {
+                    echo "PRENDS TON <br> FUTUR EN MAIN : <br> CESI TA CHANCE !";
+                } elseif ($role === 'entreprise') {
+                    echo "BIENVENUE DANS <br> VOTRE ESPACE ENTREPRISE";
+                } elseif ($role === 'pilote') {
+                    echo "BIENVENUE DANS <br> VOTRE ESPACE PILOTE";
+                }
+                ?>
+            </h1>
+            <?php
+            // Afficher un bouton différent en fonction du rôle
+            if ($role === 'etudiant') {
+                echo '<a href="../stage/stage.php" class="btn">OFFRES DE STAGE</a>';
+            } elseif ($role === 'entreprise') {
+                echo '<a href="../stage/ajout.php" class="btn">DÉPOSER UNE OFFRE</a>';
+            } elseif ($role === 'pilote') {
+                echo '<a href="../pilote/eleves.php" class="btn">MES ÉLÈVES</a>';
+            }
+            ?>
         </div>
     </section>
     

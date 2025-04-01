@@ -10,11 +10,22 @@ require_once '../../Controllers/get_data.php'; // Inclusion du contrôleur pour 
     <link rel="stylesheet" href="../../../Public/css/profil.css">
 </head>
 <body>
-    <div class="header">WEB4ALL</div>
-    <div class="nav">ACCUEIL | STAGE | ENTREPRISE | PROFIL</div>
-    
+    <header>
+        <nav class="navbar">
+            <div class="nav-logo">
+                <a href="../acceuil/acceuil.php">
+                    <img src="../../../Public/images/logo.png" alt="Logo du Site">
+                </a>
+            </div>
+            <ul class="nav-right">
+                <li><a href="../creation_compte/inscription.php">S'INSCRIRE</a></li>
+                <li><a href="../creation_compte/connexion.php">CONNEXION</a></li>
+            </ul>
+        </nav>
+    </header>
+
     <div class="container" id="profile-container">
-        <h2 id="profile-title"></h2>
+        <h2 id="profile-title">Mon Profil</h2>
         <div id="dynamic-content">
             <!-- Contenu dynamique chargé ici -->
         </div>

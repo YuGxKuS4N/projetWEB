@@ -2,26 +2,6 @@
 session_start();
 require '../Config/config.php'; // Inclusion du fichier de configuration
 
-// Classe Database pour gérer la connexion à la base de données
-class Database {
-    private $conn;
-
-    public function __construct() {
-        $this->conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-        if ($this->conn->connect_error) {
-            die("Échec de la connexion à la base de données : " . $this->conn->connect_error);
-        }
-    }
-
-    public function getConnection() {
-        return $this->conn;
-    }
-
-    public function closeConnection() {
-        $this->conn->close();
-    }
-}
-
 // Classe User pour gérer l'inscription
 class User {
     private $db;
@@ -40,7 +20,6 @@ class User {
         $password = $data['password'] ?? '';
         $confirm_password = $data['confirm_password'] ?? '';
 
-        // Validation des champs
         if (!$email) {
             die("Adresse e-mail invalide !");
         }
@@ -48,10 +27,8 @@ class User {
             die("Les mots de passe ne correspondent pas !");
         }
 
-        // Hashage sécurisé du mot de passe
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        // Enregistrement en fonction du type d'utilisateur
         switch ($type) {
             case 'candidat':
                 return $this->registerCandidat($prenom, $nom, $email, $hashed_password, $data);
@@ -65,49 +42,20 @@ class User {
     }
 
     private function registerCandidat($prenom, $nom, $email, $password, $data) {
-        $stmt = $this->conn->prepare("
-            INSERT INTO candidats (prenom, nom, email, password, ecole, lieu_ecole, annee_promo, telephone, date_naissance)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ");
-        $stmt->bind_param(
-            "sssssssss",
-            $prenom, $nom, $email, $password,
-            htmlspecialchars(trim($data['ecole'] ?? '')),
-            htmlspecialchars(trim($data['lieu_ecole'] ?? '')),
-            htmlspecialchars(trim($data['annee_promo'] ?? '')),
-            htmlspecialchars(trim($data['telephone'] ?? '')),
-            htmlspecialchars(trim($data['date_naissance'] ?? ''))
-        );
+        $stmt = $this->conn->prepare("INSERT INTO candidats (prenom, nom, email, password, ecole, lieu_ecole, annee_promo, telephone, date_naissance) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssssssss", $prenom, $nom, $email, $password, $data['ecole'], $data['lieu_ecole'], $data['annee_promo'], $data['telephone'], $data['date_naissance']);
         return $this->executeStatement($stmt);
     }
 
     private function registerEntreprise($prenom, $nom, $email, $password, $data) {
-        $stmt = $this->conn->prepare("
-            INSERT INTO entreprises (nom_entreprise, prenom, nom, email, password, telephone)
-            VALUES (?, ?, ?, ?, ?, ?)
-        ");
-        $stmt->bind_param(
-            "ssssss",
-            htmlspecialchars(trim($data['nom_entreprise'] ?? '')),
-            $prenom, $nom, $email, $password,
-            htmlspecialchars(trim($data['telephone'] ?? ''))
-        );
+        $stmt = $this->conn->prepare("INSERT INTO entreprises (nom_entreprise, prenom, nom, email, password, telephone) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssss", $data['nom_entreprise'], $prenom, $nom, $email, $password, $data['telephone']);
         return $this->executeStatement($stmt);
     }
 
     private function registerPilote($prenom, $nom, $email, $password, $data) {
-        $stmt = $this->conn->prepare("
-            INSERT INTO pilotes (prenom, nom, email, password, ecole, lieu_ecole, annee_promo, telephone)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        ");
-        $stmt->bind_param(
-            "ssssssss",
-            $prenom, $nom, $email, $password,
-            htmlspecialchars(trim($data['ecole'] ?? '')),
-            htmlspecialchars(trim($data['lieu_ecole'] ?? '')),
-            htmlspecialchars(trim($data['annee_promo'] ?? '')),
-            htmlspecialchars(trim($data['telephone'] ?? ''))
-        );
+        $stmt = $this->conn->prepare("INSERT INTO pilotes (prenom, nom, email, password, ecole, lieu_ecole, annee_promo, telephone) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssssss", $prenom, $nom, $email, $password, $data['ecole'], $data['lieu_ecole'], $data['annee_promo'], $data['telephone']);
         return $this->executeStatement($stmt);
     }
 
