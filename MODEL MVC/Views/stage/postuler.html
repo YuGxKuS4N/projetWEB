@@ -44,21 +44,7 @@
     </form>
   </div>
 
-  <script>
-    // Récupérer les paramètres de l'URL
-    const params = new URLSearchParams(window.location.search);
-    const stageId = params.get("stage_id");
-
-    // Charger les détails du stage
-    document.addEventListener("DOMContentLoaded", () => {
-      fetch(`../../Back/stage/get_stage.php?stage_id=${stageId}`)
-        .then(response => response.json())
-        .then(stage => {
-          document.getElementById("stage-title").textContent = `Postuler pour : ${stage.entreprise} (${stage.ville})`;
-          document.getElementById("stage-id").value = stage.id;
-        })
-        .catch(error => console.error("Erreur lors du chargement des détails du stage :", error));
-    });
-  </script>
+  <!-- Appel du script externe -->
+  <script src="../../../Public/js/postuler.js"></script>
 </body>
 </html>
