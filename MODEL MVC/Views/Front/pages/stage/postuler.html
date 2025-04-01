@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulaire de Candidature</title>
+  <link rel="stylesheet" href="styles/postuler.css">
+</head>
+<body>
+  <div class="header">WEB4ALL</div>
+  <div class="container">
+    <h2 id="stage-title">Titre du poste</h2>
+    <form action="../../Back/stage/candidature.php" method="POST" enctype="multipart/form-data">
+      <input type="hidden" id="stage-id" name="stage_id">
+      <div class="form-group">
+        <label for="prenom">Prénom</label>
+        <input type="text" id="prenom" name="prenom" required>
+      </div>
+      <div class="form-group">
+        <label for="nom">Nom</label>
+        <input type="text" id="nom" name="nom" required>
+      </div>
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="telephone">Numéro de téléphone</label>
+        <input type="tel" id="telephone" name="telephone" placeholder="+33" required>
+      </div>
+      <div class="form-group">
+        <label for="date">À partir de quelle date pouvez-vous commencer ?</label>
+        <input type="date" id="date" name="date" required>
+      </div>
+      <div class="form-group">
+        <label>Importer CV</label>
+        <input type="file" id="cv" name="cv" class="upload-btn" required>
+      </div>
+      <div class="form-group">
+        <label>Importer Lettre de motivation</label>
+        <input type="file" id="motivation" name="motivation" class="upload-btn" required>
+      </div>
+      <button type="submit">Envoyer la candidature</button>
+    </form>
+  </div>
+
+  <script>
+    // Récupérer les paramètres de l'URL
+    const params = new URLSearchParams(window.location.search);
+    const stageId = params.get("stage_id");
+
+    // Charger les détails du stage
+    document.addEventListener("DOMContentLoaded", () => {
+      fetch(`../../Back/stage/get_stage.php?stage_id=${stageId}`)
+        .then(response => response.json())
+        .then(stage => {
+          document.getElementById("stage-title").textContent = `Postuler pour : ${stage.entreprise} (${stage.ville})`;
+          document.getElementById("stage-id").value = stage.id;
+        })
+        .catch(error => console.error("Erreur lors du chargement des détails du stage :", error));
+    });
+  </script>
+</body>
+</html>
