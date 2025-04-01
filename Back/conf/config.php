@@ -15,8 +15,13 @@ $password = '4243';
 $mysql_hostname = '127.0.0.1'; 
 $mysql_port = 3306; 
 $mysql_username = 'root';  
-$mysql_password = 'projet213';  
+$mysql_password = 'projetweb';   
 $mysql_dbname = 'projetweb'; 
+
+echo "User: " . $mysql_username . "<br>";
+echo "Password: " . $mysql_password . "<br>";
+echo "Host: " . $mysql_hostname . "<br>";
+echo "Port: " . $mysql_port . "<br>";
 
 // Création de l'objet SSH
 $ssh = new SSH2($hostname, $port);
@@ -32,7 +37,7 @@ echo "Connecté avec succès via SSH!";
 $ssh->exec("ssh -L 3306:127.0.0.1:3306 -N &");  // Tunnel SSH pour MySQL
 
 // Connexion à la base de données MySQL via le tunnel SSH
-$conn = new mysqli($mysql_hostname, $mysql_username, $mysql_password, $mysql_dbname, $mysql_port);
+$conn = new mysqli($mysql_hostname, $mysql_username, $mysql_password, $mysql_dbname, port: $mysql_port);
 
 // Vérifier la connexion
 if ($conn->connect_error) {
@@ -41,19 +46,7 @@ if ($conn->connect_error) {
 
 echo "Connexion à la base de données MySQL réussie !\n";
 
-// Exemple de requête MySQL (facultatif)
-$query = "SELECT * FROM ta_table";
-$result = $conn->query($query);
-
-if ($result->num_rows > 0) {
-    // Afficher les résultats de la requête
-    while($row = $result->fetch_assoc()) {
-        echo "id: " . $row["id"]. " - Nom: " . $row["nom"]. " - Email: " . $row["email"]. "\n";
-    }
-} else {
-    echo "Aucun résultat trouvé.\n";
-}
 
 // Fermer la connexion MySQL
-$conn->close();
+//$conn->close();
 ?>
