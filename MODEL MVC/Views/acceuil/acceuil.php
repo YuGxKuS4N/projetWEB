@@ -1,5 +1,5 @@
 <?php
-require_once '../../Controllers/get_stage.php'; // Exemple d'inclusion d'un contrôleur
+require_once '../../Controllers/get_stage.php'; // Inclusion du contrôleur pour récupérer les stages
 ?>
 <!DOCTYPE html>
 <html lang="fr">

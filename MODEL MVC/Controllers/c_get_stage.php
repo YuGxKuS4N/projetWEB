@@ -1,6 +1,6 @@
 <?php
 /**
- * Fichier : get_stage.php
+ * Fichier : c_get_stage.php
  * Description : Ce fichier gère deux cas principaux :
  *               1. Récupération des détails d'un stage spécifique en fonction de son ID.
  *               2. Récupération de la liste de tous les stages disponibles.

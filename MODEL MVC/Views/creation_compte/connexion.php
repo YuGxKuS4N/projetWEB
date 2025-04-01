@@ -1,3 +1,6 @@
+<?php
+require_once '../../Controllers/c_connexion.php'; // Inclusion du contrôleur pour gérer la connexion
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -9,12 +12,12 @@
 <body>
     <nav class="navbar">
         <ul class="nav-left">
-            <li><a href="../accueil/accueil.php">ACCUEIL</a></li>
+            <li><a href="../acceuil/acceuil.php">ACCUEIL</a></li>
             <li><a href="../stage/stage.php">STAGE</a></li>
         </ul>    
 
         <div class="nav-logo">
-            <a href="../accueil/accueil.php">
+            <a href="../acceuil/acceuil.php">
                 <img src="../../../Public/images/logo.png" alt="Logo du Site">
             </a>
         </div>
@@ -25,7 +28,7 @@
     </nav>
 
     <div class="form-box">
-        <form class="form" action="../../../Back/auth/connexion.php" method="POST">
+        <form class="form" action="../../../Controllers/c_connexion.php" method="POST">
             <span class="title">Se connecter</span>
             <span class="subtitle">Entrez vos identifiants pour accéder à votre compte.</span>
             <div class="form-container">

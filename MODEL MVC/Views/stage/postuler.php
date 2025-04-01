@@ -1,5 +1,5 @@
 <?php
-require_once '../../Controllers/candidature.php'; // Inclusion du contrôleur pour gérer les candidatures
+require_once '../../Controllers/c_candidature.php'; // Inclusion du contrôleur pour gérer les candidatures
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -13,7 +13,7 @@ require_once '../../Controllers/candidature.php'; // Inclusion du contrôleur po
   <div class="header">WEB4ALL</div>
   <div class="container">
     <h2 id="stage-title">Titre du poste</h2>
-    <form action="../../../Controllers/candidature.php" method="POST" enctype="multipart/form-data">
+    <form action="../../../Controllers/c_candidature.php" method="POST" enctype="multipart/form-data">
       <input type="hidden" id="stage-id" name="stage_id">
       <div class="form-group">
         <label for="prenom">Prénom</label>

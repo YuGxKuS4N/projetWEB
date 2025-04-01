@@ -1,12 +1,12 @@
 <?php
-require_once '../../Controllers/c_c_inscription.php'; // Inclusion du contrôleur d'c_inscription
+require_once '../../Controllers/c_inscription.php'; // Inclusion du contrôleur pour gérer l'inscription
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>inscription - WEB4ALL</title>
+  <title>Inscription - WEB4ALL</title>
   <link rel="stylesheet" href="../../../Public/css/inscription.css" />
 </head>
 <body>

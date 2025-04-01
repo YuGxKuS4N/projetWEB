@@ -7,7 +7,7 @@
 session_start(); // Démarrer la session pour accéder à l'ID de l'utilisateur connecté
 header('Content-Type: application/json');
 require '../Config/config.php'; // Inclusion du fichier de configuration
-require '../Controllers/connexion.php'; // Inclure le fichier connexion.php pour gérer la session
+require '../Controllers/c_connexion.php'; // Inclure le fichier connexion.php pour gérer la session
 
 // Classe pour gérer la connexion à la base de données
 class Database {
