@@ -4,22 +4,10 @@
  * Description : Ce fichier gère deux cas principaux :
  *               1. Récupération des détails d'un stage spécifique en fonction de son ID.
  *               2. Récupération de la liste de tous les stages disponibles.
- * 
- * Entrées :
- * - `stage_id` (optionnel) : Si fourni dans l'URL (par exemple, `?stage_id=1`), le fichier retourne les détails du stage correspondant.
- * 
- * Sorties :
- * - Si `stage_id` est fourni :
- *   Retourne un objet JSON contenant les détails du stage spécifique.
- * - Si `stage_id` n'est pas fourni :
- *   Retourne un tableau JSON contenant la liste de tous les stages disponibles.
- * 
- * Dépendances :
- * - Fichier de configuration : `../conf/config.php` (pour la connexion à la base de données).
  */
 
 header('Content-Type: application/json');
-require '../conf/config.php';
+require '../Config/config.php'; // Inclure la configuration
 
 // Classe pour gérer la connexion à la base de données
 class Database {

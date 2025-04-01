@@ -2,43 +2,12 @@
 /**
  * Fichier : candidature.php
  * Description : Ce fichier gère la soumission des candidatures par les étudiants connectés.
- *               Il utilise l'ID du stagiaire connecté pour enregistrer la candidature.
- *               Les fichiers (CV et lettre de motivation) sont téléversés et les informations
- *               sont enregistrées dans la base de données.
- * 
- * Fonctionnalités :
- * - Connexion à la base de données via la classe `Database`.
- * - Validation des données du formulaire (champs obligatoires, email, etc.).
- * - Téléversement sécurisé des fichiers (CV et lettre de motivation).
- * - Enregistrement de la candidature dans la table `Candidature`.
- * 
- * Entrées :
- * - Méthode POST : Données du formulaire de candidature, incluant :
- *   - `stage_id` : ID de l'offre de stage.
- *   - Fichiers téléversés : `cv` (CV) et `motivation` (lettre de motivation).
- * 
- * Sorties :
- * - Réponse JSON en cas de succès :
- *   {
- *       "success": "Votre candidature a été envoyée avec succès."
- *   }
- * - Réponse JSON en cas d'erreur :
- *   {
- *       "errors": ["Liste des erreurs"]
- *   }
- * 
- * Dépendances :
- * - Fichier de configuration : `../conf/config.php` (pour la connexion à la base de données).
- * - Base de données : Tables `Candidature` et `Offre_Stage`.
- * 
- * Auteur : [Votre Nom]
- * Date : [Date de création]
  */
 
 session_start(); // Démarrer la session pour accéder à l'ID de l'utilisateur connecté
 header('Content-Type: application/json');
-require '../conf/config.php';
-require '../auth/connexion.php'; // Inclure le fichier connexion.php pour gérer la session
+require '../Config/config.php'; // Inclusion du fichier de configuration
+require '../Controllers/connexion.php'; // Inclure le fichier connexion.php pour gérer la session
 
 // Classe pour gérer la connexion à la base de données
 class Database {
@@ -78,10 +47,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $dateCandidature = date('Y-m-d'); // Date actuelle
 
     // Vérifier et téléverser le CV
-    $cvPath = uploadFile($_FILES['cv'], 'uploads/cv/', $errors);
+    $cvPath = uploadFile($_FILES['cv'], '../../Public/uploads/cv/', $errors);
 
     // Vérifier et téléverser la lettre de motivation
-    $motivationPath = uploadFile($_FILES['motivation'], 'uploads/motivation/', $errors);
+    $motivationPath = uploadFile($_FILES['motivation'], '../../Public/uploads/motivation/', $errors);
 
     if (empty($errors)) {
         // Enregistrer la candidature dans la table `Candidature`

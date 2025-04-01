@@ -1,3 +1,6 @@
+<?php
+require_once '../../Controllers/get_stage.php'; // Exemple d'inclusion d'un contrôleur
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -14,7 +17,7 @@
             </ul>    
 
             <div class="nav-logo">
-                <a href="accueil.php">
+                <a href="acceuil.php">
                     <img src="../../../Public/images/logo.png" alt="Logo du Site">
                 </a>
             </div>

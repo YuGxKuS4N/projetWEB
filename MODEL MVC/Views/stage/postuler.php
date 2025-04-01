@@ -1,3 +1,6 @@
+<?php
+require_once '../../Controllers/candidature.php'; // Inclusion du contrôleur pour gérer les candidatures
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -10,7 +13,7 @@
   <div class="header">WEB4ALL</div>
   <div class="container">
     <h2 id="stage-title">Titre du poste</h2>
-    <form action="../../../Back/stage/candidature.php" method="POST" enctype="multipart/form-data">
+    <form action="../../../Controllers/candidature.php" method="POST" enctype="multipart/form-data">
       <input type="hidden" id="stage-id" name="stage_id">
       <div class="form-group">
         <label for="prenom">Prénom</label>

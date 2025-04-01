@@ -1,3 +1,6 @@
+<?php
+require_once '../../Controllers/inscription.php'; // Inclusion du contrôleur d'inscription
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -9,11 +12,11 @@
 <body>
   <nav class="navbar">
     <ul class="nav-left">
-      <li><a href="../accueil/index.php">ACCUEIL</a></li>
+      <li><a href="../acceuil/acceuil.php">ACCUEIL</a></li>
       <li><a href="../stage/stage.php">STAGE</a></li>
     </ul>
     <div class="nav-logo">
-      <a href="../accueil/index.php">
+      <a href="../acceuil/acceuil.php">
         <img src="../../../Public/images/logo.png" alt="Logo du Site" />
       </a>
     </div>
@@ -23,7 +26,7 @@
   </nav>
 
   <div class="form-box">
-    <form class="form" action="../../../Back/auth/inscription.php" method="POST">
+    <form class="form" action="../../../Controllers/inscription.php" method="POST">
       <span class="title">Créer un compte</span>
       <div class="form-container">
         <input type="text" class="input" name="prenom" placeholder="Prénom" required />

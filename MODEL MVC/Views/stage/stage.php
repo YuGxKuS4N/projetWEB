@@ -1,3 +1,6 @@
+<?php
+require_once '../../Controllers/get_stage.php'; // Inclusion du contrôleur pour récupérer les stages
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -10,7 +13,7 @@
   <header>
     <div class="logo">WEB4ALL</div>
     <nav>
-      <a href="../accueil/accueil.php">Accueil</a>
+      <a href="../acceuil/acceuil.php">Accueil</a>
       <a href="../creation_compte/entreprise.php">Entreprises</a>
     </nav>
   </header>

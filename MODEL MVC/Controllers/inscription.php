@@ -1,6 +1,6 @@
 <?php
 session_start();
-require '../config.php'; // Inclusion du fichier de connexion
+require '../Config/config.php'; // Inclusion du fichier de configuration
 
 // Classe Database pour gérer la connexion à la base de données
 class Database {
@@ -108,7 +108,7 @@ class User {
     // Fonction pour exécuter l'instruction préparée
     private function executeStatement($stmt) {
         if ($stmt->execute()) {
-            header("Location: connexion.html"); // Redirection après succès
+            header("Location: ../Views/creation_compte/connexion.php"); // Redirection après succès
             exit();
         } else {
             echo "Erreur lors de l'inscription.";

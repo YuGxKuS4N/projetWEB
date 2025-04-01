@@ -1,3 +1,6 @@
+<?php
+require_once '../../Controllers/get_data.php'; // Inclusion du contrôleur pour récupérer les données utilisateur
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>

@@ -1,5 +1,5 @@
 <?php
-require '../auth/connexion.php'; // Inclure la connexion à la base de données
+require '../Config/config.php'; // Inclure la connexion à la base de données
 
 // Vérifier si le paramètre 'type' est défini
 if (!isset($_GET['type']) || !isset($_GET['user_id'])) {
