@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil - WEB4ALL</title>
-    <link rel="stylesheet" href="../../styles/styles.css"> <!-- Lien vers le fichier CSS -->
+    <link rel="stylesheet" href="../../../Public/css/profil.css">
 </head>
 <body>
     <div class="header">WEB4ALL</div>
@@ -16,8 +16,6 @@
             <!-- Contenu dynamique chargé ici -->
         </div>
     </div>
-
-    <!-- Appel du script externe -->
     <script src="../../../Public/js/profil.js"></script>
 </body>
 </html>

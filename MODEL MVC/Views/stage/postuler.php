@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formulaire de Candidature</title>
-  <link rel="stylesheet" href="styles/postuler.css">
+  <title>Postuler - WEB4ALL</title>
+  <link rel="stylesheet" href="../../../Public/css/postuler.css">
 </head>
 <body>
   <div class="header">WEB4ALL</div>
   <div class="container">
     <h2 id="stage-title">Titre du poste</h2>
-    <form action="../../Back/stage/candidature.php" method="POST" enctype="multipart/form-data">
+    <form action="../../../Back/stage/candidature.php" method="POST" enctype="multipart/form-data">
       <input type="hidden" id="stage-id" name="stage_id">
       <div class="form-group">
         <label for="prenom">Prénom</label>
@@ -25,26 +25,12 @@
         <input type="email" id="email" name="email" required>
       </div>
       <div class="form-group">
-        <label for="telephone">Numéro de téléphone</label>
-        <input type="tel" id="telephone" name="telephone" placeholder="+33" required>
-      </div>
-      <div class="form-group">
-        <label for="date">À partir de quelle date pouvez-vous commencer ?</label>
-        <input type="date" id="date" name="date" required>
-      </div>
-      <div class="form-group">
         <label>Importer CV</label>
         <input type="file" id="cv" name="cv" class="upload-btn" required>
-      </div>
-      <div class="form-group">
-        <label>Importer Lettre de motivation</label>
-        <input type="file" id="motivation" name="motivation" class="upload-btn" required>
       </div>
       <button type="submit">Envoyer la candidature</button>
     </form>
   </div>
-
-  <!-- Appel du script externe -->
   <script src="../../../Public/js/postuler.js"></script>
 </body>
 </html>

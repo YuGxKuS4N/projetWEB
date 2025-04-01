@@ -1,97 +1,39 @@
-<!DOCTYPE html>  
-<html lang="fr">  
-<head>  
-  <meta charset="UTF-8" />  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
-  <title>Gestion des Espaces</title>  
-  <link rel="stylesheet" href="styles/styles.css" />  
-</head>  
-<body>  
-  <div class="background-overlay"></div>  
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inscription - WEB4ALL</title>
+  <link rel="stylesheet" href="../../../Public/css/inscription.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <ul class="nav-left">
+      <li><a href="../acceuil/index.php">ACCUEIL</a></li>
+      <li><a href="../stage/stage.php">STAGE</a></li>
+    </ul>
+    <div class="nav-logo">
+      <a href="../acceuil/index.php">
+        <img src="../../../Public/images/logo.png" alt="Logo du Site" />
+      </a>
+    </div>
+    <ul class="nav-right">
+      <li><a href="connexion.php">CONNEXION</a></li>
+    </ul>
+  </nav>
 
-  <!-- NAVBAR -->  
-  <nav class="navbar">  
-    <ul class="nav-left">  
-      <li><a href="../../index/index.html">ACCUEIL</a></li>  
-      <li><a href="../../pages/creation_compte/stage.html">STAGE</a></li>  
-      <li><a href="../../pages/creation_compte/entreprise.html">ENTREPRISE</a></li>  
-    </ul>  
-    <div class="nav-logo">  
-      <a href="#">  
-        <img src="../../../images/logo.png" alt="Logo du Site" />  
-      </a>  
-    </div>  
-    <ul class="nav-right">  
-      <li><a href="../connexion/connexion.html">CONNEXION</a></li>  
-    </ul>  
-  </nav>  
-
-  <!-- FORM-BOX AVEC ONGLETS -->  
-  <div class="form-box">  
-    <div class="tabs">  
-      <button onclick="showTab('candidat', event)" class="tab-button active">Espace Candidat</button>  
-      <button onclick="showTab('entreprise', event)" class="tab-button">Espace Entreprise</button>  
-      <button onclick="showTab('pilote', event)" class="tab-button">Espace Pilote</button>  
-    </div>  
-
-    <!-- Formulaire Candidat -->  
-    <div id="candidat" class="tab-content" style="display: block;">  
-      <form class="form" action="../../../Back/auth/inscription.php" method="POST">  
-        <span class="title">Créer un compte Candidat</span>  
-        <div class="form-container">  
-          <input type="text" class="input" name="prenom" placeholder="Prénom" required />  
-          <input type="text" class="input" name="nom" placeholder="Nom" required />  
-          <input type="text" class="input" name="ecole" placeholder="École" required />  
-          <input type="text" class="input" name="lieu_ecole" placeholder="Lieu de l'école" required />  
-          <input type="number" class="input" name="annee_promo" placeholder="Année de promotion" required />  
-          <input type="tel" class="input" name="telephone" placeholder="Numéro de téléphone" pattern="[0-9]{10}" required />  
-          <input type="email" class="input" name="email" placeholder="E-mail" required />  
-          <input type="date" class="input" name="date_naissance" placeholder="Date de naissance" required />  
-          <input type="password" class="input" name="password" placeholder="Mot de passe" required />  
-          <input type="password" class="input" name="confirm_password" placeholder="Confirmez le mot de passe" required />  
-        </div>  
-        <button type="submit">S'inscrire</button>  
-      </form>  
-    </div>  
-
-    <!-- Formulaire Entreprise -->  
-    <div id="entreprise" class="tab-content" style="display: none;">  
-      <form class="form" action="../../../Back/auth/inscription.php" method="POST">  
-        <span class="title">Créer un compte Entreprise</span>  
-        <div class="form-container">  
-          <input type="text" class="input" name="nom_entreprise" placeholder="Nom de l'entreprise" required />  
-          <input type="text" class="input" name="prenom" placeholder="Prénom du contact" required />  
-          <input type="text" class="input" name="nom" placeholder="Nom du contact" required />  
-          <input type="tel" class="input" name="telephone" placeholder="Numéro de téléphone" pattern="[0-9]{10}" required />  
-          <input type="email" class="input" name="email" placeholder="E-mail" required />  
-          <input type="password" class="input" name="password" placeholder="Mot de passe" required />  
-          <input type="password" class="input" name="confirm_password" placeholder="Confirmez le mot de passe" required />  
-        </div>  
-        <button type="submit">S'inscrire</button>  
-      </form>  
-    </div>  
-
-    <!-- Formulaire Pilote -->  
-    <div id="pilote" class="tab-content" style="display: none;">  
-      <form class="form" action="../../../Back/auth/inscription.php" method="POST">  
-        <span class="title">Créer un compte Pilote</span>  
-        <div class="form-container">  
-          <input type="text" class="input" name="prenom" placeholder="Prénom" required />  
-          <input type="text" class="input" name="nom" placeholder="Nom" required />  
-          <input type="text" class="input" name="ecole" placeholder="École" required />  
-          <input type="text" class="input" name="lieu_ecole" placeholder="Lieu de l'école" required />  
-          <input type="number" class="input" name="annee_promo" placeholder="Année de promotion" required />  
-          <input type="tel" class="input" name="telephone" placeholder="Numéro de téléphone" pattern="[0-9]{10}" required />  
-          <input type="email" class="input" name="email" placeholder="E-mail" required />  
-          <input type="password" class="input" name="password" placeholder="Mot de passe" required />  
-          <input type="password" class="input" name="confirm_password" placeholder="Confirmez le mot de passe" required />  
-        </div>  
-        <button type="submit">S'inscrire</button>  
-      </form>  
-    </div>  
-  </div>  
-
-  <!-- Appel du script externe -->
-  <script src="../../Public/js/inscription.js"></script>
-</body>  
+  <div class="form-box">
+    <form class="form" action="../../../Back/auth/inscription.php" method="POST">
+      <span class="title">Créer un compte</span>
+      <div class="form-container">
+        <input type="text" class="input" name="prenom" placeholder="Prénom" required />
+        <input type="text" class="input" name="nom" placeholder="Nom" required />
+        <input type="email" class="input" name="email" placeholder="E-mail" required />
+        <input type="password" class="input" name="password" placeholder="Mot de passe" required />
+        <input type="password" class="input" name="confirm_password" placeholder="Confirmez le mot de passe" required />
+      </div>
+      <button type="submit">S'inscrire</button>
+    </form>
+  </div>
+</body>
 </html>
