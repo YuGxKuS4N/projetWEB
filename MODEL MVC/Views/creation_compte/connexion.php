@@ -9,12 +9,12 @@
 <body>
     <nav class="navbar">
         <ul class="nav-left">
-            <li><a href="../acceuil/index.php">ACCUEIL</a></li>
+            <li><a href="../accueil/accueil.php">ACCUEIL</a></li>
             <li><a href="../stage/stage.php">STAGE</a></li>
         </ul>    
 
         <div class="nav-logo">
-            <a href="../acceuil/index.php">
+            <a href="../accueil/accueil.php">
                 <img src="../../../Public/images/logo.png" alt="Logo du Site">
             </a>
         </div>

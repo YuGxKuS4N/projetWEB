@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accueil - WEB4ALL</title>
-    <link rel="stylesheet" href="../../../Public/css/acceuil.css">
+    <link rel="stylesheet" href="../../../Public/css/accueil.css">
 </head>
 <body>
     <header>
@@ -14,7 +14,7 @@
             </ul>    
 
             <div class="nav-logo">
-                <a href="index.php">
+                <a href="accueil.php">
                     <img src="../../../Public/images/logo.png" alt="Logo du Site">
                 </a>
             </div>

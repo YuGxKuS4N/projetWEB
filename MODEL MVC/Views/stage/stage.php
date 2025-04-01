@@ -10,7 +10,7 @@
   <header>
     <div class="logo">WEB4ALL</div>
     <nav>
-      <a href="../acceuil/index.php">Accueil</a>
+      <a href="../accueil/accueil.php">Accueil</a>
       <a href="../creation_compte/entreprise.php">Entreprises</a>
     </nav>
   </header>

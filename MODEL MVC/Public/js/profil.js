@@ -7,6 +7,7 @@ if (!userType || !userId) {
     window.location.href = '../connexion/connexion.html'; // Rediriger vers la page de connexion
 }
 
+
 // Charger les données dynamiques en fonction du type d'utilisateur
 function chargerDonnees(type, id) {
     fetch(`../../back/auth/get_data.php?type=${type}&user_id=${id}`)
