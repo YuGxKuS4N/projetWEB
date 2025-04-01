@@ -1,12 +1,12 @@
 <?php
-require_once '../../Controllers/inscription.php'; // Inclusion du contrôleur d'inscription
+require_once '../../Controllers/c_c_inscription.php'; // Inclusion du contrôleur d'c_inscription
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Inscription - WEB4ALL</title>
+  <title>inscription - WEB4ALL</title>
   <link rel="stylesheet" href="../../../Public/css/inscription.css" />
 </head>
 <body>
@@ -26,7 +26,7 @@ require_once '../../Controllers/inscription.php'; // Inclusion du contrôleur d'
   </nav>
 
   <div class="form-box">
-    <form class="form" action="../../../Controllers/inscription.php" method="POST">
+    <form class="form" action="../../../Controllers/c_inscription.php" method="POST">
       <span class="title">Créer un compte</span>
       <div class="form-container">
         <input type="text" class="input" name="prenom" placeholder="Prénom" required />
