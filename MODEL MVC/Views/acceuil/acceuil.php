@@ -4,7 +4,7 @@ require_once '../../Controllers/c_connexion.php'; // Inclusion du contrôleur po
 
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
-    header("Location: ../creation_compte/connexion.php"); // Rediriger vers la page de connexion si non connecté
+    header("Location: ../../Controllers/c_connexion.php"); // Rediriger vers la page de connexion si non connecté
     exit();
 }
 

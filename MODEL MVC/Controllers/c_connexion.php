@@ -10,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validation des champs
     if (empty($email)) {
         $errors[] = "L'email est requis.";
+        
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors[] = "L'email n'est pas valide.";
     }

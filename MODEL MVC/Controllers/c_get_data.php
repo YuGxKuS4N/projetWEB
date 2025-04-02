@@ -9,21 +9,32 @@ if (!isset($_GET['type']) || !isset($_GET['user_id'])) {
 
 $type = $_GET['type']; // Type d'utilisateur (candidat, pilote, entreprise)
 $userId = intval($_GET['user_id']); // ID de l'utilisateur
+$context = $_GET['context'] ?? 'profile'; // Contexte : 'profile' ou 'students'
 
 $response = [];
 
-if ($type === 'candidat') {
-    // Récupérer les candidatures du stagiaire
-    $stmt = $conn->prepare("SELECT titre, statut FROM Candidature WHERE id_etudiant_fk = ?");
+if ($type === 'candidat' && $context === 'profile') {
+    // Récupérer les informations du profil du candidat
+    $stmt = $conn->prepare("SELECT * FROM Etudiant WHERE id_etudiant = ?");
     $stmt->bind_param("i", $userId);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    while ($row = $result->fetch_assoc()) {
+    if ($row = $result->fetch_assoc()) {
         $response[] = $row;
     }
-} elseif ($type === 'pilote') {
-    // Récupérer l'activité des élèves pour le pilote
+} elseif ($type === 'pilote' && $context === 'profile') {
+    // Récupérer les informations du profil du pilote
+    $stmt = $conn->prepare("SELECT * FROM Pilote WHERE id_pilote = ?");
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($row = $result->fetch_assoc()) {
+        $response[] = $row;
+    }
+} elseif ($type === 'pilote' && $context === 'students') {
+    // Récupérer les élèves du pilote
     $stmt = $conn->prepare("
         SELECT e.nom, e.prenom, COUNT(c.id_candidature) AS nb_candidatures
         FROM Etudiant e
@@ -38,18 +49,18 @@ if ($type === 'candidat') {
     while ($row = $result->fetch_assoc()) {
         $response[] = $row;
     }
-} elseif ($type === 'entreprise') {
-    // Récupérer les offres publiées par l'entreprise
-    $stmt = $conn->prepare("SELECT titre, statut FROM Offre_Stage WHERE id_entreprise_fk = ?");
+} elseif ($type === 'entreprise' && $context === 'profile') {
+    // Récupérer les informations du profil de l'entreprise
+    $stmt = $conn->prepare("SELECT * FROM Entreprise WHERE id_entreprise = ?");
     $stmt->bind_param("i", $userId);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    while ($row = $result->fetch_assoc()) {
+    if ($row = $result->fetch_assoc()) {
         $response[] = $row;
     }
 } else {
-    echo json_encode(["error" => "Type d'utilisateur invalide."]);
+    echo json_encode(["error" => "Type d'utilisateur ou contexte invalide."]);
     exit;
 }
 

@@ -4,12 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (!userId || !userType) {
     alert('Vous devez être connecté pour accéder à cette page.');
-    window.location.href = '../creation_compte/connexion.php';
+    window.location.href = '../creation_compte/c_connexion.php';
     return;
   }
 
-  // Charger les informations utilisateur
-  fetch(`../../Controllers/c_get_data.php?type=${userType}&user_id=${userId}`)
+  // Charger les informations utilisateur (contexte : profil)
+  fetch(`../../Controllers/c_get_data.php?type=${userType}&user_id=${userId}&context=profile`)
     .then(response => response.json())
     .then(data => {
       const container = document.getElementById('dynamic-content');

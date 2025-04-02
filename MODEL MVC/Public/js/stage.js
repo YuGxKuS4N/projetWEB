@@ -2,7 +2,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const offersContainer = document.getElementById("offers-container");
 
-  fetch("../../Back/stage/get_stage.php")
+  fetch("../../Back/stage/c_get_stage.php")
     .then(response => response.json())
     .then(stages => {
       if (stages.error) {
