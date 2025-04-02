@@ -1,14 +1,15 @@
 <?php
+// filepath: c:\projetWEB\MODEL MVC\Controllers\c_notification.php
+
 /**
  * Contrôleur pour gérer les notifications.
  * 
  * - Vérifie les statuts des candidatures pour les étudiants et les entreprises.
  * - Envoie des notifications pop-up et des e-mails en fonction des événements.
- * - Utilise la classe `NotificationController` pour encapsuler la logique.
  */
 
 require '../Config/config.php'; // Inclusion de la configuration
-require '../Utils/email_utils.php'; // Inclusion d'un utilitaire pour envoyer des e-mails
+require '../Utils/EmailUtils.php'; // Inclusion de l'utilitaire pour envoyer des e-mails
 
 class NotificationController {
     private $db;
@@ -19,9 +20,6 @@ class NotificationController {
         $this->conn = $this->db->connect();
     }
 
-    /**
-     * Vérifie les notifications pour un étudiant.
-     */
     public function checkStudentNotifications($studentId) {
         $sql = <<<SQL
             SELECT 
@@ -48,13 +46,16 @@ SQL;
 
         $notifications = [];
         while ($row = $result->fetch_assoc()) {
-            $notifications[] = $row;
+            $notifications[] = [
+                "message" => "Votre candidature pour le stage \"{$row['stage_titre']}\" chez \"{$row['entreprise_nom']}\" a été mise à jour avec le statut : {$row['statut_candidature']}."
+            ];
 
             // Envoyer un e-mail à l'étudiant
-            $this->sendEmail(
-                $studentId,
+            $emailUtils = new EmailUtils();
+            $emailUtils->send(
+                $this->getUserEmail($studentId, 'etudiant'),
                 "Mise à jour de votre candidature",
-                "Votre candidature pour le stage \"{$row['stage_titre']}\" chez \"{$row['entreprise_nom']}\" a été mise à jour avec le statut : {$row['statut_candidature']}."
+                $notifications[count($notifications) - 1]['message']
             );
         }
 
@@ -64,14 +65,10 @@ SQL;
         return $notifications;
     }
 
-    /**
-     * Vérifie les notifications pour une entreprise.
-     */
     public function checkCompanyNotifications($companyId) {
         $sql = <<<SQL
             SELECT 
                 c.id_candidature,
-                c.statut_candidature,
                 e.prenom AS etudiant_prenom,
                 e.nom AS etudiant_nom,
                 o.titre AS stage_titre
@@ -94,13 +91,16 @@ SQL;
 
         $notifications = [];
         while ($row = $result->fetch_assoc()) {
-            $notifications[] = $row;
+            $notifications[] = [
+                "message" => "Un étudiant nommé \"{$row['etudiant_prenom']} {$row['etudiant_nom']}\" a postulé pour le stage \"{$row['stage_titre']}\"."
+            ];
 
             // Envoyer un e-mail à l'entreprise
-            $this->sendEmail(
-                $companyId,
+            $emailUtils = new EmailUtils();
+            $emailUtils->send(
+                $this->getUserEmail($companyId, 'entreprise'),
                 "Nouvelle candidature reçue",
-                "Un étudiant nommé \"{$row['etudiant_prenom']} {$row['etudiant_nom']}\" a postulé pour le stage \"{$row['stage_titre']}\"."
+                $notifications[count($notifications) - 1]['message']
             );
         }
 
@@ -110,9 +110,6 @@ SQL;
         return $notifications;
     }
 
-    /**
-     * Marque les notifications comme envoyées pour un étudiant.
-     */
     private function markNotificationsAsSent($studentId) {
         $sql = <<<SQL
             UPDATE 
@@ -128,9 +125,6 @@ SQL;
         $stmt->execute();
     }
 
-    /**
-     * Marque les notifications comme envoyées pour une entreprise.
-     */
     private function markNotificationsAsSentForCompany($companyId) {
         $sql = <<<SQL
             UPDATE 
@@ -153,36 +147,21 @@ SQL;
         $stmt->execute();
     }
 
-    /**
-     * Envoie un e-mail à l'utilisateur.
-     */
-    private function sendEmail($userId, $subject, $message) {
-        // Récupérer l'adresse e-mail de l'utilisateur
-        $sql = <<<SQL
-            SELECT 
-                email 
-            FROM 
-                Etudiant 
-            WHERE 
-                id_etudiant = ?
-            UNION
-            SELECT 
-                email 
-            FROM 
-                Entreprise 
-            WHERE 
-                id_entreprise = ?
-SQL;
+    private function getUserEmail($userId, $role) {
+        $sql = $role === 'etudiant'
+            ? "SELECT email FROM Etudiant WHERE id_etudiant = ?"
+            : "SELECT email FROM Entreprise WHERE id_entreprise = ?";
 
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ii", $userId, $userId);
+        $stmt->bind_param("i", $userId);
         $stmt->execute();
         $result = $stmt->get_result();
 
         if ($row = $result->fetch_assoc()) {
-            $email = $row['email'];
-            sendEmail($email, $subject, $message); // Fonction utilitaire pour envoyer un e-mail
+            return $row['email'];
         }
+
+        return null;
     }
 }
 

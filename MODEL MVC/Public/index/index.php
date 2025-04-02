@@ -50,6 +50,10 @@ switch ($page) {
         loadPage('utilisateur/profil');
         break;
 
+    case 'notification': // Nouveau cas pour les notifications
+        require_once BASE_PATH . '/Controllers/c_notification.php';
+        break;
+
     default:
         // Si la page demandée n'existe pas
         http_response_code(404);
