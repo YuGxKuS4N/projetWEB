@@ -1,6 +1,4 @@
 <?php
-// filepath: c:\projetWEB\MODEL MVC\Controllers\c_notification.php
-
 /**
  * Contrôleur pour gérer les notifications.
  * 
@@ -175,7 +173,7 @@ $database = new Database();
 $notificationController = new NotificationController($database);
 
 $response = [];
-if ($_SESSION['role'] === 'stagiaire') {
+if ($_SESSION['role'] === 'etudiant') {
     $response = $notificationController->checkStudentNotifications($_SESSION['user_id']);
 } elseif ($_SESSION['role'] === 'entreprise') {
     $response = $notificationController->checkCompanyNotifications($_SESSION['user_id']);
