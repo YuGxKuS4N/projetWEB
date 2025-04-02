@@ -1,15 +1,21 @@
 <?php
+/**
+ * Contrôleur pour gérer l'inscription des utilisateurs.
+ * 
+ * - Vérifie les données du formulaire.
+ * - Insère les données dans la base de données en fonction du type d'utilisateur.
+ */
+
 session_start();
 require '../Config/config.php'; // Inclusion du fichier de configuration
 
-// Classe User pour gérer l'inscription
 class User {
     private $db;
     private $conn;
 
     public function __construct(Database $database) {
         $this->db = $database;
-        $this->conn = $this->db->getConnection();
+        $this->conn = $this->db->connect();
     }
 
     public function register($data) {
@@ -42,19 +48,40 @@ class User {
     }
 
     private function registerCandidat($prenom, $nom, $email, $password, $data) {
-        $stmt = $this->conn->prepare("INSERT INTO candidats (prenom, nom, email, password, ecole, lieu_ecole, annee_promo, telephone, date_naissance) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $sql = <<<SQL
+            INSERT INTO candidats 
+                (prenom, nom, email, password, ecole, lieu_ecole, annee_promo, telephone, date_naissance) 
+            VALUES 
+                (?, ?, ?, ?, ?, ?, ?, ?, ?)
+SQL;
+
+        $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("sssssssss", $prenom, $nom, $email, $password, $data['ecole'], $data['lieu_ecole'], $data['annee_promo'], $data['telephone'], $data['date_naissance']);
         return $this->executeStatement($stmt);
     }
 
     private function registerEntreprise($prenom, $nom, $email, $password, $data) {
-        $stmt = $this->conn->prepare("INSERT INTO entreprises (nom_entreprise, prenom, nom, email, password, telephone) VALUES (?, ?, ?, ?, ?, ?)");
+        $sql = <<<SQL
+            INSERT INTO entreprises 
+                (nom_entreprise, prenom, nom, email, password, telephone) 
+            VALUES 
+                (?, ?, ?, ?, ?, ?)
+SQL;
+
+        $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("ssssss", $data['nom_entreprise'], $prenom, $nom, $email, $password, $data['telephone']);
         return $this->executeStatement($stmt);
     }
 
     private function registerPilote($prenom, $nom, $email, $password, $data) {
-        $stmt = $this->conn->prepare("INSERT INTO pilotes (prenom, nom, email, password, ecole, lieu_ecole, annee_promo, telephone) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $sql = <<<SQL
+            INSERT INTO pilotes 
+                (prenom, nom, email, password, ecole, lieu_ecole, annee_promo, telephone) 
+            VALUES 
+                (?, ?, ?, ?, ?, ?, ?, ?)
+SQL;
+
+        $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("ssssssss", $prenom, $nom, $email, $password, $data['ecole'], $data['lieu_ecole'], $data['annee_promo'], $data['telephone']);
         return $this->executeStatement($stmt);
     }
