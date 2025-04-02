@@ -100,3 +100,4 @@ document.addEventListener("DOMContentLoaded", () => {
 function redirectToPostuler(stageId) {
   window.location.href = `postuler.html?stage_id=${stageId}`;
 }
+

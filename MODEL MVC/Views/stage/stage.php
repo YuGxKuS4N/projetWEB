@@ -1,5 +1,5 @@
 <?php
-require_once '../../Controllers/get_stage.php'; // Inclusion du contrôleur pour récupérer les stages
+// filepath: c:\projetWEB\MODEL MVC\Views\stage\stage.php
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -20,6 +20,20 @@ require_once '../../Controllers/get_stage.php'; // Inclusion du contrôleur pour
   </header>
 
   <main>
+    <section class="search-filters">
+      <input type="text" id="search-input" placeholder="Rechercher un stage...">
+      <select id="filter-lieu">
+        <option value="">Lieu</option>
+      </select>
+      <select id="filter-duree">
+        <option value="">Durée</option>
+      </select>
+      <select id="filter-profil">
+        <option value="">Profil demandé</option>
+      </select>
+      <button id="search-button">Rechercher</button>
+    </section>
+
     <section class="offers">
       <h2>Nos Offres de Stage</h2>
       <div id="offers-container">

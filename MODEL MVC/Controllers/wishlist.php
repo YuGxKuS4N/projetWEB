@@ -3,7 +3,7 @@
  * Contrôleur pour gérer la wishlist.
  * 
  * - Vérifie si l'utilisateur est connecté.
- * - Ajoute un stage à la wishlist.
+ * - Ajoute ou retire un stage de la wishlist.
  * - Utilise la classe `WishlistController` pour encapsuler la logique.
  */
 
@@ -12,6 +12,7 @@ require_once '../Config/config.php'; // Inclusion de la configuration
 
 class WishlistController {
     private $db;
+
     private $conn;
 
     public function __construct(Database $database) {
@@ -59,6 +60,27 @@ SQL;
             return ['success' => false, 'message' => 'Erreur lors de l\'ajout à la wishlist.'];
         }
     }
+
+    public function removeFromWishlist($idStagiaire, $stageId) {
+        // Supprimer le stage de la wishlist
+        $sqlDelete = <<<SQL
+            DELETE FROM 
+                wishlist 
+            WHERE 
+                id_stagiaire = ? 
+            AND 
+                id_stage = ?
+SQL;
+
+        $stmt = $this->conn->prepare($sqlDelete);
+        $stmt->bind_param("ii", $idStagiaire, $stageId);
+
+        if ($stmt->execute() && $stmt->affected_rows > 0) {
+            return ['success' => true, 'message' => 'Stage retiré de la wishlist.'];
+        } else {
+            return ['success' => false, 'message' => 'Erreur lors de la suppression du stage de la wishlist.'];
+        }
+    }
 }
 
 // Vérifier si l'utilisateur est connecté
@@ -70,18 +92,26 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'stagiaire') {
 // Récupérer les données de la requête POST
 $data = json_decode(file_get_contents('php://input'), true);
 $stageId = $data['stageId'] ?? null;
+$action = $data['action'] ?? null;
 
-if (!$stageId) {
-    echo json_encode(['success' => false, 'message' => 'ID du stage manquant.']);
+if (!$stageId || !$action) {
+    echo json_encode(['success' => false, 'message' => 'Paramètres manquants.']);
     exit();
 }
 
 $idStagiaire = $_SESSION['user_id']; // ID du stagiaire connecté
 
-// Ajouter le stage à la wishlist
+// Initialiser le contrôleur
 $database = new Database();
 $wishlistController = new WishlistController($database);
-$response = $wishlistController->addToWishlist($idStagiaire, $stageId);
+
+if ($action === 'add') {
+    $response = $wishlistController->addToWishlist($idStagiaire, $stageId);
+} elseif ($action === 'remove') {
+    $response = $wishlistController->removeFromWishlist($idStagiaire, $stageId);
+} else {
+    $response = ['success' => false, 'message' => 'Action invalide.'];
+}
 
 echo json_encode($response);
 ?>
