@@ -73,25 +73,35 @@ document.addEventListener("DOMContentLoaded", () => {
     document.head.appendChild(style);
 
     // Gestion de la navbar responsive
-    const navbarToggle = document.getElementById("navbar-toggle");
-    const navbarMenu = document.getElementById("navbar-menu");
+    const navbar = document.querySelector(".navbar");
+    const navbarMenu = document.querySelector(".navbar-menu");
 
-    // Afficher/masquer la navbar au clic sur le bouton
-    navbarToggle.addEventListener("click", () => {
-        navbarMenu.classList.toggle("active");
-    });
-
-    // Media queries en JavaScript
+    // Fonction pour gérer le bouton toggle dynamiquement
     const handleResize = () => {
         const screenWidth = window.innerWidth;
 
-        // Si l'écran est inférieur à 768px
+        // Si l'écran est inférieur ou égal à 768px
         if (screenWidth <= 768) {
-            navbarMenu.classList.add("mobile");
-            
+            // Ajouter le bouton toggle si non présent
+            if (!document.getElementById("navbar-toggle")) {
+                const navbarToggle = document.createElement("button");
+                navbarToggle.id = "navbar-toggle";
+                navbarToggle.className = "navbar-toggle";
+                navbarToggle.innerHTML = `<span class="dots">•••</span>`;
+                navbar.appendChild(navbarToggle);
+
+                // Ajouter l'événement pour afficher/masquer la navbar
+                navbarToggle.addEventListener("click", () => {
+                    navbarMenu.classList.toggle("active");
+                });
+            }
         } else {
-            navbarMenu.classList.remove("mobile");
-            navbarMenu.classList.remove("active"); // Réinitialiser l'état
+            // Supprimer le bouton toggle si présent
+            const navbarToggle = document.getElementById("navbar-toggle");
+            if (navbarToggle) {
+                navbarToggle.remove();
+                navbarMenu.classList.remove("active"); // Réinitialiser l'état
+            }
         }
     };
 
