@@ -5,6 +5,7 @@ private $port = "212";
 private $dbname = "projet";
 private $username = "user";
 private $password = "Php@1234";
+private $conn;
 
 public function __construct() {
     try {
@@ -45,7 +46,7 @@ public function __construct() {
 // // Connexion au serveur SSH avec le mot de passe
 // if (!$ssh->login($username, $password)) {
 //     exit("Échec de la connexion SSH\n");
-}
+
 
 // echo "Connecté avec succès via SSH!\n";
 // // Création d'un tunnel SSH pour rediriger le port MySQL local vers le serveur distant
@@ -73,7 +74,7 @@ public function __construct() {
 //     private $password = "projet213"; // Mot de passe MySQL
 //     private $dbname = "projetweb"; // Nom de la base de données
 //     private $port = 3306; // Port MySQL
-//     private $conn;
+     
 
 //     public function __construct() {
 //         // Commande SSH pour établir le tunnel
@@ -83,29 +84,29 @@ public function __construct() {
 //         shell_exec($sshCommand . " > /dev/null 2>&1 &");
 //     }
 
-//     // Méthode pour établir la connexion à la base de données
-//     public function connect() {
-//         $this->conn = new mysqli($this->host, $this->username, $this->password, $this->dbname, $this->port);
+    // Méthode pour établir la connexion à la base de données
+    public function connect() {
+        $this->conn = new mysqli($this->host, $this->username, $this->password, $this->dbname, $this->port);
 
-//         if ($this->conn->connect_error) {
-//             die(json_encode(["error" => "Connexion échouée : " . $this->conn->connect_error]));
-//         }
+        if ($this->conn->connect_error) {
+            die(json_encode(["error" => "Connexion échouée : " . $this->conn->connect_error]));
+        }
 
-//         return $this->conn;
-//     }
+        return $this->conn;
+    }
 
-//     // Méthode pour récupérer la connexion
-//     public function getConnection() {
-//         if (!$this->conn) {
-//             $this->connect();
-//         }
-//         return $this->conn;
-//     }
+    // Méthode pour récupérer la connexion
+    public function getConnection() {
+        if (!$this->conn) {
+            $this->connect();
+        }
+        return $this->conn;
+    }
 
-//     // Méthode pour fermer la connexion
-//     public function closeConnection() {
-//         if ($this->conn) {
-//             $this->conn->close();
-//         }
-//     }
-// }    
+    // Méthode pour fermer la connexion
+    public function closeConnection() {
+        if ($this->conn) {
+            $this->conn->close();
+        }
+    }
+}    
