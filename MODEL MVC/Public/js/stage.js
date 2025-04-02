@@ -15,6 +15,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const offerCard = document.createElement("div");
         offerCard.classList.add("offer-card");
         offerCard.innerHTML = `
+          <div class="wishlist-icon" onclick="addToWishlist(${stage.id})">
+            <i class="fa fa-star"></i>
+          </div>
           <h3>${stage.titre}</h3>
           <p><strong>Entreprise :</strong> ${stage.entreprise}</p>
           <p><strong>Lieu :</strong> ${stage.lieu}</p>
@@ -33,4 +36,24 @@ document.addEventListener("DOMContentLoaded", () => {
 // Rediriger vers la page de candidature
 function redirectToPostuler(stageId) {
   window.location.href = `postuler.html?stage_id=${stageId}`;
+}
+
+// Ajouter un stage à la wishlist
+function addToWishlist(stageId) {
+  fetch("../../Controllers/wishlist.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ stageId })
+  })
+    .then(response => response.json())
+    .then(result => {
+      if (result.success) {
+        alert("Stage ajouté à la wishlist !");
+      } else {
+        alert("Erreur : " + result.message);
+      }
+    })
+    .catch(error => {
+      console.error("Erreur lors de l'ajout à la wishlist :", error);
+    });
 }

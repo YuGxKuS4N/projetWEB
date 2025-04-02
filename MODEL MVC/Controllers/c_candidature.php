@@ -9,25 +9,7 @@ header('Content-Type: application/json');
 require '../Config/config.php'; // Inclusion du fichier de configuration
 require '../Controllers/c_connexion.php'; // Inclure le fichier connexion.php pour gérer la session
 
-// Classe pour gérer la connexion à la base de données
-class Database {
-    private $host = "127.0.0.1";
-    private $username = "root";
-    private $password = "projet213";
-    private $dbname = "projetweb";
-    private $port = 8080;
-    private $conn;
 
-    public function connect() {
-        $this->conn = new mysqli($this->host, $this->username, $this->password, $this->dbname, $this->port);
-
-        if ($this->conn->connect_error) {
-            die(json_encode(["error" => "Connexion échouée : " . $this->conn->connect_error]));
-        }
-
-        return $this->conn;
-    }
-}
 
 // Initialiser la connexion à la base de données
 $database = new Database();

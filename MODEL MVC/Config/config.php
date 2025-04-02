@@ -25,5 +25,20 @@ class Database {
 
         return $this->conn;
     }
+
+    // Méthode pour récupérer la connexion
+    public function getConnection() {
+        if (!$this->conn) {
+            $this->connect();
+        }
+        return $this->conn;
+    }
+
+    // Méthode pour fermer la connexion
+    public function closeConnection() {
+        if ($this->conn) {
+            $this->conn->close();
+        }
+    }
 }
 ?>
