@@ -65,4 +65,4 @@ try {
 
 
 // Fermer la connexion MySQL
-//$conn->close();
+$conn->close();
