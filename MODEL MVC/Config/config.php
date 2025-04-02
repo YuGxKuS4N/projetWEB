@@ -110,3 +110,7 @@ public function __construct() {
         }
     }
 }    
+
+new Database()
+
+?>
