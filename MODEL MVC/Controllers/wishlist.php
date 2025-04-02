@@ -1,6 +1,65 @@
 <?php
+/**
+ * Contrôleur pour gérer la wishlist.
+ * 
+ * - Vérifie si l'utilisateur est connecté.
+ * - Ajoute un stage à la wishlist.
+ * - Utilise la classe `WishlistController` pour encapsuler la logique.
+ */
+
 session_start();
 require_once '../Config/config.php'; // Inclusion de la configuration
+
+class WishlistController {
+    private $db;
+    private $conn;
+
+    public function __construct(Database $database) {
+        $this->db = $database;
+        $this->conn = $this->db->connect();
+    }
+
+    public function addToWishlist($idStagiaire, $stageId) {
+        // Vérifier si le stage est déjà dans la wishlist
+        $sqlCheck = <<<SQL
+            SELECT 
+                * 
+            FROM 
+                wishlist 
+            WHERE 
+                id_stagiaire = ? 
+            AND 
+                id_stage = ?
+SQL;
+
+        $stmt = $this->conn->prepare($sqlCheck);
+        $stmt->bind_param("ii", $idStagiaire, $stageId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            return ['success' => false, 'message' => 'Ce stage est déjà dans votre wishlist.'];
+        }
+
+        // Ajouter le stage à la wishlist
+        $sqlInsert = <<<SQL
+            INSERT INTO 
+                wishlist 
+                (id_stagiaire, id_stage) 
+            VALUES 
+                (?, ?)
+SQL;
+
+        $stmt = $this->conn->prepare($sqlInsert);
+        $stmt->bind_param("ii", $idStagiaire, $stageId);
+
+        if ($stmt->execute()) {
+            return ['success' => true, 'message' => 'Stage ajouté à la wishlist.'];
+        } else {
+            return ['success' => false, 'message' => 'Erreur lors de l\'ajout à la wishlist.'];
+        }
+    }
+}
 
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'stagiaire') {
@@ -19,31 +78,10 @@ if (!$stageId) {
 
 $idStagiaire = $_SESSION['user_id']; // ID du stagiaire connecté
 
-// Connexion à la base de données
-$db = new Database();
-$conn = $db->connect();
-
-// Vérifier si le stage est déjà dans la wishlist
-$stmt = $conn->prepare("SELECT * FROM wishlist WHERE id_stagiaire = ? AND id_stage = ?");
-$stmt->bind_param("ii", $idStagiaire, $stageId);
-$stmt->execute();
-$result = $stmt->get_result();
-
-if ($result->num_rows > 0) {
-    echo json_encode(['success' => false, 'message' => 'Ce stage est déjà dans votre wishlist.']);
-    exit();
-}
-
 // Ajouter le stage à la wishlist
-$stmt = $conn->prepare("INSERT INTO wishlist (id_stagiaire, id_stage) VALUES (?, ?)");
-$stmt->bind_param("ii", $idStagiaire, $stageId);
+$database = new Database();
+$wishlistController = new WishlistController($database);
+$response = $wishlistController->addToWishlist($idStagiaire, $stageId);
 
-if ($stmt->execute()) {
-    echo json_encode(['success' => true, 'message' => 'Stage ajouté à la wishlist.']);
-} else {
-    echo json_encode(['success' => false, 'message' => 'Erreur lors de l\'ajout à la wishlist.']);
-}
-
-$stmt->close();
-$conn->close();
+echo json_encode($response);
 ?>
