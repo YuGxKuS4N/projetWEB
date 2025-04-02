@@ -12,32 +12,28 @@ $username = 'abousalih';
 $password = '4243';  
 
 
-$mysql_hostname = '127.0.0.1'; 
+$mysql_hostname = '192.168.1.26'; // Adresse du serveur MySQL (localhost si le serveur MySQL est sur le même serveur que le script PHP)
 $mysql_port = 3306; 
-$mysql_username = 'root';  
-$mysql_password = 'projetweb';   
-$mysql_dbname = 'projetweb'; 
+$mysql_username = 'phpmyadmin';  
+$mysql_password = 'Php@1234';   
+$mysql_dbname = 'projet'; 
 
-echo "User: " . $mysql_username . "<br>";
-echo "Password: " . $mysql_password . "<br>";
-echo "Host: " . $mysql_hostname . "<br>";
-echo "Port: " . $mysql_port . "<br>";
 
 // Création de l'objet SSH
 $ssh = new SSH2($hostname, $port);
 
 // Connexion au serveur SSH avec le mot de passe
 if (!$ssh->login($username, $password)) {
-    exit('Échec de la connexion SSH');
+    exit("Échec de la connexion SSH\n");
 }
 
-echo "Connecté avec succès via SSH!";
+echo "Connecté avec succès via SSH!\n";
 // Création d'un tunnel SSH pour rediriger le port MySQL local vers le serveur distant
 // Connecte-toi à MySQL en utilisant la connexion SSH comme tunnel
-$ssh->exec("ssh -L 3306:127.0.0.1:3306 -N &");  // Tunnel SSH pour MySQL
+$ssh->exec("ssh -L 3306:localhost:3306 -N &");  // Tunnel SSH pour MySQL
 
 // Connexion à la base de données MySQL via le tunnel SSH
-$conn = new mysqli($mysql_hostname, $mysql_username, $mysql_password, $mysql_dbname, port: $mysql_port);
+$conn = new mysqli($mysql_hostname, $mysql_username, $mysql_password, $mysql_dbname, $mysql_port);
 
 // Vérifier la connexion
 if ($conn->connect_error) {
