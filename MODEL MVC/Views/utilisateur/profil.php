@@ -1,57 +1,35 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const userId = sessionStorage.getItem('user_id');
-  const userType = sessionStorage.getItem('role');
-
-  if (!userId || !userType) {
-    alert('Vous devez être connecté pour accéder à cette page.');
-    window.location.href = '../creation_compte/c_connexion.php';
-    return;
-  }
-
-  // Charger les informations utilisateur (contexte : profil)
-  fetch(`../../Controllers/c_get_data.php?type=${userType}&user_id=${userId}&context=profile`)
-    .then(response => response.json())
-    .then(data => {
-      const container = document.getElementById('dynamic-content');
-      if (data.error) {
-        container.innerHTML = `<p>${data.error}</p>`;
-      } else {
-        // Afficher les informations utilisateur
-        let content = '';
-        for (const [key, value] of Object.entries(data[0])) {
-          content += `
-            <div class="profile-field">
-              <label for="${key}">${key}</label>
-              <input type="text" id="${key}" value="${value}" />
+<?php
+require_once '../../Controllers/get_data.php'; // Inclusion du contrôleur pour récupérer les données utilisateur
+?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil - WEB4ALL</title>
+    <link rel="stylesheet" href="../../../Public/css/profil.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-logo">
+                <a href="../acceuil/acceuil.php">
+                    <img src="../../../Public/images/logo.png" alt="Logo du Site">
+                </a>
             </div>
-          `;
-        }
-        content += `<button id="save-profile">Enregistrer</button>`;
-        container.innerHTML = content;
+            <ul class="nav-right">
+                <li><a href="../creation_compte/inscription.php">S'INSCRIRE</a></li>
+                <li><a href="../creation_compte/connexion.php">CONNEXION</a></li>
+            </ul>
+        </nav>
+    </header>
 
-        // Ajouter un événement pour enregistrer les modifications
-        document.getElementById('save-profile').addEventListener('click', () => {
-          const updatedData = {};
-          document.querySelectorAll('.profile-field input').forEach(input => {
-            updatedData[input.id] = input.value;
-          });
-
-          fetch(`../../Controllers/update_profile.php`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ userId, userType, ...updatedData })
-          })
-            .then(response => response.json())
-            .then(result => {
-              if (result.success) {
-                alert('Profil mis à jour avec succès.');
-              } else {
-                alert('Erreur lors de la mise à jour du profil.');
-              }
-            })
-            .catch(error => console.error('Erreur :', error));
-        });
-      }
-    })
-    .catch(error => console.error('Erreur lors du chargement des données utilisateur :', error));
-});
+    <div class="container" id="profile-container">
+        <h2 id="profile-title">Mon Profil</h2>
+        <div id="dynamic-content">
+            <!-- Contenu dynamique chargé ici -->
+        </div>
+    </div>
+    <script src="../../../Public/js/profil.js"></script>
+</body>
+</html>
