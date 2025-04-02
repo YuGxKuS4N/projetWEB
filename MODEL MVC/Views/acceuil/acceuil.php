@@ -69,5 +69,6 @@ $role = $_SESSION['role'];
     <footer>
         <p>&copy; <?php echo date("Y"); ?> WEB4ALL. Tous droits réservés.</p>
     </footer>
+    <script src="../../../Public/js/notifications.js"></script>
 </body>
 </html>
