@@ -33,38 +33,41 @@ $role = $_SESSION['role'];
             </ul>
         </nav>
     </header>
-
     <section class="hero">
-        <video id="background-video" autoplay loop muted class="background-video">
-            <source src="../../../Public/videos/bckg.mp4" type="video/mp4">
-            Votre navigateur ne supporte pas les vidéos HTML5.
-        </video>
-        <div class="overlay"></div>
-        <div class="hero-content">
-            <h1>
-                <?php
-                // Afficher un titre différent en fonction du rôle
-                if ($role === 'etudiant') {
-                    echo "PRENDS TON <br> FUTUR EN MAIN : <br> CESI TA CHANCE !";
-                } elseif ($role === 'entreprise') {
-                    echo "BIENVENUE DANS <br> VOTRE ESPACE ENTREPRISE";
-                } elseif ($role === 'pilote') {
-                    echo "BIENVENUE DANS <br> VOTRE ESPACE PILOTE";
-                }
-                ?>
-            </h1>
+    <video id="background-video" autoplay loop muted class="background-video">
+        <source src="../../../Public/videos/bckg.mp4" type="video/mp4">
+        Votre navigateur ne supporte pas les vidéos HTML5.
+    </video>
+    <div class="overlay"></div>
+    <div class="hero-content">
+        <h1>
             <?php
-            // Afficher un bouton différent en fonction du rôle
+            // Afficher un titre différent en fonction du rôle
             if ($role === 'etudiant') {
-                echo '<a href="../stage/stage.php" class="btn">OFFRES DE STAGE</a>';
+                echo "PRENDS TON <br> FUTUR EN MAIN : <br> CESI TA CHANCE !";
             } elseif ($role === 'entreprise') {
-                echo '<a href="../stage/ajout.php" class="btn">DÉPOSER UNE OFFRE</a>';
+                echo "BIENVENUE DANS <br> VOTRE ESPACE ENTREPRISE";
             } elseif ($role === 'pilote') {
-                echo '<a href="../pilote/eleves.php" class="btn">MES ÉLÈVES</a>';
+                echo "BIENVENUE DANS <br> VOTRE ESPACE PILOTE";
+            } elseif ($role === 'admin') {
+                echo "BIENVENUE DANS <br> L'ESPACE ADMINISTRATION";
             }
             ?>
-        </div>
-    </section>
+        </h1>
+        <?php
+        // Afficher un bouton différent en fonction du rôle
+        if ($role === 'etudiant') {
+            echo '<a href="../stage/stage.php" class="btn">OFFRES DE STAGE</a>';
+        } elseif ($role === 'entreprise') {
+            echo '<a href="../stage/ajout.php" class="btn">DÉPOSER UNE OFFRE</a>';
+        } elseif ($role === 'pilote') {
+            echo '<a href="../pilote/eleves.php" class="btn">MES ÉLÈVES</a>';
+        } elseif ($role === 'admin') {
+            echo '<a href="../admin/admin.php" class="btn">PANEL ADMINISTRATION</a>';
+        }
+        ?>
+    </div>
+</section>
     
     <footer>
         <p>&copy; <?php echo date("Y"); ?> WEB4ALL. Tous droits réservés.</p>
