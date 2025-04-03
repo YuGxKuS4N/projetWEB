@@ -1,4 +1,5 @@
 <?php
+require_once '../config/config.php';
 session_start(); // Démarre la session PHP
 
 // BASE_PATH correspond à la racine de votre projet (ici, MODEL-MVC)
