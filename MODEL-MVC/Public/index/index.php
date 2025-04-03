@@ -49,6 +49,6 @@ $page = $_GET['page'];
     // Charger la page demandée
     loadPage($page);
     ?>
-    <!-- <script src="../js/responsive.js"></script> -->
+    <script src="../js/responsive.js"></script>
 </body>
 </html>
