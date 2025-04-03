@@ -7,7 +7,6 @@
  * - Utilise la classe `StageController` pour encapsuler la logique.
  */
 
-session_start();
 require_once '../Config/config.php'; // Inclusion de la configuration
 
 class StageController {

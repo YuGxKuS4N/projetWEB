@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 require_once '../../Config/config.php'; // Inclusion de la configuration
 
 // Options dynamiques pour les secteurs d'activité

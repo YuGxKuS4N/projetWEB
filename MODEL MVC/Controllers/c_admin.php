@@ -6,7 +6,7 @@
  * - Gérer les stages (afficher, supprimer).
  */
 
-session_start();
+
 require_once __DIR__ . '/../Config/config.php'; // Inclusion de la configuration
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {

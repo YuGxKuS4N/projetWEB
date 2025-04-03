@@ -6,7 +6,7 @@
  * - Insère les données dans la base de données en fonction du type d'utilisateur.
  */
 
-session_start();
+
 require '../Config/config.php'; // Inclusion du fichier de configuration
 
 class User {

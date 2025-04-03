@@ -1,8 +1,10 @@
 <?php
 // Point d'entrée principal pour l'application
 
-// Démarrer la session
-session_start();
+// Démarrer la session (appel unique ici)
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Définir le chemin de base pour inclure les fichiers
 define('BASE_PATH', dirname(__DIR__, 2));
@@ -23,41 +25,20 @@ function loadPage($page) {
 
 // Récupérer la page demandée dans l'URL (par exemple : ?page=acceuil)
 $page = $_GET['page'] ?? 'acceuil'; // Par défaut, charger la page d'accueil
-
-// Routage simple
-switch ($page) {
-    case 'acceuil':
-        loadPage('acceuil/acceuil');
-        break;
-
-    case 'connexion':
-        loadPage('creation_compte/connexion');
-        break;
-
-    case 'inscription':
-        loadPage('creation_compte/inscription');
-        break;
-
-    case 'stage':
-        loadPage('stage/stage');
-        break;
-
-    case 'postuler':
-        loadPage('stage/postuler');
-        break;
-
-    case 'profil':
-        loadPage('utilisateur/profil');
-        break;
-
-    case 'notification': // Nouveau cas pour les notifications
-        require_once BASE_PATH . '/Controllers/c_notification.php';
-        break;
-
-    default:
-        // Si la page demandée n'existe pas
-        http_response_code(404);
-        echo "<h1>404 - Page non trouvée</h1>";
-        break;
-}
 ?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEB4ALL</title>
+    <link rel="stylesheet" href="../Public/css/style.css">
+</head>
+<body>
+    <?php
+    // Charger la page demandée
+    loadPage($page);
+    ?>
+    <script src="../Public/js/responsive.js"></script>
+</body>
+</html>

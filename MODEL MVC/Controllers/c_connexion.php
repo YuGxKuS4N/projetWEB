@@ -7,8 +7,7 @@
  * - Utilise la classe `ConnexionController` pour encapsuler la logique.
  */
 
-session_start();
-require_once '../Config/config.php'; // Inclusion de la configuration
+require_once __DIR__ . '/../Config/config.php'; // Inclusion de la configuration
 
 class ConnexionController {
     private $db;

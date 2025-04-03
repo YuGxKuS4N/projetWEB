@@ -6,7 +6,7 @@
  * - Envoie une notification par e-mail après la suppression.
  */
 
-session_start();
+
 require_once '../Config/config.php'; // Inclusion de la configuration
 require_once '../Utils/EmailUtils.php'; // Inclusion de l'utilitaire pour envoyer des e-mails
 

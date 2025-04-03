@@ -8,7 +8,7 @@
  * - Utilise la classe `CandidatureController` pour encapsuler la logique.
  */
 
-session_start(); // Démarrer la session pour accéder à l'ID de l'utilisateur connecté
+
 header('Content-Type: application/json');
 require '../Config/config.php'; // Inclusion du fichier de configuration
 
