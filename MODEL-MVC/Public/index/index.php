@@ -40,15 +40,15 @@ $page = $_GET['page'];
     <!-- Assurez-vous d'utiliser un doctype HTML5 pour éviter le mode quirks -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WEB4ALL</title>
-    <link rel="stylesheet" href="<?= BASE_PATH ?>/Public/css/style.css">
+    <link rel="stylesheet" href="/projetWEB/MODEL-MVC/Public/css/style.css">
 </head>
 <body>
     <?php
     // Charger la page demandée
     loadPage($page);
     ?>
-    <script src="<?= BASE_PATH ?>/Public/js/responsive.js"></script>
+    <script src="/projetWEB/MODEL-MVC/Public/js/responsive.js"></script>
 </body>
 </html>
 <?php
-// Fin du script PHP                
+// Fin du script PHP
