@@ -4,7 +4,7 @@ const stageId = params.get("stage_id");
 
 // Charger les détails du stage
 document.addEventListener("DOMContentLoaded", () => {
-  fetch(`../../Back/stage/c_get_stage.php?stage_id=${stageId}`)
+  fetch(`/projetWEB/MODEL-MVC/Controllers/c_get_stage.php?stage_id=${stageId}`)
     .then(response => response.json())
     .then(stage => {
       if (stage.error) {
@@ -17,3 +17,4 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch(error => console.error("Erreur lors du chargement des détails du stage :", error));
 });
+

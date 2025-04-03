@@ -10,7 +10,7 @@
 
 
 header('Content-Type: application/json');
-require '../Config/config.php'; // Inclusion du fichier de configuration
+require '/Config/config.php'; // Inclusion du fichier de configuration
 
 class CandidatureController {
     private $db;

@@ -4,12 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (!userId || !userType) {
     alert('Vous devez être connecté pour accéder à cette page.');
-    window.location.href = '../creation_compte/c_connexion.php';
+    window.location.href = '/projetWEB/MODEL-MVC/Views/creation_compte/c_connexion.php';
     return;
   }
 
   // Charger les informations utilisateur (contexte : profil)
-  fetch(`../../Controllers/c_get_data.php?type=${userType}&user_id=${userId}&context=profile`)
+  fetch(`/projetWEB/MODEL-MVC/Controllers/c_get_data.php?type=${userType}&user_id=${userId}&context=profile`)
     .then(response => response.json())
     .then(data => {
       const container = document.getElementById('dynamic-content');
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             updatedData[input.id] = input.value;
           });
 
-          fetch(`../../Controllers/update_profile.php`, {
+          fetch(`/projetWEB/MODEL-MVC/Controllers/update_profile.php`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ userId, userType, ...updatedData })

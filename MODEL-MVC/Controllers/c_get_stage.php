@@ -4,7 +4,9 @@
  */
 
 header('Content-Type: application/json');
-require '../Config/config.php'; // Inclusion de la configuration
+
+// Remplacer le chemin relatif par un chemin absolu pour inclure le fichier de configuration
+require '/Config/config.php'; // Exemple de chemin absolu
 
 class StageController {
     private $db;

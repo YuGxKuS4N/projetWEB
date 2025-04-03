@@ -1,5 +1,5 @@
 setInterval(() => {
-    fetch('?page=notification')
+    fetch('/projetWEB/MODEL-MVC/Controllers/c_get_notifications.php?page=notification')
         .then(response => response.json())
         .then(data => {
             if (data.error) {

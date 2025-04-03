@@ -1,5 +1,5 @@
 <?php
-require_once '../../Controllers/c_inscription.php'; // Inclusion du contrôleur pour gérer l'inscription
+require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Controllers/c_inscription.php'; // Inclusion sécurisée du contrôleur
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -7,22 +7,22 @@ require_once '../../Controllers/c_inscription.php'; // Inclusion du contrôleur 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Inscription - WEB4ALL</title>
-  <link rel="stylesheet" href="../../../Public/css/inscription.css" />
-  <script src="../../../Public/js/inscription.js" defer></script> <!-- Appel du fichier JS -->
+  <link rel="stylesheet" href="/projetWEB/MODEL-MVC/Public/css/inscription.css" />
+  <script src="/projetWEB/MODEL-MVC/Public/js/inscription.js" defer></script> <!-- Appel du fichier JS -->
 </head>
 <body>
   <nav class="navbar">
     <ul class="nav-left">
-      <li><a href="../acceuil/acceuil.php">ACCUEIL</a></li>
-      <li><a href="../stage/stage.php">STAGE</a></li>
+      <li><a href="/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php">ACCUEIL</a></li>
+      <li><a href="/projetWEB/MODEL-MVC/Views/stage/stage.php">STAGE</a></li>
     </ul>
     <div class="nav-logo">
-      <a href="../acceuil/acceuil.php">
-        <img src="../../../Public/images/logo.png" alt="Logo du Site" />
+      <a href="/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php">
+        <img src="/projetWEB/MODEL-MVC/Public/images/logo.png" alt="Logo du Site" />
       </a>
     </div>
     <ul class="nav-right">
-      <li><a href="connexion.php">CONNEXION</a></li>
+      <li><a href="/projetWEB/MODEL-MVC/Views/creation_compte/connexion.php">CONNEXION</a></li>
     </ul>
   </nav>
 
@@ -35,7 +35,7 @@ require_once '../../Controllers/c_inscription.php'; // Inclusion du contrôleur 
 
     <!-- Formulaire Stagiaire -->
     <div id="stagiaire" class="tab-content" style="display: block;">
-      <form class="form" action="../../../Controllers/c_inscription.php" method="POST">
+      <form class="form" action="/projetWEB/MODEL-MVC/Controllers/c_inscription.php" method="POST">
         <span class="title">Créer un compte Stagiaire</span>
         <div class="form-container">
           <input type="text" class="input" name="prenom" placeholder="Prénom" required />
@@ -64,7 +64,7 @@ require_once '../../Controllers/c_inscription.php'; // Inclusion du contrôleur 
 
     <!-- Formulaire Entreprise -->
     <div id="entreprise" class="tab-content" style="display: none;">
-      <form class="form" action="../../../Controllers/c_inscription.php" method="POST">
+      <form class="form" action="/projetWEB/MODEL-MVC/Controllers/c_inscription.php" method="POST">
         <span class="title">Créer un compte Entreprise</span>
         <div class="form-container">
           <input type="text" class="input" name="nom_entreprise" placeholder="Nom de l'entreprise" required />
@@ -81,7 +81,7 @@ require_once '../../Controllers/c_inscription.php'; // Inclusion du contrôleur 
 
     <!-- Formulaire Pilote -->
     <div id="pilote" class="tab-content" style="display: none;">
-      <form class="form" action="../../../Controllers/c_inscription.php" method="POST">
+      <form class="form" action="/projetWEB/MODEL-MVC/Controllers/c_inscription.php" method="POST">
         <span class="title">Créer un compte Pilote</span>
         <div class="form-container">
           <input type="text" class="input" name="prenom" placeholder="Prénom" required />

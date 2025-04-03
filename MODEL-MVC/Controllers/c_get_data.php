@@ -6,7 +6,7 @@
  * - Utilise la classe `DataController` pour encapsuler la logique.
  */
 
-require '../Config/config.php'; // Inclusion de la configuration
+require '/Config/config.php'; // Chemin absolu vers la configuration
 
 class DataController {
     private $db;
@@ -115,3 +115,4 @@ if ($context === 'profile') {
 // Retourner les données au format JSON
 echo json_encode($response);
 ?>
+<?php

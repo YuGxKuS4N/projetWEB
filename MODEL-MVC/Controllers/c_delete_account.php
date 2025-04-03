@@ -6,9 +6,8 @@
  * - Envoie une notification par e-mail après la suppression.
  */
 
-
-require_once '../Config/config.php'; // Inclusion de la configuration
-require_once '../Utils/EmailUtils.php'; // Inclusion de l'utilitaire pour envoyer des e-mails
+require_once '/Config/config.php'; // Chemin absolu vers la configuration
+require_once '/Utils/EmailUtils.php'; // Chemin absolu vers l'utilitaire pour envoyer des e-mails
 
 class DeleteAccountController {
     private $db;

@@ -1,7 +1,7 @@
 <?php
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-    header("Location: ../acceuil/acceuil.php");
+    header("Location: /projetWEB/MODEL-MVC/Views/acceuil/acceuil.php");
     exit();
 }
 ?>
@@ -11,7 +11,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administration - WEB4ALL</title>
-    <link rel="stylesheet" href="../../../Public/css/admin.css">
+    <link rel="stylesheet" href="/projetWEB/MODEL-MVC/Public/css/admin.css">
 </head>
 <body>
     <header>
@@ -27,6 +27,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
             <button onclick="manageStages()">Voir les stages</button>
         </section>
     </main>
-    <script src="../../../Public/js/admin.js"></script>
+    <script src="/projetWEB/MODEL-MVC/Public/js/admin.js"></script>
 </body>
 </html>
+

@@ -6,8 +6,8 @@
  * - Envoie des notifications pop-up et des e-mails en fonction des événements.
  */
 
-require '../Config/config.php'; // Inclusion de la configuration
-require '../Utils/EmailUtils.php'; // Inclusion de l'utilitaire pour envoyer des e-mails
+require_once dirname(__DIR__, 2) . '/Config/config.php';  // Chemin absolu pour la configuration
+require_once dirname(__DIR__, 2) . '/Utils/EmailUtils.php';  // Chemin absolu pour l'utilitaire EmailUtils
 
 class NotificationController {
     private $db;

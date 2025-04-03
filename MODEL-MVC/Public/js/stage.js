@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Fonction pour charger les options de filtrage
   const loadFilterOptions = () => {
-    fetch('../../Controllers/c_get_stage.php?action=getFilters')
+    fetch('/projetWEB/MODEL-MVC/Controllers/c_get_stage.php?action=getFilters')
       .then(response => response.json())
       .then(options => {
         // Charger les lieux
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
       profil: filters.profil || ''
     });
 
-    fetch(`../../Controllers/c_get_stage.php?${params.toString()}`)
+    fetch(`/projetWEB/MODEL-MVC/Controllers/c_get_stage.php?${params.toString()}`)
       .then(response => response.json())
       .then(stages => {
         offersContainer.innerHTML = ''; // Réinitialiser le conteneur
@@ -98,6 +98,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Rediriger vers la page de candidature
 function redirectToPostuler(stageId) {
-  window.location.href = `postuler.html?stage_id=${stageId}`;
+  window.location.href = `/projetWEB/MODEL-MVC/Views/stage/postuler.html?stage_id=${stageId}`;
 }
-

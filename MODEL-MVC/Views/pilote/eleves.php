@@ -1,7 +1,8 @@
 <?php
+session_start(); // Assure que la session est démarrée
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'pilote') {
-    header("Location: ../creation_compte/connexion.php");
+    header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php");
     exit();
 }
 ?>
@@ -11,7 +12,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'pilote') {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mes Élèves</title>
-  <link rel="stylesheet" href="../../../Public/css/eleves.css">
+  <link rel="stylesheet" href="/projetWEB/MODEL-MVC/Public/css/eleves.css">
 </head>
 <body>
 <div class="container">
@@ -23,10 +24,10 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'pilote') {
 <script>
   // Charger les élèves dynamiquement
   document.addEventListener('DOMContentLoaded', () => {
-    const userId = <?php echo $_SESSION['user_id']; ?>; // ID du pilote connecté
+    const userId = <?php echo json_encode($_SESSION['user_id']); ?>; // JSON pour éviter les erreurs JS
     const type = 'pilote';
 
-    fetch(`../../Controllers/c_get_data.php?type=${type}&user_id=${userId}&context=students`)
+    fetch(`/projetWEB/MODEL-MVC/Controllers/c_get_data.php?type=${type}&user_id=${userId}&context=students`)
       .then(response => response.json())
       .then(data => {
         const container = document.getElementById('students-container');

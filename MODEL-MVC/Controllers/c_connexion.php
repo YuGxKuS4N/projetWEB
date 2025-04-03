@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 /**
  * Contrôleur pour gérer la connexion des utilisateurs.
  * 

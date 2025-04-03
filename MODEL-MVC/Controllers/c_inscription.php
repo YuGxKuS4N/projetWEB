@@ -7,7 +7,7 @@
  */
 
 
-require '../Config/config.php'; // Inclusion du fichier de configuration
+require '/Config/config.php';  // Chemin absolu pour le fichier de configuration
 
 class User {
     private $db;

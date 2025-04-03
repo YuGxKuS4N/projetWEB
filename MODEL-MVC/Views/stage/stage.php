@@ -1,5 +1,5 @@
 <?php
-// filepath: c:\projetWEB\MODEL MVC\Views\stage\stage.php
+// filepath: c:\projetWEB\MODEL-MVC\Views\stage\stage.php
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -7,15 +7,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stages - WEB4ALL</title>
-  <link rel="stylesheet" href="../../../Public/css/stage.css">
+  <link rel="stylesheet" href="/projetWEB/MODEL-MVC/Public/css/stage.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
   <header>
     <div class="logo">WEB4ALL</div>
     <nav>
-      <a href="../acceuil/acceuil.php">Accueil</a>
-      <a href="../creation_compte/entreprise.php">Entreprises</a>
+      <a href="/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php">Accueil</a>
+      <a href="/projetWEB/MODEL-MVC/Views/creation_compte/entreprise.php">Entreprises</a>
     </nav>
   </header>
 
@@ -41,6 +41,6 @@
       </div>
     </section>
   </main>
-  <script src="../../../Public/js/stage.js"></script>
+  <script src="/projetWEB/MODEL-MVCw/Public/js/stage.js"></script>
 </body>
 </html>

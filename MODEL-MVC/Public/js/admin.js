@@ -1,6 +1,6 @@
 // Gérer les comptes
 function manageAccounts() {
-    fetch('../../Controllers/c_admin.php?action=getAccounts')
+    fetch('/path/to/your/project/Controllers/c_admin.php?action=getAccounts')
         .then(response => response.json())
         .then(data => {
             if (data.error) {
@@ -15,7 +15,7 @@ function manageAccounts() {
 
 // Gérer les stages
 function manageStages() {
-    fetch('../../Controllers/c_admin.php?action=getStages')
+    fetch('/path/to/your/project/Controllers/c_admin.php?action=getStages')
         .then(response => response.json())
         .then(data => {
             if (data.error) {
