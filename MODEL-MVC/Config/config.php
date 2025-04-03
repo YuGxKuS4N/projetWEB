@@ -13,7 +13,7 @@ if ($conn->connect_error) {
     die("Connexion à la base de données échouée : " . $conn->connect_error);  
 }  
 
-// echo "Connexion à la base de données MySQL réussie !"; // Supprimez ou commentez cette ligne
+echo "Connexion à la base de données MySQL réussie !\n";  
 
 // Fermer la connexion MySQL  
-$conn->close();
+$conn->close();  
