@@ -1,4 +1,5 @@
 <?php
+session_start();
 /**
  * Contrôleur pour gérer la connexion des utilisateurs.
  * 
@@ -64,6 +65,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $connexionController = new ConnexionController($database);
     $response = $connexionController->login($email, $password);
 
-    echo json_encode($response);
+    if ($response['success']) {
+        // Rediriger l'utilisateur vers l'accueil après connexion
+        header("Location: ../Vues/accueil.php");
+        exit();
+    } else {
+        echo json_encode($response);
+    }
 }
-?>

@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require_once '../../Controllers/c_connexion.php'; // Inclusion du contrôleur pour gérer la connexion
 
 // Vérifier si l'utilisateur est connecté
