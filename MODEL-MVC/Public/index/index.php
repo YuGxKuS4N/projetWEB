@@ -5,8 +5,14 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// BASE_PATH correspond à la racine de votre projet (ici, MODEL-MVC)
 define('BASE_PATH', dirname(__DIR__, 2));
 
+/**
+ * Fonction pour charger une vue.
+ * La vue doit se trouver dans le dossier "Views" et sera appelée avec son chemin relatif.
+ * Par exemple, pour charger "Views/acceuil/acceuil.php", on appelle loadPage('acceuil/acceuil')
+ */
 function loadPage($page) {
     $viewsPath = BASE_PATH . '/Views/';
     $filePath = $viewsPath . $page . '.php';
@@ -19,30 +25,30 @@ function loadPage($page) {
     }
 }
 
-// Si la requête est pour la racine (`/`), charger directement la vue `acceuil.php`
-if ($_SERVER['REQUEST_URI'] === '/') {
-    loadPage('acceuil/acceuil'); // Charge la vue `acceuil.php` dans le dossier `Views/acceuil`
+// Si le paramètre "page" n'est pas défini ou s'il vaut "acceuil",
+// charger directement la page d'accueil "acceuil/acceuil.php"
+if (!isset($_GET['page']) || $_GET['page'] === 'acceuil') {
+    loadPage('acceuil/acceuil');
     exit;
 }
 
-// Récupérer la page demandée dans l'URL (par exemple : ?page=acceuil)
-$page = $_GET['page'] ?? 'acceuil';
+// Sinon, récupérer la page demandée dans l'URL (ex: ?page=admin/admin)
+$page = $_GET['page'];
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <!-- Assurez-vous d'utiliser un doctype HTML5 pour éviter le mode quirks -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WEB4ALL</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
     <?php
-    // Charger la page demandée uniquement si ce n'est pas la racine
-    if ($_SERVER['REQUEST_URI'] !== '/') {
-        loadPage($page);
-    }
+    // Charger la page demandée
+    loadPage($page);
     ?>
- <!-- <script src="../js/responsive.js"></script> -->
+    <!-- <script src="../js/responsive.js"></script> -->
 </body>
 </html>
