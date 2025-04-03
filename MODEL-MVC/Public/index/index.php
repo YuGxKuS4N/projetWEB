@@ -1,5 +1,6 @@
 <?php
-require_once '../config/config.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Config/config.php'; // Inclusion sécurisée de la configuration
+
 session_start(); // Démarre la session PHP
 
 // BASE_PATH correspond à la racine de votre projet (ici, MODEL-MVC)

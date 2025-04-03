@@ -1,6 +1,6 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Config/config.php'; // Inclusion sécurisée de la configuration
-//require_once '../config/config.php';
+
 // Options dynamiques pour les secteurs d'activité
 $secteurs = [
     "Développement Web",
