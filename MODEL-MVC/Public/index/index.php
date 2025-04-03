@@ -29,7 +29,7 @@ function loadPage($page) {
 // charger directement la page d'accueil "acceuil/acceuil.php"
 if (!isset($_GET['page']) || $_GET['page'] === 'acceuil') {
     loadPage('acceuil/acceuil');
-    exit;
+    exit();
 }
 
 // Sinon, récupérer la page demandée dans l'URL (ex: ?page=admin/admin)
