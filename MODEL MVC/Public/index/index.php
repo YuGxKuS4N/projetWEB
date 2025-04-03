@@ -32,13 +32,13 @@ $page = $_GET['page'] ?? 'acceuil'; // Par défaut, charger la page d'accueil
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WEB4ALL</title>
-    <link rel="stylesheet" href="../../Public/css/style.css"> <!-- Chemin corrigé -->
+    <link rel="stylesheet" href="/css/style.css"> <!-- Chemin corrigé -->
 </head>
 <body>
     <?php
     // Charger la page demandée
     loadPage($page);
     ?>
-    <script src="../../Public/js/responsive.js"></script> <!-- Chemin corrigé -->
+    <script src="/js/responsive.js"></script> <!-- Chemin corrigé -->
 </body>
 </html>
