@@ -43,6 +43,6 @@ $page = $_GET['page'] ?? 'acceuil';
         loadPage($page);
     }
     ?>
-    <script src="../js/responsive.js"></script>
+ <!-- <script src="../js/responsive.js"></script> -->
 </body>
 </html>

@@ -1,8 +1,0 @@
-Options -Indexes
-RewriteEngine On
-RewriteBase /projetWEB/MODEL MVC/Public/
-
-# Rediriger les requêtes vers index.php si le fichier ou dossier n'existe pas
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ index.php [QSA,L]
