@@ -7,7 +7,14 @@
  */
 
 
-require '/Config/config.php';  // Chemin absolu pour le fichier de configuration
+// Activer l'affichage des erreurs pour le débogage
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Inclusion de la configuration et de la classe Database
+require_once __DIR__ . '/../Config/config.php';
+require_once __DIR__ . '/../Config/Database.php'; // Ajout de cette ligne
 
 class User {
     private $db;
