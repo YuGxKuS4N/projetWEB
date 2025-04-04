@@ -1,16 +1,15 @@
 <?php
 // filepath: c:\projetWEB\MODEL-MVC\Views\stage\stage.php
-require_once __DIR__ . '/../../Config/config.php'; // Correction du chemin
+require_once __DIR__ . '/../../Config/config.php'; // Inclusion de la configuration
 
 try {
-    $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER, DB_PASS);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $conn = getDatabaseConnection(); // Utilisation de la fonction pour obtenir la connexion
 
     // Récupérer les offres de stage
-    $query = $pdo->query("SELECT * FROM Offre_Stage");
-    $offres = $query->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    die("Erreur de connexion : " . $e->getMessage());
+    $query = $conn->query("SELECT * FROM Offre_Stage");
+    $offres = $query->fetch_all(MYSQLI_ASSOC);
+} catch (Exception $e) {
+    die("Erreur : " . $e->getMessage());
 }
 ?>
 <!DOCTYPE html>

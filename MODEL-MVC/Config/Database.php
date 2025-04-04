@@ -5,10 +5,10 @@ require_once 'config.php'; // Charger les paramètres de configuration
 // Configuration file
 
 // Define database constants
-define('DB_HOST', 'localhost');
-define('DB_USER', 'your_username');
-define('DB_PASS', 'your_password');
-define('DB_NAME', 'your_database_name');
+define('DB_HOST', '86.71.46.25');
+define('DB_USER', 'user');
+define('DB_PASS', 'Php@1234');
+define('DB_NAME', 'projet');
 
 class Database {
     private $host = DB_HOST;
