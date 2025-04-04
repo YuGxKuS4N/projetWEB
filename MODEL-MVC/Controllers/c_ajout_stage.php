@@ -58,6 +58,9 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'entreprise') {
 
 // Vérifier si le formulaire a été soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form_submitted'])) {
+    // Débogage : Enregistrer les données reçues
+    error_log("Données reçues : " . print_r($_POST, true));
+
     // Récupérer les données du formulaire
     $data = $_POST;
     $idEntreprise = $_SESSION['user_id']; // ID de l'entreprise connectée
@@ -72,6 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form_submitted'])) {
         $_SESSION['message'] = $response['message'];
     } catch (Exception $e) {
         $_SESSION['message'] = "Erreur inattendue : " . $e->getMessage();
+        error_log("Exception : " . $e->getMessage());
     }
 } else {
     $_SESSION['message'] = "Formulaire non soumis correctement.";
