@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Config/config.php'; // Inclusion sécurisée de la configuration
+require_once dirname(__DIR__, 2) . '/Config/config.php'; // Correction du chemin
 
 // Options dynamiques pour les secteurs d'activité
 $secteurs = [
@@ -21,7 +21,10 @@ unset($_SESSION['message']); // Supprimer le message après l'avoir affiché
 
 // Vérifier si le formulaire a été soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Vérifier que la connexion à la base de données est toujours active
+    // Obtenir la connexion à la base de données
+    $conn = getDatabaseConnection();
+
+    // Vérifier que la connexion est active
     if (!$conn || $conn->connect_error) {
         $_SESSION['message'] = "Erreur de connexion à la base de données.";
         header("Location: /projetWEB/MODEL-MVC/Views/ajout_stage/ajout.php");
