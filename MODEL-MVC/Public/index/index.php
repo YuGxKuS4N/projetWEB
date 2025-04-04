@@ -1,18 +1,21 @@
 <?php
+
 session_start(); // Démarre la session PHP
 
 // BASE_PATH correspond à la racine de votre projet (ici, MODEL-MVC)
-define('BASE_PATH', dirname(DIR, 2));
+define('BASE_PATH', dirname(__DIR__, 2));
 
 /**
- 
-Fonction pour charger une vue.
-La vue doit se trouver dans le dossier "Views" et sera appelée avec son chemin relatif.
-Par exemple, pour charger "Views/acceuil/acceuil.php", on appelle loadPage('acceuil/acceuil')*/
+ * Fonction pour charger une vue.
+ * La vue doit se trouver dans le dossier "Views" et sera appelée avec son chemin relatif.
+ *
+ * Par exemple, pour charger "Views/acceuil/acceuil.php", on appelle loadPage('acceuil/acceuil').
+ */
 function loadPage($page) {
     $viewsPath = BASE_PATH . '/Views/';
     $filePath = $viewsPath . $page . '.php';
 
+    // Vérifie si le fichier existe avant de le charger
     if (file_exists($filePath)) {
         require_once $filePath;
     } else {
@@ -30,7 +33,9 @@ if (!isset($_GET['page']) || $_GET['page'] === 'acceuil') {
 
 // Sinon, récupérer la page demandée dans l'URL (ex: ?page=admin/admin)
 $page = $_GET['page'];
+
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
