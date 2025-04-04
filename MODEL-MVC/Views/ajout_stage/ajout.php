@@ -18,6 +18,37 @@ $secteurs = [
 // Vérifier si un message de confirmation ou d'erreur est passé via la session
 $message = $_SESSION['message'] ?? '';
 unset($_SESSION['message']); // Supprimer le message après l'avoir affiché
+
+// Vérifier si le formulaire a été soumis
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $titre = htmlspecialchars($_POST['titre']);
+    $description = htmlspecialchars($_POST['description']);
+    $secteur_activite = htmlspecialchars($_POST['secteur']);
+    $date_debut = htmlspecialchars($_POST['date_debut']);
+    $duree = intval($_POST['duree']);
+    $lieu = htmlspecialchars($_POST['lieu_stage']);
+
+    // Insérer les données dans la table Offre_Stage
+    $sql = <<<SQL
+    INSERT INTO Offre_Stage (titre, description, secteur_activite, date_debut, duree, lieu)
+    VALUES (?, ?, ?, ?, ?, ?)
+SQL;
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssssis", $titre, $description, $secteur_activite, $date_debut, $duree, $lieu);
+
+    if ($stmt->execute()) {
+        $_SESSION['message'] = "Données insérées avec succès dans la table Offre_Stage.";
+    } else {
+        $_SESSION['message'] = "Erreur lors de l'insertion des données : " . $stmt->error;
+    }
+
+    $stmt->close();
+
+    // Redirection après traitement
+    header("Location: /projetWEB/MODEL-MVC/Views/ajout_stage/ajout.php");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -38,7 +69,7 @@ unset($_SESSION['message']); // Supprimer le message après l'avoir affiché
     </div>
   <?php endif; ?>
 
-  <form action="/projetWEB/MODEL-MVC/Controllers/c_ajout_stage.php" method="POST">
+  <form action="/projetWEB/MODEL-MVC/Views/ajout_stage/ajout.php" method="POST">
     <input type="hidden" name="form_submitted" value="1">
     <label for="titre">Titre de l’offre</label>
     <input type="text" id="titre" name="titre" placeholder="Titre de l'offre" required>
