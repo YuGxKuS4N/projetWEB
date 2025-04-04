@@ -47,7 +47,7 @@ $page = $_GET['page'];
     ?>
     <script src="<?= BASE_PATH ?>/Public/js/responsive.js"></script>
 </body>
+<p style="text-align: center; margin-top: 20px;">Bienvenue sur notre site web !</p>
 </html>
-echo "Hello, World!";
 <?php
 // Fin du script PHP                
