@@ -66,6 +66,7 @@ try {
 </section>
 
 
+
   </main>
   <script src="/projetWEB/MODEL-MVCw/Public/js/stage.js"></script>
 </body>
