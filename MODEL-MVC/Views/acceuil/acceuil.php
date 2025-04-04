@@ -1,4 +1,9 @@
 <?php
+// Activer l'affichage des erreurs
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 // Vérifier si la session est déjà active avant d'appeler session_start()
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
