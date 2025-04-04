@@ -76,14 +76,14 @@ class User {
     private function registerCandidat($prenom, $nom, $email, $password, $data) {
         $sql = <<<SQL
             INSERT INTO Stagiaire 
-                (prenom, nom, email, password, ecole, lieu_ecole, annee_promo, telephone, date_naissance) 
+                (prenom, nom, email, password, ecole, lieu_ecole, annee_promo, telephone) 
             VALUES 
-                (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                (?, ?, ?, ?, ?, ?, ?, ?)
 SQL;
 
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param(
-            "sssssssss", 
+            "ssssssss", 
             $prenom, 
             $nom, 
             $email, 
@@ -91,7 +91,7 @@ SQL;
             $data['ecole'], 
             $data['lieu_ecole'], 
             $data['annee_promo'], 
-            $data['telephone'], 
+            $data['telephone']
         );
         return $this->executeStatement($stmt);
     }
