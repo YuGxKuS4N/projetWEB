@@ -44,6 +44,11 @@ SQL;
     }
 }
 
+// Démarrer la session si ce n'est pas déjà fait
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 // Vérifier si l'utilisateur est connecté et est une entreprise
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'entreprise') {
     $_SESSION['message'] = "Accès non autorisé. Vous devez être connecté en tant qu'entreprise.";
@@ -51,17 +56,27 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'entreprise') {
     exit();
 }
 
-// Récupérer les données du formulaire
-$data = $_POST;
-$idEntreprise = $_SESSION['user_id']; // ID de l'entreprise connectée
+// Vérifier si le formulaire a été soumis
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form_submitted'])) {
+    // Récupérer les données du formulaire
+    $data = $_POST;
+    $idEntreprise = $_SESSION['user_id']; // ID de l'entreprise connectée
 
-// Ajouter l'offre de stage
-$database = new Database();
-$stageController = new StageController($database);
-$response = $stageController->addStage($data, $idEntreprise);
+    // Ajouter l'offre de stage
+    try {
+        $database = new Database();
+        $stageController = new StageController($database);
+        $response = $stageController->addStage($data, $idEntreprise);
 
-// Stocker le message dans la session et rediriger
-$_SESSION['message'] = $response['message'];
+        // Stocker le message dans la session et rediriger
+        $_SESSION['message'] = $response['message'];
+    } catch (Exception $e) {
+        $_SESSION['message'] = "Erreur inattendue : " . $e->getMessage();
+    }
+} else {
+    $_SESSION['message'] = "Formulaire non soumis correctement.";
+}
+
 header("Location: ../Views/ajout_stage/ajout.php");
 exit();
 ?>

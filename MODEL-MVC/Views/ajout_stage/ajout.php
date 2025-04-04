@@ -39,6 +39,7 @@ unset($_SESSION['message']); // Supprimer le message après l'avoir affiché
   <?php endif; ?>
 
   <form action="/projetWEB/MODEL-MVC/Controllers/c_ajout_stage.php" method="POST">
+    <input type="hidden" name="form_submitted" value="1">
     <label for="titre">Titre de l’offre</label>
     <input type="text" id="titre" name="titre" placeholder="Titre de l'offre" required>
 

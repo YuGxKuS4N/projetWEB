@@ -7,13 +7,14 @@
  */
 
 require '/Config/config.php'; // Chemin absolu vers la configuration
+require __DIR__ . '/../Config/Database.php'; // Inclure la classe Database avec le chemin relatif correct
 
 class DataController {
     private $db;
     private $conn;
 
-    public function __construct(Database $database) {
-        $this->db = $database;
+    public function __construct() {
+        $this->db = new Database();
         $this->conn = $this->db->connect();
     }
 
@@ -115,4 +116,3 @@ if ($context === 'profile') {
 // Retourner les données au format JSON
 echo json_encode($response);
 ?>
-<?php
