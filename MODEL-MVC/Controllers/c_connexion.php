@@ -42,6 +42,11 @@ class ConnexionController {
 SQL;
 
         $stmt = $this->conn->prepare($sql);
+        if (!$stmt) {
+            error_log("Erreur de préparation de la requête : " . $this->conn->error);
+            return ["success" => false, "error" => "Erreur interne. Veuillez réessayer plus tard."];
+        }
+
         $stmt->bind_param("sss", $email, $email, $email);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -66,6 +71,7 @@ SQL;
 
 // Traitement de la requête POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    error_log("Début du traitement de la connexion"); // Journal de débogage
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
 
@@ -74,13 +80,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $response = $connexionController->login($email, $password);
 
     if ($response['success']) {
+        error_log("Connexion réussie pour l'utilisateur : $email"); // Journal de débogage
         // Rediriger l'utilisateur vers l'accueil après connexion
         header("Location: /projetWEB/MODEL-MVC/Views/acceuil/acceuil.php");
         exit();
     } else {
+        error_log("Échec de la connexion : " . $response['error']); // Journal de débogage
         // Rediriger vers la page de connexion avec un message d'erreur
         header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php?error=" . urlencode($response['error']));
         exit();
     }
 }
+
+error_log("Fin du script c_connexion.php"); // Journal de débogage
 ?>
