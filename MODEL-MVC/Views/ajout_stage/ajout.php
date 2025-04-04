@@ -21,7 +21,7 @@ unset($_SESSION['message']); // Supprimer le message après l'avoir affiché
 
 // Vérifier si le formulaire a été soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Vérifier la connexion à la base de données
+    // Vérifier que la connexion à la base de données est toujours active
     if (!$conn || $conn->connect_error) {
         $_SESSION['message'] = "Erreur de connexion à la base de données.";
         header("Location: /projetWEB/MODEL-MVC/Views/ajout_stage/ajout.php");

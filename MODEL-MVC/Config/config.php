@@ -14,5 +14,3 @@ if ($conn->connect_error) {
 }  
 
 echo "Connexion à la base de données MySQL réussie !\n";
-
-$conn->close();
