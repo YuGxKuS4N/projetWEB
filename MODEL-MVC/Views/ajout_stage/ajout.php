@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Config/config.php'; // Inclusion sécurisée de la configuration
+require_once $_SERVER['DOCUMENT_ROOT'] . '/aa/projetWEB/MODEL-MVC/Config/config.php'; // Correction du chemin d'accès
 
 // Options dynamiques pour les secteurs d'activité
 $secteurs = [
