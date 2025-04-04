@@ -68,6 +68,6 @@ try {
 
 
   </main>
-  <script src="/projetWEB/MODEL-MVC/Public/js/stage.js"></script>
+  <script src="/stage.js"></script>
 </body>
 </html>
