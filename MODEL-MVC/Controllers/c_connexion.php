@@ -37,7 +37,7 @@ class ConnexionController {
             WHERE email = ?
             UNION
             SELECT id_entreprise AS id, email, password, 'entreprise' AS role 
-            FROM Entreprise 
+            FROM entreprises 
             WHERE email = ?
 SQL;
 
