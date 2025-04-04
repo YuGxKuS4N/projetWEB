@@ -33,6 +33,6 @@ session_start();
         </div>
     </div>
 
-    <script src="/projetWEB/MODEL-MVC/Public/js/responsive.js"></script>
+  <!--  <script src="/projetWEB/MODEL-MVC/Public/js/responsive.js"></script> -->
 </body>
 </html>
