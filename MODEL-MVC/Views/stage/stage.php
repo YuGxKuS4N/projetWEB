@@ -1,6 +1,6 @@
 <?php
 // filepath: c:\projetWEB\MODEL-MVC\Views\stage\stage.php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Config/config.php'; // Inclusion de la configuration
+require_once __DIR__ . '/../../Config/config.php'; // Correction du chemin
 
 try {
     $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER, DB_PASS);
