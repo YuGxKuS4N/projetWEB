@@ -44,21 +44,8 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Controllers/c_ins
           <input type="password" class="input" name="password" placeholder="Mot de passe" required />
           <input type="password" class="input" name="confirm_password" placeholder="Confirmez le mot de passe" required />
           <label for="secteur">Secteur d'activité recherché</label>
-          <select id="secteur" name="secteur" required>
-            <option value="">Sélectionnez un secteur</option>
-            <option value="Développement Web">Développement Web</option>
-            <option value="Développement Mobile">Développement Mobile</option>
-            <option value="Intelligence Artificielle">Intelligence Artificielle</option>
-            <option value="Cybersécurité">Cybersécurité</option>
-            <option value="Big Data">Big Data</option>
-            <option value="Réseaux et Télécommunications">Réseaux et Télécommunications</option>
-            <option value="Cloud Computing">Cloud Computing</option>
-            <option value="Internet des Objets (IoT)">Internet des Objets (IoT)</option>
-            <option value="Réalité Virtuelle et Augmentée">Réalité Virtuelle et Augmentée</option>
-            <option value="Gestion de Projets Informatiques">Gestion de Projets Informatiques</option>
-          </select>
         </div>
-        <button type="submit" name="type" value="stagiaire">S'inscrire</button>
+        <button type="submit" name="type" value="pilote">S'inscrire</button>
       </form>
     </div>
 
@@ -93,8 +80,21 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Controllers/c_ins
           <input type="email" class="input" name="email" placeholder="E-mail" required />
           <input type="password" class="input" name="password" placeholder="Mot de passe" required />
           <input type="password" class="input" name="confirm_password" placeholder="Confirmez le mot de passe" required />
+          <select id="secteur" name="secteur" required>
+            <option value="">Sélectionnez un secteur</option>
+            <option value="Développement Web">Développement Web</option>
+            <option value="Développement Mobile">Développement Mobile</option>
+            <option value="Intelligence Artificielle">Intelligence Artificielle</option>
+            <option value="Cybersécurité">Cybersécurité</option>
+            <option value="Big Data">Big Data</option>
+            <option value="Réseaux et Télécommunications">Réseaux et Télécommunications</option>
+            <option value="Cloud Computing">Cloud Computing</option>
+            <option value="Internet des Objets (IoT)">Internet des Objets (IoT)</option>
+            <option value="Réalité Virtuelle et Augmentée">Réalité Virtuelle et Augmentée</option>
+            <option value="Gestion de Projets Informatiques">Gestion de Projets Informatiques</option>
+          </select>
         </div>
-        <button type="submit" name="type" value="pilote">S'inscrire</button>
+        <button type="submit" name="type" value="stagiaire">S'inscrire</button>
       </form>
     </div>
   </div>
