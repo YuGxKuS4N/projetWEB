@@ -1,6 +1,6 @@
 <?php
 // filepath: c:\projetWEB\MODEL-MVC\Views\stage\stage.php
-require_once __DIR__ . '/../../Config/config.php'; // Inclusion de la configuration
+require_once __DIR__ . '/Config/config.php'; // Inclusion de la configuration
 
 try {
     $conn = getDatabaseConnection(); // Utilisation de la fonction pour obtenir la connexion
@@ -46,24 +46,25 @@ try {
     </section>
 
     <section class="offers">
-      <h2>Nos Offres de Stage</h2>
-      <div id="offers-container">
-        <?php if (!empty($offres)): ?>
-          <?php foreach ($offres as $offre): ?>
-            <div class="offer">
-              <h3><?php echo htmlspecialchars($offre['titre']); ?></h3>
-              <p><?php echo htmlspecialchars($offre['description']); ?></p>
-              <p><strong>Secteur :</strong> <?php echo htmlspecialchars($offre['secteur_activite']); ?></p>
-              <p><strong>Date de début :</strong> <?php echo htmlspecialchars($offre['date_debut']); ?></p>
-              <p><strong>Durée :</strong> <?php echo htmlspecialchars($offre['duree']); ?> mois</p>
-              <p><strong>Lieu :</strong> <?php echo htmlspecialchars($offre['lieu']); ?></p>
-            </div>
-          <?php endforeach; ?>
-        <?php else: ?>
-          <p>Aucune offre de stage disponible pour le moment.</p>
-        <?php endif; ?>
-      </div>
-    </section>
+  <h2>Nos Offres de Stage</h2>
+  <div class="offers-list">
+    <?php if (!empty($offres)): ?>
+      <?php foreach ($offres as $offre): ?>
+        <div class="offer">
+          <h3><?php echo htmlspecialchars($offre['titre']); ?></h3>
+          <p><?php echo htmlspecialchars($offre['description']); ?></p>
+          <p><strong>Secteur :</strong> <?php echo htmlspecialchars($offre['secteur_activite']); ?></p>
+          <p><strong>Date de début :</strong> <?php echo htmlspecialchars($offre['date_debut']); ?></p>
+          <p><strong>Durée :</strong> <?php echo htmlspecialchars($offre['duree']); ?> mois</p>
+          <p><strong>Lieu :</strong> <?php echo htmlspecialchars($offre['lieu']); ?></p>
+        </div>
+      <?php endforeach; ?>
+    <?php else: ?>
+      <p>Aucune offre de stage disponible pour le moment.</p>
+    <?php endif; ?>
+  </div>
+</section>
+
   </main>
   <script src="/projetWEB/MODEL-MVCw/Public/js/stage.js"></script>
 </body>
