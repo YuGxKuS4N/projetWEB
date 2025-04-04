@@ -28,6 +28,10 @@ class ConnexionController {
 
     public function login($email, $password) {
         $sql = <<<SQL
+            SELECT id_stagiaire AS id, email, password, 'stagiaire' AS role 
+            FROM Stagiaire 
+            WHERE email = ?
+            UNION
             SELECT id_etudiant AS id, email, password, 'etudiant' AS role 
             FROM Etudiant 
             WHERE email = ?
@@ -47,7 +51,7 @@ SQL;
             return ["success" => false, "error" => "Erreur interne. Veuillez réessayer plus tard."];
         }
 
-        $stmt->bind_param("sss", $email, $email, $email);
+        $stmt->bind_param("ssss", $email, $email, $email, $email);
         $stmt->execute();
         $result = $stmt->get_result();
 
