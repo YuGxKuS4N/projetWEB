@@ -21,6 +21,13 @@ unset($_SESSION['message']); // Supprimer le message après l'avoir affiché
 
 // Vérifier si le formulaire a été soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Vérifier la connexion à la base de données
+    if (!$conn || $conn->connect_error) {
+        $_SESSION['message'] = "Erreur de connexion à la base de données.";
+        header("Location: /projetWEB/MODEL-MVC/Views/ajout_stage/ajout.php");
+        exit();
+    }
+
     $titre = htmlspecialchars($_POST['titre']);
     $description = htmlspecialchars($_POST['description']);
     $secteur_activite = htmlspecialchars($_POST['secteur']);
@@ -35,15 +42,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 SQL;
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssis", $titre, $description, $secteur_activite, $date_debut, $duree, $lieu);
+    if ($stmt) {
+        $stmt->bind_param("ssssis", $titre, $description, $secteur_activite, $date_debut, $duree, $lieu);
 
-    if ($stmt->execute()) {
-        $_SESSION['message'] = "Données insérées avec succès dans la table Offre_Stage.";
+        if ($stmt->execute()) {
+            $_SESSION['message'] = "Données insérées avec succès dans la table Offre_Stage.";
+        } else {
+            $_SESSION['message'] = "Erreur lors de l'insertion des données : " . $stmt->error;
+        }
+
+        $stmt->close();
     } else {
-        $_SESSION['message'] = "Erreur lors de l'insertion des données : " . $stmt->error;
+        $_SESSION['message'] = "Erreur lors de la préparation de la requête : " . $conn->error;
     }
-
-    $stmt->close();
 
     // Redirection après traitement
     header("Location: /projetWEB/MODEL-MVC/Views/ajout_stage/ajout.php");
