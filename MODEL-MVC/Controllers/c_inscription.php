@@ -50,6 +50,10 @@ class User {
                 - Et au moins 4 chiffres."
             );
         }
+//s
+        if ($type === 'stagiaire' && empty($data['secteur'])) {
+            die("Le champ secteur d'activité est obligatoire pour les stagiaires !");
+        }
 
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
