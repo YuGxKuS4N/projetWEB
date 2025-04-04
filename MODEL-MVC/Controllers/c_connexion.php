@@ -43,14 +43,20 @@ SQL;
             $user = $result->fetch_assoc();
 
             if (password_verify($password, $user['password'])) {
+                // Journal pour confirmer la connexion réussie
+                error_log("Connexion réussie pour l'utilisateur : " . $user['email']);
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['role'] = $user['role'];
                 return ["success" => true, "role" => $user['role']];
             } else {
+                // Journal pour mot de passe incorrect
+                error_log("Mot de passe incorrect pour l'utilisateur : " . $email);
                 return ["success" => false, "error" => "Mot de passe incorrect."];
             }
         } else {
+            // Journal pour email non trouvé
+            error_log("Aucun compte trouvé avec l'email : " . $email);
             return ["success" => false, "error" => "Aucun compte trouvé avec cet email."];
         }
     }

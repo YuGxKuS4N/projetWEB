@@ -28,6 +28,14 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Controllers/c_con
     </nav>
 
     <div class="form-box">
+        <?php if (isset($_SESSION['error_message'])): ?>
+            <div class="error-message">
+                <?php 
+                echo $_SESSION['error_message']; 
+                unset($_SESSION['error_message']); // Supprimez le message après affichage
+                ?>
+            </div>
+        <?php endif; ?>
         <form class="form" action="/projetWEB/MODEL-MVC/Controllers/c_connexion.php" method="POST">
             <span class="title">Se connecter</span>
             <span class="subtitle">Entrez vos identifiants pour accéder à votre compte.</span>
