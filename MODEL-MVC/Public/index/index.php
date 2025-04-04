@@ -9,7 +9,7 @@ session_start(); // Démarre la session PHP
  * Par exemple, pour charger "Views/acceuil/acceuil.php", on appelle loadPage('acceuil/acceuil').
  */
 function loadPage($page) {
-    $viewsPath = '../Views/'; // Dossier Views par rapport à Public/index/
+    $viewsPath = 'C:/projetWEB/MODEL-MVC/Views/'; // Dossier Views avec chemin absolu
 
     // Construit le chemin vers le fichier demandé
     $filePath = $viewsPath . $page . '.php';
@@ -40,21 +40,21 @@ if (!isset($_GET['page']) || $_GET['page'] === 'acceuil') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WEB4ALL</title>
-    <!-- Chemin vers le fichier CSS -->
-    <link rel="stylesheet" href="../css/style.css">
+    <!-- Chemin absolu vers le fichier CSS -->
+    <link rel="stylesheet" href="C:/projetWEB/MODEL-MVC/Public/css/style.css">
 </head>
 <body>
     <header>
         <nav class="navbar">
             <div class="nav-logo">
-                <a href="../Views/acceuil/acceuil.php">
-                    <!-- Chemin vers le logo -->
-                    <img src="../images/logo.png" alt="Logo du Site">
+                <a href="C:/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php">
+                    <!-- Chemin absolu vers le logo -->
+                    <img src="C:/projetWEB/MODEL-MVC/Public/image/logo.png" alt="Logo du Site">
                 </a>
             </div>
             <ul class="nav-right">
-                <li><a href="../Views/creation_compte/inscription.php">S'INSCRIRE</a></li>
-                <li><a href="../Views/creation_compte/connexion.php">CONNEXION</a></li>
+                <li><a href="C:/projetWEB/MODEL-MVC/Views/creation_compte/inscription.php">S'INSCRIRE</a></li>
+                <li><a href="C:/projetWEB/MODEL-MVC/Views/creation_compte/connexion.php">CONNEXION</a></li>
             </ul>
         </nav>
     </header>
@@ -69,7 +69,7 @@ if (!isset($_GET['page']) || $_GET['page'] === 'acceuil') {
         </div>
     </div>
 
-    <!-- Chemin vers le fichier JS -->
-    <script src="../js/responsive.js"></script>
+    <!-- Chemin absolu vers le fichier JS -->
+    <script src="C:/projetWEB/MODEL-MVC/Public/js/responsive.js"></script>
 </body>
 </html>
