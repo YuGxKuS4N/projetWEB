@@ -7,7 +7,7 @@
  * - Insère les données dans la base de données en fonction du type d'utilisateur.
  */
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Config/config.php'; // Chemin
+require_once dirname(__DIR__, 3) . '/projetWEB/MODEL-MVC/Config/config.php'; // Correction du chemin
 
 // Activer l'affichage des erreurs pour le débogage
 ini_set('display_errors', 1);
@@ -54,7 +54,7 @@ class User {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         switch ($type) {
-            case 'candidat':
+            case 'stagiaire':
                 return $this->registerCandidat($prenom, $nom, $email, $hashed_password, $data);
             case 'entreprise':
                 return $this->registerEntreprise($prenom, $nom, $email, $hashed_password, $data);
@@ -75,7 +75,7 @@ class User {
 
     private function registerCandidat($prenom, $nom, $email, $password, $data) {
         $sql = <<<SQL
-            INSERT INTO candidats 
+            INSERT INTO Stagiaire 
                 (prenom, nom, email, password, ecole, lieu_ecole, annee_promo, telephone, date_naissance) 
             VALUES 
                 (?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -102,7 +102,7 @@ SQL;
 
     private function registerPilote($prenom, $nom, $email, $password, $data) {
         $sql = <<<SQL
-            INSERT INTO pilotes 
+            INSERT INTO Pilote 
                 (prenom, nom, email, password, ecole, lieu_ecole, annee_promo, telephone) 
             VALUES 
                 (?, ?, ?, ?, ?, ?, ?, ?)
@@ -126,7 +126,9 @@ SQL;
 }
 
 // Traitement du formulaire
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+// Vérifier si le script est exécuté dans un contexte HTTP
+if (php_sapi_name() !== 'cli' && isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] === "POST") {
     require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Config/Database.php';
 
     $database = new Database();
@@ -135,5 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $user->register($_POST);
 
     $database->disconnect(); // Ferme proprement la connexion
+} else {
+    echo "Ce script doit être exécuté dans un contexte HTTP avec une requête POST.";
 }
 ?>
