@@ -2,13 +2,13 @@
 session_start(); // Démarre la session PHP
 
 // BASE_PATH correspond à la racine de votre projet (ici, MODEL-MVC)
-define('BASE_PATH', dirname(__DIR__, 2));
+define('BASE_PATH', dirname(DIR, 2));
 
 /**
- * Fonction pour charger une vue.
- * La vue doit se trouver dans le dossier "Views" et sera appelée avec son chemin relatif.
- * Par exemple, pour charger "Views/acceuil/acceuil.php", on appelle loadPage('acceuil/acceuil')
- */
+ 
+Fonction pour charger une vue.
+La vue doit se trouver dans le dossier "Views" et sera appelée avec son chemin relatif.
+Par exemple, pour charger "Views/acceuil/acceuil.php", on appelle loadPage('acceuil/acceuil')*/
 function loadPage($page) {
     $viewsPath = BASE_PATH . '/Views/';
     $filePath = $viewsPath . $page . '.php';
@@ -35,7 +35,6 @@ $page = $_GET['page'];
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <!-- Assurez-vous d'utiliser un doctype HTML5 pour éviter le mode quirks -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WEB4ALL</title>
     <link rel="stylesheet" href="<?= BASE_PATH ?>/Public/css/style.css">
@@ -47,7 +46,4 @@ $page = $_GET['page'];
     ?>
     <script src="<?= BASE_PATH ?>/Public/js/responsive.js"></script>
 </body>
-<p style="text-align: center; margin-top: 20px;">Bienvenue sur notre site web !</p>
 </html>
-<?php
-// Fin du script PHP                
