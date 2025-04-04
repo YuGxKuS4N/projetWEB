@@ -1,6 +1,6 @@
 <?php
 // filepath: c:\projetWEB\MODEL-MVC\Views\stage\stage.php
-require_once __DIR__ . '/Config/config.php'; // Inclusion de la configuration
+require_once dirname(__DIR__, 2) . '/Config/config.php'; // Correction du chemin
 
 try {
     $conn = getDatabaseConnection(); // Utilisation de la fonction pour obtenir la connexion
