@@ -48,5 +48,6 @@ $page = $_GET['page'];
     <script src="<?= BASE_PATH ?>/Public/js/responsive.js"></script>
 </body>
 </html>
+echo "Hello, World!";
 <?php
 // Fin du script PHP                
