@@ -64,7 +64,7 @@ $role = $_SESSION['role'];
             <h1>
                 <?php
                 // Afficher un titre différent en fonction du rôle
-                if ($role === 'etudiant') {
+                if ($role === 'stagiare') {
                     echo "PRENDS TON <br> FUTUR EN MAIN : <br> CESI TA CHANCE !";
                 } elseif ($role === 'entreprise') {
                     echo "BIENVENUE DANS <br> VOTRE ESPACE ENTREPRISE";
@@ -77,7 +77,7 @@ $role = $_SESSION['role'];
             </h1>
             <?php
             // Afficher un bouton différent en fonction du rôle
-            if ($role === 'etudiant') {
+            if ($role === 'stagiare') {
                 echo '<a href="/projetWEB/MODEL-MVC/Views/stage/stage.php" class="btn">OFFRES DE STAGE</a>';
             } elseif ($role === 'entreprise') {
                 echo '<a href="/projetWEB/MODEL-MVC/Views/ajout_stage/ajout.php" class="btn">DÉPOSER UNE OFFRE</a>';
