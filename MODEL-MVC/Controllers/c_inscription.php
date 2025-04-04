@@ -1,11 +1,13 @@
 <?php
+
 /**
  * Contrôleur pour gérer l'inscription des utilisateurs.
- * 
+ *
  * - Vérifie les données du formulaire.
  * - Insère les données dans la base de données en fonction du type d'utilisateur.
  */
 
+require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Config/config.php'; // Chemin
 
 // Activer l'affichage des erreurs pour le débogage
 ini_set('display_errors', 1);
@@ -36,8 +38,17 @@ class User {
         if (!$email) {
             die("Adresse e-mail invalide !");
         }
+
         if ($password !== $confirm_password) {
             die("Les mots de passe ne correspondent pas !");
+        }
+
+        if (!$this->validatePassword($password)) {
+            die("Le mot de passe doit contenir :
+                - Au moins une majuscule,
+                - Au moins un caractère spécial,
+                - Et au moins 4 chiffres."
+            );
         }
 
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -54,6 +65,14 @@ class User {
         }
     }
 
+    private function validatePassword($password) {
+        $hasUpperCase = preg_match('/[A-Z]/', $password);
+        $hasSpecialChar = preg_match('/[\W]/', $password);
+        $hasFourDigits = preg_match('/\d{4,}/', $password);
+
+        return $hasUpperCase && $hasSpecialChar && $hasFourDigits;
+    }
+
     private function registerCandidat($prenom, $nom, $email, $password, $data) {
         $sql = <<<SQL
             INSERT INTO candidats 
@@ -63,7 +82,8 @@ class User {
 SQL;
 
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("sssssssss", $prenom, $nom, $email, $password, $data['ecole'], $data['lieu_ecole'], $data['annee_promo'], $data['telephone'], $data['date_naissance']);
+        $stmt->bind_param("sssssssss", $prenom, $nom, $email, $password, $data['ecole'], $data['lieu_ecole'], 
+                                       $data['annee_promo'], $data['telephone'], $data['date_naissance']);
         return $this->executeStatement($stmt);
     }
 
@@ -89,7 +109,8 @@ SQL;
 SQL;
 
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ssssssss", $prenom, $nom, $email, $password, $data['ecole'], $data['lieu_ecole'], $data['annee_promo'], $data['telephone']);
+        $stmt->bind_param("ssssssss", $prenom, $nom, $email, $password, $data['ecole'], $data['lieu_ecole'], 
+                                          $data['annee_promo'], $data['telephone']);
         return $this->executeStatement($stmt);
     }
 
@@ -106,9 +127,13 @@ SQL;
 
 // Traitement du formulaire
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Config/Database.php';
+
     $database = new Database();
     $user = new User($database);
+
     $user->register($_POST);
-    $database->closeConnection();
+
+    $database->disconnect(); // Ferme proprement la connexion
 }
 ?>
