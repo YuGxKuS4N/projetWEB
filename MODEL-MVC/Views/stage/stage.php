@@ -1,5 +1,17 @@
 <?php
 // filepath: c:\projetWEB\MODEL-MVC\Views\stage\stage.php
+require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Config/config.php'; // Inclusion de la configuration
+
+try {
+    $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER, DB_PASS);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Récupérer les offres de stage
+    $query = $pdo->query("SELECT * FROM Offre_Stage");
+    $offres = $query->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    die("Erreur de connexion : " . $e->getMessage());
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -37,7 +49,20 @@
     <section class="offers">
       <h2>Nos Offres de Stage</h2>
       <div id="offers-container">
-        <!-- Les offres seront chargées dynamiquement ici -->
+        <?php if (!empty($offres)): ?>
+          <?php foreach ($offres as $offre): ?>
+            <div class="offer">
+              <h3><?php echo htmlspecialchars($offre['titre']); ?></h3>
+              <p><?php echo htmlspecialchars($offre['description']); ?></p>
+              <p><strong>Secteur :</strong> <?php echo htmlspecialchars($offre['secteur_activite']); ?></p>
+              <p><strong>Date de début :</strong> <?php echo htmlspecialchars($offre['date_debut']); ?></p>
+              <p><strong>Durée :</strong> <?php echo htmlspecialchars($offre['duree']); ?> mois</p>
+              <p><strong>Lieu :</strong> <?php echo htmlspecialchars($offre['lieu']); ?></p>
+            </div>
+          <?php endforeach; ?>
+        <?php else: ?>
+          <p>Aucune offre de stage disponible pour le moment.</p>
+        <?php endif; ?>
       </div>
     </section>
   </main>
