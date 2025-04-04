@@ -1,6 +1,6 @@
 <?php
-require_once dirname(__DIR__, 2) . '/Config/config.php';
-require_once dirname(__DIR__, 2) . '/Config/Database.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Config/config.php'; // Inclusion sécurisée de la configuration
+
 // Options dynamiques pour les secteurs d'activité
 $secteurs = [
     "Développement Web",
