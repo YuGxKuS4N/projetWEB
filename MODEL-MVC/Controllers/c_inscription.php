@@ -92,7 +92,6 @@ SQL;
             $data['lieu_ecole'], 
             $data['annee_promo'], 
             $data['telephone'], 
-            $data['date_naissance']
         );
         return $this->executeStatement($stmt);
     }
