@@ -80,7 +80,7 @@ $role = $_SESSION['role'];
             if ($role === 'etudiant') {
                 echo '<a href="/projetWEB/MODEL-MVC/Views/stage/stage.php" class="btn">OFFRES DE STAGE</a>';
             } elseif ($role === 'entreprise') {
-                echo '<a href="/projetWEB/MODEL-MVC/Views/stage/ajout.php" class="btn">DÉPOSER UNE OFFRE</a>';
+                echo '<a href="/projetWEB/MODEL-MVC/Views/ajout_stage/ajout.php" class="btn">DÉPOSER UNE OFFRE</a>';
             } elseif ($role === 'pilote') {
                 echo '<a href="/projetWEB/MODEL-MVC/Views/pilote/eleves.php" class="btn">MES ÉLÈVES</a>';
             } elseif ($role === 'admin') {
