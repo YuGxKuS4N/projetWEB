@@ -28,15 +28,15 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Controllers/c_ins
 
   <div class="form-box">
     <div class="tabs">
-      <button onclick="showTab('stagiaire', event)" class="tab-button active">Espace Stagiaire</button>
+      <button onclick="showTab('pilote', event)" class="tab-button active">Espace Pilote</button>
       <button onclick="showTab('entreprise', event)" class="tab-button">Espace Entreprise</button>
-      <button onclick="showTab('pilote', event)" class="tab-button">Espace Pilote</button>
+      <button onclick="showTab('stagiaire', event)" class="tab-button">Espace Stagiaire</button>
     </div>
 
     <!-- Formulaire Stagiaire -->
-    <div id="stagiaire" class="tab-content" style="display: block;">
+    <div id="pilote" class="tab-content" style="display: block;">
       <form class="form" action="/projetWEB/MODEL-MVC/Controllers/c_inscription.php" method="POST">
-        <span class="title">Créer un compte Stagiaire</span>
+        <span class="title">Créer un compte Pilote</span>
         <div class="form-container">
           <input type="text" class="input" name="prenom" placeholder="Prénom" required />
           <input type="text" class="input" name="nom" placeholder="Nom" required />
@@ -80,9 +80,9 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Controllers/c_ins
     </div>
 
     <!-- Formulaire Pilote -->
-    <div id="pilote" class="tab-content" style="display: none;">
+    <div id="stagiaire" class="tab-content" style="display: none;">
       <form class="form" action="/projetWEB/MODEL-MVC/Controllers/c_inscription.php" method="POST">
-        <span class="title">Créer un compte Pilote</span>
+        <span class="title">Créer un compte stagiaire</span>
         <div class="form-container">
           <input type="text" class="input" name="prenom" placeholder="Prénom" required />
           <input type="text" class="input" name="nom" placeholder="Nom" required />
