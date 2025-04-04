@@ -19,7 +19,7 @@ ob_end_clean(); // Vide le tampon pour éviter toute sortie indésirable
 
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
-    header("Location: /projetWEB/MODEL-MVC/Controllers/c_connexion.php"); // Rediriger vers la page de connexion si non connecté
+    header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php"); // Rediriger vers la page de connexion si non connecté
     exit();
 }
 
@@ -47,7 +47,9 @@ $role = $_SESSION['role'];
                     <li><a href="/projetWEB/MODEL-MVC/Views/creation_compte/inscription.php">S'INSCRIRE</a></li>
                     <li><a href="/projetWEB/MODEL-MVC/Views/creation_compte/connexion.php">CONNEXION</a></li>
                 <?php else: ?>
-                    <li><a href="/projetWEB/MODEL-MVC/Controllers/c_deconnexion.php">DÉCONNEXION</a></li>
+                    <li>
+                        <a href="/projetWEB/MODEL-MVC/Controllers/c_deconnexion.php?redirect=connexion">DÉCONNEXION</a>
+                    </li>
                 <?php endif; ?>
             </ul>
         </nav>

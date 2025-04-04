@@ -1,13 +1,16 @@
 <?php
-session_start(); // Démarre ou reprend la session
-
-// Supprimer toutes les variables de session
+session_start();
 session_unset();
-
-// Détruire la session
 session_destroy();
 
-// Rediriger l'utilisateur vers la page d'accueil ou une autre page après la déconnexion
-header("Location: /projetWEB/MODEL-MVC/Views/acceuil/acceuil.php");
+// Vérifier si un paramètre de redirection est défini
+$redirect = isset($_GET['redirect']) ? $_GET['redirect'] : 'acceuil';
+
+// Rediriger vers la page spécifiée
+if ($redirect === 'connexion') {
+    header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php");
+} else {
+    header("Location: /projetWEB/MODEL-MVC/Views/acceuil/acceuil.php");
+}
 exit();
 ?>
