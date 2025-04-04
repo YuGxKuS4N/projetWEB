@@ -4,7 +4,13 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Controllers/c_connexion.php'; // Chemin correct vers le contrôleur
+ob_start(); // Démarre la mise en tampon de sortie
+$controllerPath = dirname(__DIR__, 3) . '/MODEL-MVC/Controllers/c_connexion.php';
+if (!file_exists($controllerPath)) {
+    die("Erreur : Le fichier c_connexion.php est introuvable à l'emplacement : $controllerPath");
+}
+require_once $controllerPath;
+ob_end_clean(); // Vide le tampon pour éviter toute sortie indésirable
 
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
@@ -32,8 +38,12 @@ $role = $_SESSION['role'];
                 </a>
             </div>
             <ul class="nav-right">
-                <li><a href="/projetWEB/MODEL-MVC/Views/creation_compte/inscription.php">S'INSCRIRE</a></li>
-                <li><a href="/projetWEB/MODEL-MVC/Views/creation_compte/connexion.php">CONNEXION</a></li>
+                <?php if (!isset($_SESSION['user_id'])): ?>
+                    <li><a href="/projetWEB/MODEL-MVC/Views/creation_compte/inscription.php">S'INSCRIRE</a></li>
+                    <li><a href="/projetWEB/MODEL-MVC/Views/creation_compte/connexion.php">CONNEXION</a></li>
+                <?php else: ?>
+                    <li><a href="/projetWEB/MODEL-MVC/Controllers/c_deconnexion.php">DÉCONNEXION</a></li>
+                <?php endif; ?>
             </ul>
         </nav>
     </header>

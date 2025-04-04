@@ -57,9 +57,9 @@ SQL;
 }
 
 // Traitement de la requête POST
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = trim($_POST['email']);
-    $password = trim($_POST['password']);
+if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = trim($_POST['email'] ?? '');
+    $password = trim($_POST['password'] ?? '');
 
     $database = new Database();
     $connexionController = new ConnexionController($database);
@@ -70,6 +70,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: ../Vues/accueil.php");
         exit();
     } else {
+        // Utilisez une sortie JSON uniquement si nécessaire
+        header('Content-Type: application/json');
         echo json_encode($response);
+        exit();
     }
 }
