@@ -22,7 +22,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Controllers/c_con
             </a>
         </div>
 
-        <ul class="nav-right">
+        <uel class="nav-right">
             <li><a href="/projetWEB/MODEL-MVC/Views/creation_compte/inscription.php">S'INSCRIRE</a></li>
         </ul>
     </nav>
