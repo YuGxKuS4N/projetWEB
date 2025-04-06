@@ -151,7 +151,5 @@ if (php_sapi_name() !== 'cli' && isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["
     $user->register($_POST);
 
     $database->disconnect(); // Ferme proprement la connexion
-} else {
-    echo "Ce script doit être exécuté dans un contexte HTTP avec une requête POST.";
-}
+} 
 ?>
