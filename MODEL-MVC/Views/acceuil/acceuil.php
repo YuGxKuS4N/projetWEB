@@ -32,7 +32,8 @@ $role = $_SESSION['role'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accueil - WEB4ALL</title>
-    <link rel="stylesheet" href="/projetWEB/MODEL-MVC/Public/css/acceuil.css"> 
+    <!--<link rel="stylesheet" href="../../projetWEB/MODEL-MVC/Public/css/acceuil.css">  -->
+    <link rel="stylesheet" href="../../Public/css/acceuil.css"
 </head>
 <body>
     <header>
