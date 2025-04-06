@@ -87,6 +87,8 @@ $role = $_SESSION['role'];
                 echo '<a href="/projetWEB/MODEL-MVC/Views/admin/admin.php" class="btn">PANEL ADMINISTRATION</a>';
             }
             ?>
+            <!-- Bouton pour accéder à la page profil -->
+            <a href="/projetWEB/MODEL-MVC/Views/utilisateur/profil.php" class="btn">MON PROFIL</a>
         </div>
     </section>
     
