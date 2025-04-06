@@ -32,15 +32,14 @@ $role = $_SESSION['role'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accueil - WEB4ALL</title>
-    <!--<link rel="stylesheet" href="../../projetWEB/MODEL-MVC/Public/css/acceuil.css">  -->
-    <link rel="stylesheet" href="../../Public/css/acceuil.css">
+    <link rel="stylesheet" href="/projetWEB/MODEL-MVC/Public/css/acceuil.css"> <!-- Correction du chemin -->
 </head>
 <body>
     <header>
         <nav class="navbar">
             <div class="nav-logo">
                 <a href="/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php">
-                    <img src="/projetWEB/MODEL-MVC/Public/images/logo.png" alt="Logo du Site"> <!-- Vérifiez ce chemin -->
+                    <img src="../../Public/images/logo.png" alt="Logo du Site"> <!-- Correction du chemin -->
                 </a>
             </div>
             <ul class="nav-right">
