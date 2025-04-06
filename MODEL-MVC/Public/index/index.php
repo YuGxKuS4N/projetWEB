@@ -18,7 +18,7 @@ include_once dirname(__DIR__) . '/Controllers/c_chargement.php';
         <nav class="navbar">  
             <div class="nav-logo">  
                 <a href="/projetWEB/MODEL-MVC/Public/index.php">  
-                    <img src="/projetWEB/MODEL-MVC/Public/images/logo.png" alt="Logo du Site">  
+                     
                 </a>  
             </div>  
             <ul class="nav-right">  
