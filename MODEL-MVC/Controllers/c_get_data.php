@@ -6,7 +6,7 @@
  * - Utilise la classe `DataController` pour encapsuler la logique.
  */
 
-require '/Config/config.php'; // Chemin absolu vers la configuration
+require __DIR__ . '/../Config/config.php'; // Correction du chemin
 require __DIR__ . '/../Config/Database.php'; // Inclure la classe Database avec le chemin relatif correct
 
 class DataController {
@@ -21,11 +21,11 @@ class DataController {
     public function getProfile($type, $userId) {
         $sql = '';
         switch ($type) {
-            case 'candidat':
+            case 'stagiaire':
                 $sql = <<<SQL
                     SELECT * 
-                    FROM Etudiant 
-                    WHERE id_etudiant = ?
+                    FROM Stagiaire 
+                    WHERE id_stagiaire = ?
 SQL;
                 break;
             case 'pilote':
@@ -47,6 +47,10 @@ SQL;
         }
 
         $stmt = $this->conn->prepare($sql);
+        if (!$stmt) {
+            return ["error" => "Erreur de préparation de la requête : " . $this->conn->error];
+        }
+
         $stmt->bind_param("i", $userId);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -77,6 +81,10 @@ SQL;
 SQL;
 
         $stmt = $this->conn->prepare($sql);
+        if (!$stmt) {
+            return ["error" => "Erreur de préparation de la requête : " . $this->conn->error];
+        }
+
         $stmt->bind_param("i", $userId);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -96,13 +104,12 @@ if (!isset($_GET['type']) || !isset($_GET['user_id'])) {
     exit();
 }
 
-$type = $_GET['type']; // Type d'utilisateur (candidat, pilote, entreprise)
+$type = $_GET['type']; // Type d'utilisateur (stagiaire, pilote, entreprise)
 $userId = intval($_GET['user_id']); // ID de l'utilisateur
 $context = $_GET['context'] ?? 'profile'; // Contexte : 'profile' ou 'students'
 
 // Initialiser le contrôleur
-$database = new Database();
-$dataController = new DataController($database);
+$dataController = new DataController();
 
 $response = [];
 if ($context === 'profile') {
@@ -112,6 +119,9 @@ if ($context === 'profile') {
 } else {
     $response = ["error" => "Contexte ou type d'utilisateur invalide."];
 }
+
+// Journal pour le débogage
+error_log("Réponse du contrôleur : " . json_encode($response));
 
 // Retourner les données au format JSON
 echo json_encode($response);
