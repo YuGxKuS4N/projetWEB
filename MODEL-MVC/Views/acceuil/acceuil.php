@@ -32,14 +32,14 @@ $role = $_SESSION['role'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accueil - WEB4ALL</title>
-    <link rel="stylesheet" href="/projetWEB/MODEL-MVC/Public/css/accueil.css">
+    <link rel="stylesheet" href="/projetWEB/MODEL-MVC/Public/css/acceuil.css"> 
 </head>
 <body>
     <header>
         <nav class="navbar">
             <div class="nav-logo">
                 <a href="/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php">
-                    <img src="/projetWEB/MODEL-MVC/Public/images/logo.png" alt="Logo du Site">
+                    <img src="/projetWEB/MODEL-MVC/Public/images/logo.png" alt="Logo du Site"> <!-- Vérifiez ce chemin -->
                 </a>
             </div>
             <ul class="nav-right">
@@ -56,7 +56,7 @@ $role = $_SESSION['role'];
     </header>
     <section class="hero">
         <video id="background-video" autoplay loop muted class="background-video">
-            <source src="/projetWEB/MODEL-MVC/Public/videos/bckg.mp4" type="video/mp4">
+            <source src="/projetWEB/MODEL-MVC/Public/videos/bckg.mp4" type="video/mp4"> <!-- Vérifiez ce chemin -->
             Votre navigateur ne supporte pas les vidéos HTML5.
         </video>
         <div class="overlay"></div>
@@ -77,7 +77,7 @@ $role = $_SESSION['role'];
             </h1>
             <?php
             // Afficher un bouton différent en fonction du rôle
-            if ($role === 'stagiaire') { // Remplacez 'etudiant' par 'stagiaire'
+            if ($role === 'stagiaire') {
                 echo '<a href="/projetWEB/MODEL-MVC/Views/stage/stage.php" class="btn">OFFRES DE STAGE</a>';
             } elseif ($role === 'entreprise') {
                 echo '<a href="/projetWEB/MODEL-MVC/Views/ajout_stage/ajout.php" class="btn">DÉPOSER UNE OFFRE</a>';
@@ -93,6 +93,6 @@ $role = $_SESSION['role'];
     <footer>
         <p>&copy; <?php echo date("Y"); ?> WEB4ALL. Tous droits réservés.</p>
     </footer>
-    <script src="/projetWEB/MODEL-MVC/Public/js/notifications.js"></script>
+    <script src="/projetWEB/MODEL-MVC/Public/js/notifications.js"></script> <!-- Correction du chemin -->
 </body>
 </html>

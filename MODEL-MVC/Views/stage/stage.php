@@ -57,7 +57,7 @@ try {
           <p><strong>Date de début :</strong> <?php echo htmlspecialchars($offre['date_debut']); ?></p>
           <p><strong>Durée :</strong> <?php echo htmlspecialchars($offre['duree']); ?> mois</p>
           <p><strong>Lieu :</strong> <?php echo htmlspecialchars($offre['lieu']); ?></p>
-          <p><button onclick="window.location.href='/projetWEB/MODEL-MVC/Views/postuler/postuler.php?id=<?php echo $offre['stage-id']; ?>'">Postuler</button></p>
+            <p><button onclick="window.location.href='/projetWEB/MODEL-MVC/Views/postuler/postuler.php?id=<?php echo htmlspecialchars($offre['id']); ?>'">Postuler</button></p>
         </div>
       <?php endforeach; ?>
     <?php else: ?>
