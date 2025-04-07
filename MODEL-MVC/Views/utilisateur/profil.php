@@ -4,6 +4,7 @@ require_once dirname(__DIR__, 3) . '/MODEL-MVC/Controllers/c_get_data.php'; // C
 // Vérifier si l'utilisateur est connecté
 session_start();
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
+    error_log("Session invalide : " . json_encode($_SESSION)); // Journal pour le débogage
     header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php");
     exit();
 }

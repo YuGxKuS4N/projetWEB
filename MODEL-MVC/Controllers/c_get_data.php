@@ -105,6 +105,8 @@ if (!isset($_GET['type']) || !isset($_GET['user_id'])) {
     exit();
 }
 
+error_log("Paramètres reçus : type=" . $_GET['type'] . ", user_id=" . $_GET['user_id"]); // Journal pour le débogage
+
 $type = $_GET['type']; // Type d'utilisateur (stagiaire, pilote, entreprise)
 $userId = intval($_GET['user_id']); // ID de l'utilisateur
 $context = $_GET['context'] ?? 'profile'; // Contexte : 'profile' ou 'students'
