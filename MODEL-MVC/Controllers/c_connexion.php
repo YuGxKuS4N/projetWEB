@@ -32,10 +32,6 @@ class ConnexionController {
             FROM Stagiaire 
             WHERE email = ?
             UNION
-            SELECT id_etudiant AS id, email, password, 'etudiant' AS role 
-            FROM Etudiant 
-            WHERE email = ?
-            UNION
             SELECT id_pilote AS id, email, password, 'pilote' AS role 
             FROM Pilote 
             WHERE email = ?
