@@ -47,7 +47,7 @@ SQL;
             return ["success" => false, "error" => "Erreur interne. Veuillez réessayer plus tard."];
         }
 
-        $stmt->bind_param("ssss", $email, $email, $email, $email);
+        $stmt->bind_param("ssss", $email, $email, $email);
         $stmt->execute();
         $result = $stmt->get_result();
 
