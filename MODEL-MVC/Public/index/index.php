@@ -3,6 +3,9 @@ session_start(); // Démarre la session PHP
 
 // Inclure le fichier de chargement des vues  
 include_once dirname(__DIR__) . '/Controllers/c_chargement.php';   
+
+// Vérifier si la variable $page est définie
+$page = $_GET['page'] ?? 'acceuil/acceuil'; // Charger la page d'accueil par défaut
 ?>  
 
 <!DOCTYPE html>  
@@ -32,10 +35,16 @@ include_once dirname(__DIR__) . '/Controllers/c_chargement.php';
         <h2 id="profile-title">Mon Profil</h2>  
         <div id="dynamic-content">  
             <!-- Contenu dynamique chargé ici -->  
-            <?php loadPage($page); ?>  
+            <?php 
+            try {
+                loadPage($page); 
+            } catch (Exception $e) {
+                echo "<p>Erreur lors du chargement de la page : " . htmlspecialchars($e->getMessage()) . "</p>";
+            }
+            ?>  
         </div>  
     </div>  
 
     <script src="/projetWEB/MODEL-MVC/Public/js/responsive.js"></script>  
 </body>  
-</html>  
+</html>
