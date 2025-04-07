@@ -4,18 +4,18 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Vérifier si la session est déjà active avant d'appeler session_start()
-// if (session_status() == PHP_SESSION_NONE) {
-//     session_start();
-// }
+//Vérifier si la session est déjà active avant d'appeler session_start()
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
-// ob_start(); // Démarre la mise en tampon de sortie
-// $controllerPath = dirname(__DIR__, 3) . '/MODEL-MVC/Controllers/c_connexion.php';
-// if (!file_exists($controllerPath)) {
-//     die("Erreur : Le fichier c_connexion.php est introuvable à l'emplacement : $controllerPath");
-// }
-// require_once $controllerPath;
-// ob_end_clean(); // Vide le tampon pour éviter toute sortie indésirable
+ob_start(); // Démarre la mise en tampon de sortie
+$controllerPath = dirname(__DIR__, 3) . '/MODEL-MVC/Controllers/c_connexion.php';
+if (!file_exists($controllerPath)) {
+    die("Erreur : Le fichier c_connexion.php est introuvable à l'emplacement : $controllerPath");
+}
+require_once $controllerPath;
+ob_end_clean(); // Vide le tampon pour éviter toute sortie indésirable
 
 // Vérifier si l'utilisateur est connecté
 // if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
@@ -24,7 +24,7 @@ error_reporting(E_ALL);
 // }
 
 // Récupérer le rôle de l'utilisateur
-// $role = $_SESSION['role'];
+$role = $_SESSION['role'];
 ?>
 <!DOCTYPE html>
 <html lang="fr">
