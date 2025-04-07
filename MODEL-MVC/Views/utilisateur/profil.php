@@ -11,6 +11,9 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
 $userId = $_SESSION['user_id'];
 $userType = $_SESSION['role'];
 
+// Journal des paramètres transmis au contrôleur
+error_log("Paramètres transmis au contrôleur : type=$userType, user_id=$userId");
+
 // Récupérer les données utilisateur
 $data = file_get_contents(dirname(__DIR__, 3) . "/MODEL-MVC/Controllers/c_get_data.php?type=$userType&user_id=$userId&context=profile");
 if ($data === false) {
