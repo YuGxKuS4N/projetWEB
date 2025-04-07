@@ -47,7 +47,8 @@ SQL;
             return ["success" => false, "error" => "Erreur interne. Veuillez réessayer plus tard."];
         }
 
-        $stmt->bind_param("ssss", $email, $email, $email);
+        // Corriger le nombre de variables passées à bind_param
+        $stmt->bind_param("sss", $email, $email, $email); // Trois paramètres pour trois `?`
         $stmt->execute();
         $result = $stmt->get_result();
 
