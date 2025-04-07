@@ -1,6 +1,6 @@
 <?php
 /**
- * Contrôleur pour récupérer les stages et les options de filtrage.
+ * Contrôleur pour récupérer les stages et les options de filtrage. 
  */
 
 header('Content-Type: application/json');
