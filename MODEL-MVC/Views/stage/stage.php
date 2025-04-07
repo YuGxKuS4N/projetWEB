@@ -69,6 +69,6 @@ try {
 
 
   </main>
-  <script src="/projetWEB/MODEL-MVC/Public/js/stage.js"></script>
+  <script src="projetWEB/MODEL-MVC/Views/stage/stage.js"></script>
 </body>
 </html>
