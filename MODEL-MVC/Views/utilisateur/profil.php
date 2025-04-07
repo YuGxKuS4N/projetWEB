@@ -21,6 +21,7 @@ if ($data === false) {
     error_log("Erreur lors de la récupération des données utilisateur : type=$userType, user_id=$userId");
     $userData = ["error" => "Impossible de récupérer les données utilisateur."];
 } else {
+    error_log("Données utilisateur récupérées : " . $data); // Journal pour le débogage
     $userData = json_decode($data, true);
 }
 ?>
