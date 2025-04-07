@@ -39,7 +39,7 @@ $role = $_SESSION['role'];
         <nav class="navbar">
             <div class="nav-logo">
                 <a href="/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php">
-                    <img src="../../Public/images/logo.png" alt="Logo du Site"> <!-- Correction du chemin -->
+                    <img src="../../Public/image/logo.png" alt="Logo du Site"> <!-- Correction du chemin -->
                 </a>
             </div>
             <ul class="nav-right">
