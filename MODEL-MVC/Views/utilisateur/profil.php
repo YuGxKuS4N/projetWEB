@@ -1,5 +1,5 @@
 <?php
-require_once '/projetWEB/MODEL-MVC/Controllers/c_get_data.php'; // Inclusion du contrôleur pour récupérer les données utilisateur
+require_once dirname(__DIR__, 3) . '/MODEL-MVC/Controllers/c_get_data.php'; // Correction du chemin
 
 // Vérifier si l'utilisateur est connecté
 session_start();
@@ -12,7 +12,7 @@ $userId = $_SESSION['user_id'];
 $userType = $_SESSION['role'];
 
 // Récupérer les données utilisateur
-$data = file_get_contents("/projetWEB/MODEL-MVC/Controllers/c_get_data.php?type=$userType&user_id=$userId&context=profile");
+$data = file_get_contents(dirname(__DIR__, 3) . "/MODEL-MVC/Controllers/c_get_data.php?type=$userType&user_id=$userId&context=profile");
 $userData = json_decode($data, true);
 ?>
 <!DOCTYPE html>
