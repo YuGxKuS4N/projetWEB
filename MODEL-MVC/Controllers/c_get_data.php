@@ -18,9 +18,9 @@ class DataController {
         $this->conn = $this->db->connect();
     }
 
-    public function getProfile($type, $userId) {
+    public function getProfile($userType, $userId) {
         $sql = '';
-        switch ($type) {
+        switch ($userType) {
             case 'stagiaire':
                 $sql = <<<SQL
                     SELECT * 
@@ -98,16 +98,16 @@ SQL;
     }
 }
 
-// Vérifier si les paramètres nécessaires sont définis
-if (!isset($_GET['type']) || !isset($_GET['user_id'])) {
+// ✅ Vérifier si les paramètres nécessaires sont définis
+if (!isset($_GET['user_type']) || !isset($_GET['user_id'])) {
     error_log("Paramètres manquants : " . json_encode($_GET)); // Journal pour le débogage
     echo json_encode(["error" => "Paramètres manquants."]);
     exit();
 }
 
-error_log("Paramètres reçus : type=" . $_GET['type'] . ", user_id=" . $_GET['user_id"]); // Journal pour le débogage
+error_log("Paramètres reçus : user_type=" . $_GET['user_type'] . ", user_id=" . $_GET['user_id']); // Journal pour le débogage
 
-$type = $_GET['type']; // Type d'utilisateur (stagiaire, pilote, entreprise)
+$userType = $_GET['user_type']; // ✅ nouveau nom de paramètre
 $userId = intval($_GET['user_id']); // ID de l'utilisateur
 $context = $_GET['context'] ?? 'profile'; // Contexte : 'profile' ou 'students'
 
@@ -116,8 +116,8 @@ $dataController = new DataController();
 
 $response = [];
 if ($context === 'profile') {
-    $response = $dataController->getProfile($type, $userId);
-} elseif ($context === 'students' && $type === 'pilote') {
+    $response = $dataController->getProfile($userType, $userId);
+} elseif ($context === 'students' && $userType === 'pilote') {
     $response = $dataController->getStudents($userId);
 } else {
     $response = ["error" => "Contexte ou type d'utilisateur invalide."];

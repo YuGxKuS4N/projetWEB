@@ -18,7 +18,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Controllers/c_ins
     </ul>
     <div class="nav-logo">
       <a href="/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php">
-        <img src="/projetWEB/MODEL-MVC/Public/images/logo.png" alt="Logo du Site" />
+        <img src="/projetWEB/MODEL-MVC/Public/image/logo.png" alt="Logo du Site" />
       </a>
     </div>
     <ul class="nav-right">
