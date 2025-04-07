@@ -15,7 +15,7 @@ error_reporting(E_ALL);
 //     die("Erreur : Le fichier c_connexion.php est introuvable à l'emplacement : $controllerPath");
 // }
 // require_once $controllerPath;
-ob_end_clean(); // Vide le tampon pour éviter toute sortie indésirable
+// ob_end_clean(); // Vide le tampon pour éviter toute sortie indésirable
 
 // Vérifier si l'utilisateur est connecté
 // if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
@@ -24,7 +24,7 @@ ob_end_clean(); // Vide le tampon pour éviter toute sortie indésirable
 // }
 
 // Récupérer le rôle de l'utilisateur
-$role = $_SESSION['role'];
+// $role = $_SESSION['role'];
 ?>
 <!DOCTYPE html>
 <html lang="fr">
