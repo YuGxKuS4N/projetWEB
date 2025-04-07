@@ -100,6 +100,7 @@ SQL;
 
 // Vérifier si les paramètres nécessaires sont définis
 if (!isset($_GET['type']) || !isset($_GET['user_id'])) {
+    error_log("Paramètres manquants : " . json_encode($_GET)); // Journal pour le débogage
     echo json_encode(["error" => "Paramètres manquants."]);
     exit();
 }

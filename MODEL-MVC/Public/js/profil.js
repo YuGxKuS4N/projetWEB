@@ -9,11 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Charger les informations utilisateur (contexte : profil)
+  console.log(`Paramètres envoyés à l'API: type=${userType}, user_id=${userId}, context=profile`); // Journal pour le débogage
   fetch(`/projetWEB/MODEL-MVC/Controllers/c_get_data.php?type=${userType}&user_id=${userId}&context=profile`)
     .then(response => response.json())
     .then(data => {
       const container = document.getElementById('dynamic-content');
       if (data.error) {
+        console.error("Erreur API :", data.error); // Journal pour le débogage
         container.innerHTML = `<p>${data.error}</p>`;
       } else {
         // Afficher les informations utilisateur

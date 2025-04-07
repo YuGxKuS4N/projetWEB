@@ -13,7 +13,12 @@ $userType = $_SESSION['role'];
 
 // Récupérer les données utilisateur
 $data = file_get_contents(dirname(__DIR__, 3) . "/MODEL-MVC/Controllers/c_get_data.php?type=$userType&user_id=$userId&context=profile");
-$userData = json_decode($data, true);
+if ($data === false) {
+    error_log("Erreur lors de la récupération des données utilisateur : type=$userType, user_id=$userId");
+    $userData = ["error" => "Impossible de récupérer les données utilisateur."];
+} else {
+    $userData = json_decode($data, true);
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
