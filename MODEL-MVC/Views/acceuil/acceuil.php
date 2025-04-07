@@ -54,7 +54,7 @@ $role = $_SESSION['role'];
             </ul>
         </nav>
     </header>
-    <section class="hero">
+    <section class="hero" style="background: url('/projetWEB/MODEL-MVC/Public/images/background.jpg') no-repeat center center; background-size: cover;">
         <video id="background-video" autoplay loop muted class="background-video">
             <source src="/projetWEB/MODEL-MVC/Public/videos/bckg.mp4" type="video/mp4"> <!-- Vérifiez ce chemin -->
             Votre navigateur ne supporte pas les vidéos HTML5.
