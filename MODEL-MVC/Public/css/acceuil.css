@@ -155,10 +155,12 @@ html, body {
   color: #fff; /* Couleur du texte pour le titre */
   text-align: center;
   margin-top: 20px; /* Espace au-dessus du titre */
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
-.stagiaire-tilte span {
-  color: #a67c52; /* Couleur différente pour le mot "Stagiaire" */
-}
+
 footer {
   z-index: 1; /* Assure que le footer est au-dessus de la vidéo */
   background: rgba(0, 0, 0, 0.7); /* Fond semi-transparent pour le footer */
