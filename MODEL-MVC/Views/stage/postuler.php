@@ -38,6 +38,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Controllers/c_can
       <button type="submit">Envoyer la candidature</button>
     </form>
   </div>
-  <script src="/projetWEB/MODEL-MVC/Public/js/postuler.js"></script>
+  <script src="/postuler.php"></script>
 </body>
 </html>
