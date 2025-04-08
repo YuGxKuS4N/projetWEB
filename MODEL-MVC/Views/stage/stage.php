@@ -46,28 +46,29 @@ try {
     </section>
 
     <section class="offers">
-  <h2>Nos Offres de Stage</h2>
-  <div class="offers-list">
-    <?php if (!empty($offres)): ?>
-      <?php foreach ($offres as $offre): ?>
-        <div class="offer">
-          <h3><?php echo htmlspecialchars($offre['titre']); ?></h3>
-          <p><?php echo htmlspecialchars($offre['description']); ?></p>
-          <p><strong>Secteur :</strong> <?php echo htmlspecialchars($offre['secteur_activite']); ?></p>
-          <p><strong>Date de début :</strong> <?php echo htmlspecialchars($offre['date_debut']); ?></p>
-          <p><strong>Durée :</strong> <?php echo htmlspecialchars($offre['duree']); ?> mois</p>
-          <p><strong>Lieu :</strong> <?php echo htmlspecialchars($offre['lieu']); ?></p>
-            <p><button onclick="window.location.href='/projetWEB/MODEL-MVC/Views/stage/postuler.php?id=<?php echo htmlspecialchars((int)$offre['id']); ?>'">Postuler</button></p>
-        </div>
-      <?php endforeach; ?>
-    <?php else: ?>
-      <p>Aucune offre de stage disponible pour le moment.</p>
-    <?php endif; ?>
-  </div>
-</section>
-
-
-
+      <h2>Nos Offres de Stage</h2>
+      <div class="offers-list">
+        <?php if (!empty($offres)): ?>
+          <?php foreach ($offres as $offre): ?>
+            <div class="offer">
+              <h3><?php echo htmlspecialchars($offre['titre']); ?></h3>
+              <p><?php echo htmlspecialchars($offre['description']); ?></p>
+              <p><strong>Secteur :</strong> <?php echo htmlspecialchars($offre['secteur_activite']); ?></p>
+              <p><strong>Date de début :</strong> <?php echo htmlspecialchars($offre['date_debut']); ?></p>
+              <p><strong>Durée :</strong> <?php echo htmlspecialchars($offre['duree']); ?> mois</p>
+              <p><strong>Lieu :</strong> <?php echo htmlspecialchars($offre['lieu']); ?></p>
+              <p>
+                <button onclick="window.location.href='/projetWEB/MODEL-MVC/Views/stage/postuler.php?id=<?php echo htmlspecialchars((int)$offre['stage-id']); ?>'">
+                  Postuler
+                </button>
+              </p>
+            </div>
+          <?php endforeach; ?>
+        <?php else: ?>
+          <p>Aucune offre de stage disponible pour le moment.</p>
+        <?php endif; ?>
+      </div>
+    </section>
   </main>
   <script src="projetWEB/MODEL-MVC/Views/stage/stage.js"></script>
 </body>
