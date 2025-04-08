@@ -9,8 +9,18 @@ document.addEventListener("DOMContentLoaded", () => {
   // Fonction pour charger les options de filtrage
   const loadFilterOptions = () => {
     fetch('/projetWEB/MODEL-MVC/Controllers/c_get_stage.php?action=getFilters')
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Erreur HTTP : ${response.status}`);
+        }
+        return response.json();
+      })
       .then(options => {
+        if (options.error) {
+          console.error("Erreur API :", options.error);
+          return;
+        }
+
         // Charger les lieux
         options.lieux.forEach(lieu => {
           const option = document.createElement("option");
@@ -48,12 +58,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     fetch(`/projetWEB/MODEL-MVC/Controllers/c_get_stage.php?${params.toString()}`)
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Erreur HTTP : ${response.status}`);
+        }
+        return response.json();
+      })
       .then(stages => {
         offersContainer.innerHTML = ''; // Réinitialiser le conteneur
 
         if (stages.error) {
-          console.error(stages.error);
+          console.error("Erreur API :", stages.error);
           offersContainer.innerHTML = "<p>Erreur lors du chargement des stages.</p>";
           return;
         }
@@ -98,5 +113,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Rediriger vers la page de candidature
 function redirectToPostuler(stageId) {
-  window.location.href = `/projetWEB/MODEL-MVC/Views/stage/postuler.html?stage_id=${stageId}`;
+  window.location.href = `/projetWEB/MODEL-MVC/Views/stage/postuler.php?stage_id=${stageId}`;
 }
