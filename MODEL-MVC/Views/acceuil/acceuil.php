@@ -32,7 +32,7 @@ $role = $_SESSION['role'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accueil - WEB4ALL</title>
-    <link rel="stylesheet" href="/projetWEB/MODEL-MVC/Public/css/acceuil.css"> <!-- Correction du chemin -->
+    <link rel="stylesheet" href="/projetWEB/MODEL-MVC/Public/css/acceuil.css?v=<?php echo time(); ?>"> <!-- Ajout d'un paramètre pour éviter le cache -->
 </head>
 <body>
     <header>
@@ -56,7 +56,7 @@ $role = $_SESSION['role'];
     </header>
     <section class="hero">
         <video id="background-video" autoplay loop muted class="background-video">
-            <source src="/projetWEB/MODEL-MVC/Public/image/bckg.mp4" type="video/mp4"> <!-- Vérifiez ce chemin -->
+            <source src="/projetWEB/MODEL-MVC/Public/image/bckg.mp4" type="video/mp4"> 
             Votre navigateur ne supporte pas les vidéos HTML5.
         </video>
         <div class="overlay"></div>
