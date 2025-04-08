@@ -1,6 +1,6 @@
 <?php
 ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);i_set('display_startup_errors', 1);
+ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);(E_ALL);
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Controllers/c_candidature.php'; // Inclusion du contrôleure_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Controllers/c_candidature.php'; // Inclusion du contrôleur
