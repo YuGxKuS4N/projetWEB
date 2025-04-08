@@ -39,7 +39,7 @@ $role = $_SESSION['role'];
         <nav class="navbar">
             <div class="nav-logo">
                 <a href="/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php">
-                    <img src="projetWEB/MODEL-MVC/Public/image/logo.png" alt="Logo du Site"> 
+                    <img src="/projetWEB/MODEL-MVC/Public/image/logo.png" alt="Logo du Site"> <!-- Correction du chemin -->
                 </a>
             </div>
             <ul class="nav-right">
@@ -95,6 +95,6 @@ $role = $_SESSION['role'];
     <footer>
         <p>&copy; <?php echo date("Y"); ?> WEB4ALL. Tous droits réservés.</p>
     </footer>
-    <script src="projetWEB/MODEL-MVC/Public/js/notifications.js"></script> <!-- Correction du chemin -->
+    <script src="/projetWEB/MODEL-MVC/Public/js/notifications.js"></script> <!-- Correction du chemin -->
 </body>
 </html>
