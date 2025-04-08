@@ -109,6 +109,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_FILES['motivation'] ?? null // Vérifiez si le fichier de motivation est optionnel
     );
 
+    // Envoyer uniquement la réponse JSON
     echo json_encode($response);
+    exit();
 }
 ?>

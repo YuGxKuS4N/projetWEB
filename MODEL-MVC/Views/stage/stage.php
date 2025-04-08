@@ -8,6 +8,9 @@ try {
     // Récupérer les offres de stage
     $query = $conn->query("SELECT * FROM Offre_Stage");
     $offres = $query->fetch_all(MYSQLI_ASSOC);
+
+    // Journaliser les données pour le débogage
+    error_log("Offres récupérées : " . json_encode($offres));
 } catch (Exception $e) {
     die("Erreur : " . $e->getMessage());
 }

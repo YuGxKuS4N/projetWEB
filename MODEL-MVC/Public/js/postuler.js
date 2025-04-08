@@ -10,7 +10,12 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("stage-id").value = stageId;
 
   fetch(`/projetWEB/MODEL-MVC/Controllers/c_get_stage.php?stage_id=${stageId}`)
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Erreur HTTP : ${response.status}`);
+      }
+      return response.json();
+    })
     .then(stage => {
       if (stage.error) {
         console.error("Erreur :", stage.error);
