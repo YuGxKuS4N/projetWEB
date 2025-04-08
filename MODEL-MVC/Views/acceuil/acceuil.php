@@ -65,7 +65,7 @@ $role = $_SESSION['role'];
                 <?php
                 // Afficher un titre différent en fonction du rôle
                 if ($role === 'stagiaire') {
-                    echo "PRENDS TON <br> FUTUR EN MAIN : <br> CESI TA CHANCE !";
+                    echo "<span class='stagiaire-title'>PRENDS TON <br> FUTUR EN MAIN : <br> CESI TA CHANCE !</span>";
                 } elseif ($role === 'entreprise') {
                     echo "BIENVENUE DANS <br> VOTRE ESPACE ENTREPRISE";
                 } elseif ($role === 'pilote') {
