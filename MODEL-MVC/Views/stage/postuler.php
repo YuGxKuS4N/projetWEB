@@ -17,7 +17,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Controllers/c_can
   <div class="header">WEB4ALL</div>
   <div class="container">
     <h2 id="stage-title">Chargement des informations du stage...</h2>
-    <form action="/projetWEB/MODEL-MVC/Controllers/c_candidature.php" method="POST" enctype="multipart/form-data">
+    <form action="/projetWEB/MODEL-MVC/Controllers/c_candidature.php" method="POST" enctype="multipart/form-data" accept-charset="UTF-8">
       <input type="hidden" id="stage-id" name="stage_id" value="1"> <!-- Valeur par défaut pour tester -->
       <div class="form-group">
         <label for="prenom">Prénom</label>
