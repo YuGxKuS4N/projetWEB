@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const filterProfil = document.getElementById("filter-profil");
   const searchButton = document.getElementById("search-button");
 
-  // Fonction pour charger les options de filtrage
   const loadFilterOptions = () => {
     fetch('/projetWEB/MODEL-MVC/Controllers/c_get_stage.php?action=getFilters')
       .then(response => {
@@ -21,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
-        // Charger les lieux
         options.lieux.forEach(lieu => {
           const option = document.createElement("option");
           option.value = lieu;
@@ -29,7 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
           filterLieu.appendChild(option);
         });
 
-        // Charger les durées
         options.durees.forEach(duree => {
           const option = document.createElement("option");
           option.value = duree;
@@ -37,7 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
           filterDuree.appendChild(option);
         });
 
-        // Charger les profils demandés
         options.profils.forEach(profil => {
           const option = document.createElement("option");
           option.value = profil;
@@ -48,7 +44,6 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch(error => console.error("Erreur lors du chargement des options de filtrage :", error));
   };
 
-  // Fonction pour charger les stages
   const loadStages = (search = '', filters = {}) => {
     const params = new URLSearchParams({
       search: search,
@@ -65,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return response.json();
       })
       .then(stages => {
-        offersContainer.innerHTML = ''; // Réinitialiser le conteneur
+        offersContainer.innerHTML = '';
 
         if (stages.error) {
           console.error("Erreur API :", stages.error);
@@ -93,13 +88,9 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   };
 
-  // Charger les options de filtrage au démarrage
   loadFilterOptions();
-
-  // Charger les stages au démarrage
   loadStages();
 
-  // Ajouter un événement pour la recherche
   searchButton.addEventListener("click", () => {
     const search = searchInput.value;
     const filters = {
@@ -111,7 +102,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Rediriger vers la page de candidature
 function redirectToPostuler(stageId) {
   window.location.href = `/projetWEB/MODEL-MVC/Views/stage/postuler.php?stage_id=${stageId}`;
 }
