@@ -14,8 +14,6 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-echo "Contrôleur c_candidature.php chargé avec succès."; // Vérification du chargement
-
 header('Content-Type: application/json');
 require __DIR__ . '/../Config/config.php'; // Inclusion du fichier de configuration
 
