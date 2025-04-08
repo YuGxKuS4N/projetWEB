@@ -8,6 +8,12 @@
  * - Utilise la classe `CandidatureController` pour encapsuler la logique.
  */
 
+// Activer l'affichage des erreurs pour le débogage
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+echo "Contrôleur c_candidature.php chargé avec succès."; // Vérification du chargement
 
 header('Content-Type: application/json');
 require '/Config/config.php'; // Inclusion du fichier de configuration
