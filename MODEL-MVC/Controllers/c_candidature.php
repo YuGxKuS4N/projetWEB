@@ -16,7 +16,7 @@ error_reporting(E_ALL);
 echo "Contrôleur c_candidature.php chargé avec succès."; // Vérification du chargement
 
 header('Content-Type: application/json');
-require '/Config/config.php'; // Inclusion du fichier de configuration
+require __DIR__ . '/../Config/config.php'; // Inclusion du fichier de configuration
 
 class CandidatureController {
     private $db;
