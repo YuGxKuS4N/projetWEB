@@ -1,5 +1,5 @@
 <?php
-session_start()
+session_start();
 /**
  * Contrôleur pour gérer la soumission des candidatures.
  * 
