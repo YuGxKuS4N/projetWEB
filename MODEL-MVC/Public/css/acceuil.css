@@ -19,7 +19,7 @@ body {
   justify-content: center;
 }
 
-.background {
+.hero {
   position: relative;
   height: 100vh;
   overflow: hidden;
@@ -28,15 +28,10 @@ body {
   align-items: center;
 }
 
-.background video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
+html, body {
   height: 100%;
-  object-fit: cover;
-  z-index: -1;
 }
+
 .offer-card {
   position: relative;
   width: 300px;
