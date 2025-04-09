@@ -12,18 +12,11 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Controllers/c_ins
 </head>
 <body>
   <nav class="navbar">
-    <ul class="nav-left">
-      <li><a href="/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php">ACCUEIL</a></li>
-      <li><a href="/projetWEB/MODEL-MVC/Views/stage/stage.php">STAGE</a></li>
-    </ul>
     <div class="nav-logo">
       <a href="/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php">
         <img src="/projetWEB/MODEL-MVC/Public/image/logo.png" alt="Logo du Site" />
       </a>
     </div>
-    <ul class="nav-right">
-      <li><a href="/projetWEB/MODEL-MVC/Views/creation_compte/connexion.php">CONNEXION</a></li>
-    </ul>
   </nav>
 
   <div class="form-box">
@@ -33,7 +26,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Controllers/c_ins
       <button onclick="showTab('stagiaire', event)" class="tab-button">Espace Stagiaire</button>
     </div>
 
-    <!-- Formulaire Stagiaire -->
+    <!-- Formulaire Pilote -->
     <div id="pilote" class="tab-content" style="display: block;">
       <form class="form" action="/projetWEB/MODEL-MVC/Controllers/c_inscription.php" method="POST">
         <span class="title">Créer un compte Pilote</span>
@@ -65,10 +58,10 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Controllers/c_ins
       </form>
     </div>
 
-    <!-- Formulaire Pilote -->
+    <!-- Formulaire Stagiaire -->
     <div id="stagiaire" class="tab-content" style="display: none;">
       <form class="form" action="/projetWEB/MODEL-MVC/Controllers/c_inscription.php" method="POST">
-        <span class="title">Créer un compte stagiaire</span>
+        <span class="title">Créer un compte Stagiaire</span>
         <div class="form-container">
           <input type="text" class="input" name="prenom" placeholder="Prénom" required />
           <input type="text" class="input" name="nom" placeholder="Nom" required />
@@ -80,7 +73,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Controllers/c_ins
           <input type="password" class="input" name="password" placeholder="Mot de passe" required />
           <input type="password" class="input" name="confirm_password" placeholder="Confirmez le mot de passe" required />
           <select id="secteur" name="secteur" required>
-          <label for="secteur">Secteur d'activité recherché</label>
             <option value="">Sélectionnez un secteur</option>
             <option value="Développement Web">Développement Web</option>
             <option value="Développement Mobile">Développement Mobile</option>
@@ -93,7 +85,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Controllers/c_ins
             <option value="Réalité Virtuelle et Augmentée">Réalité Virtuelle et Augmentée</option>
             <option value="Gestion de Projets Informatiques">Gestion de Projets Informatiques</option>
           </select>
-          
         </div>
         <button type="submit" name="type" value="stagiaire">S'inscrire</button>
       </form>
