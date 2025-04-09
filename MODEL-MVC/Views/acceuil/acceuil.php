@@ -1,26 +1,21 @@
 <?php
-// Activer l'affichage des erreurs
+// filepath: c:\wamp64\www\projetWEB\MODEL-MVC\Views\acceuil\acceuil.php
+
+// Activer l'affichage des erreurs pour le débogage
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-//Vérifier si la session est déjà active avant d'appeler session_start()
+// Démarrer la session si elle n'est pas déjà active
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-ob_start(); // Démarre la mise en tampon de sortie
-$controllerPath = dirname(__DIR__, 3) . '/MODEL-MVC/Controllers/c_connexion.php';
-if (!file_exists($controllerPath)) {
-    die("Erreur : Le fichier c_connexion.php est introuvable à l'emplacement : $controllerPath");
-}
-require_once $controllerPath;
-ob_end_clean(); // Vide le tampon pour éviter toute sortie indésirable
-
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
-//     header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php"); // Rediriger vers la page de connexion si non connecté
-//     exit();
+    // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
+    header("Location: /projetWEB/MODEL-MVC/Views/connexion/connexion.php");
+    exit();
 }
 
 // Récupérer le rôle de l'utilisateur
@@ -45,7 +40,7 @@ $role = $_SESSION['role'];
             <ul class="nav-right">
                 <?php if (!isset($_SESSION['user_id'])): ?>
                     <li><a href="/projetWEB/MODEL-MVC/Views/creation_compte/inscription.php">S'INSCRIRE</a></li>
-                    <li><a href="/projetWEB/MODEL-MVC/Views/creation_compte/connexion.php">CONNEXION</a></li>
+                    <li><a href="/projetWEB/MODEL-MVC/Views/connexion/connexion.php">CONNEXION</a></li>
                 <?php else: ?>
                     <li>
                         <a href="/projetWEB/MODEL-MVC/Controllers/c_deconnexion.php?redirect=connexion">DÉCONNEXION</a>
@@ -55,11 +50,6 @@ $role = $_SESSION['role'];
         </nav>
     </header>
     <section class="hero">
-        <video id="background-video" autoplay loop muted class="background-video">
-            <source src="/projetWEB/MODEL-MVC/Public/image/bckg.mp4" type="video/mp4"> 
-            Votre navigateur ne supporte pas les vidéos HTML5.
-        </video>
-        <div class="overlay"></div>
         <div class="hero-content">
             <h1>
                 <?php
@@ -95,6 +85,5 @@ $role = $_SESSION['role'];
     <footer>
         <p>&copy; <?php echo date("Y"); ?> WEB4ALL. Tous droits réservés.</p>
     </footer>
-    <script src="/projetWEB/MODEL-MVC/Public/js/notifications.js"></script> <!-- Correction du chemin -->
 </body>
 </html>
