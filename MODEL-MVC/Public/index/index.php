@@ -1,48 +1,65 @@
-<!-- filepath: c:\wamp64\www\projetWEB\MODEL-MVC\Public\index\index.php -->
-<?php  
-session_start(); // Démarre la session PHP  
+<?php
+// filepath: c:\wamp64\www\projetWEB\MODEL-MVC\Public\index\index.php
 
-// Inclure le fichier de chargement des vues  
-include_once __DIR__ . '/projetWEB/MODEL-MVC/Controllers/c_chargement.php';   
-?>  
+session_start(); // Démarre la session PHP
 
-<!DOCTYPE html>  
-<html lang="fr">  
-<head>  
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>WEB4ALL</title>  
+// Vérifier si l'utilisateur est connecté
+$isConnected = isset($_SESSION['user_id']) && isset($_SESSION['role']);
 
-    <!-- Chemins relatifs à partir de projetWEB -->
-    <link rel="stylesheet" href="/projetWEB/MODEL-MVC/Public/css/style.css">
-    <link rel="stylesheet" href="/projetWEB/MODEL-MVC/Public/css/footer.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">  
-</head>  
-<body>  
-    <header>  
-        <nav class="navbar">
-            <div class="nav-logo">
-                <a href="/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php"></a>
-                    <img src="/projetWEB/MODEL-MVC/Public/image/logo.png" alt="Logo du Site">
-                </a>
-            </div>
-        </nav>
-    </header>  
+// Déterminer la page à charger
+$page = $isConnected ? 'acceuil/acceuil.php' : 'creation_compte/connexion.php';
 
-    <div class="container" id="profile-container">  
-        <h2 id="profile-title">Mon Profil</h2>  
-        <div id="dynamic-content">  
-            <!-- Contenu dynamique chargé ici -->  
-            <?php
-            $page = $_GET['page'] ?? '/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php'; // Page par défaut
-            loadPage($page);
-            ?>  
-        </div>  
-    </div>  
+// Utiliser un switch-case pour gérer les redirections
+switch ($page) {
+    case 'acceuil/acceuil.php':
+        $pageTitle = "Accueil - WEB4ALL";
+        break;
 
-    <!-- Inclusion du footer -->
-    <?php include __DIR__ . '/projetWEB/MODEL-MVC/Views/footer/footer.php'; ?>
+    case 'creation_compte/connexion.php':
+        $pageTitle = "Connexion - WEB4ALL";
+        break;
 
-    <script src="/projetWEB/MODEL-MVC/Public/js/responsive.js"></script>
-</body>  
-</html>
+    default:
+        $pageTitle = "Erreur - WEB4ALL";
+        $page = 'erreur/404.php'; // Page d'erreur par défaut
+        break;
+}
+?>
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1<?php
+// filepath: c:\wamp64\www\projetWEB\MODEL-MVC\Public\index\index.php
+
+session_start(); // Démarre la session PHP
+
+// Vérifier si l'utilisateur est connecté
+$isConnected = isset($_SESSION['user_id']) && isset($_SESSION['role']);
+
+// Déterminer la page à charger
+$page = $isConnected ? 'acceuil/acceuil.php' : 'creation_compte/connexion.php';
+
+// Utiliser un switch-case pour gérer les redirections
+switch ($page) {
+    case 'acceuil/acceuil.php':
+        $pageTitle = "Accueil - WEB4ALL";
+        break;
+
+    case 'creation_compte/connexion.php':
+        $pageTitle = "Connexion - WEB4ALL";
+        break;
+
+    default:
+        $pageTitle = "Erreur - WEB4ALL";
+        $page = 'erreur/404.php'; // Page d'erreur par défaut
+        break;
+}
+?>
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1
