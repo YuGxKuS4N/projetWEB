@@ -17,7 +17,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Controllers/c_ins
       </a>
     </div>
     <div class="nav-links">
-      <a href="projetWEB/MODEL-MVC/Views/creation_compte/connexion.php" class="btn-connexion">Se connecter</a>
+      <a href="../connexion.php" class="btn-connexion">Se connecter</a>
     </div>
   </nav>
 
