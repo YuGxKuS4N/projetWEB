@@ -9,7 +9,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-image: url('projetWEB\MODEL-MVC\Public\image\logo.png');
+    background-image: url('/projetWEB/MODEL-MVC/Public/image/fond_co.png'); /* Image de fond pour la page de connexion */
     background-size: cover; /* Pour que l'image couvre toute la page */
     background-position: center; /* Centrer l'image */
     background-attachment: fixed; /* Empêche l'image de se déplacer lors du défilement */
@@ -18,6 +18,7 @@ body {
     align-items: center;
     height: 100vh;
     overflow: hidden;
+    -webkit-backdrop-filter: blur(5px); /* Support for Safari */
     backdrop-filter: blur(5px); 
 }
 

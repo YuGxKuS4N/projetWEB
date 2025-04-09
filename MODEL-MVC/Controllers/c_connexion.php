@@ -32,10 +32,6 @@ class ConnexionController {
             FROM Stagiaire 
             WHERE email = ?
             UNION
-            SELECT id_etudiant AS id, email, password, 'etudiant' AS role 
-            FROM Etudiant 
-            WHERE email = ?
-            UNION
             SELECT id_pilote AS id, email, password, 'pilote' AS role 
             FROM Pilote 
             WHERE email = ?
@@ -51,7 +47,8 @@ SQL;
             return ["success" => false, "error" => "Erreur interne. Veuillez réessayer plus tard."];
         }
 
-        $stmt->bind_param("ssss", $email, $email, $email, $email);
+        // Corriger le nombre de variables passées à bind_param
+        $stmt->bind_param("sss", $email, $email, $email); // Trois paramètres pour trois `?`
         $stmt->execute();
         $result = $stmt->get_result();
 

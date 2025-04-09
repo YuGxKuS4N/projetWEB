@@ -6,7 +6,7 @@
  * - Utilise la classe `DataController` pour encapsuler la logique.
  */
 
-require '/Config/config.php'; // Chemin absolu vers la configuration
+require __DIR__ . '/../Config/config.php'; // Correction du chemin
 require __DIR__ . '/../Config/Database.php'; // Inclure la classe Database avec le chemin relatif correct
 
 class DataController {
@@ -18,14 +18,14 @@ class DataController {
         $this->conn = $this->db->connect();
     }
 
-    public function getProfile($type, $userId) {
+    public function getProfile($userType, $userId) {
         $sql = '';
-        switch ($type) {
-            case 'candidat':
+        switch ($userType) {
+            case 'stagiaire':
                 $sql = <<<SQL
                     SELECT * 
-                    FROM Etudiant 
-                    WHERE id_etudiant = ?
+                    FROM Stagiaire 
+                    WHERE id_stagiaire = ?
 SQL;
                 break;
             case 'pilote':
@@ -47,6 +47,10 @@ SQL;
         }
 
         $stmt = $this->conn->prepare($sql);
+        if (!$stmt) {
+            return ["error" => "Erreur de préparation de la requête : " . $this->conn->error];
+        }
+
         $stmt->bind_param("i", $userId);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -77,6 +81,10 @@ SQL;
 SQL;
 
         $stmt = $this->conn->prepare($sql);
+        if (!$stmt) {
+            return ["error" => "Erreur de préparation de la requête : " . $this->conn->error];
+        }
+
         $stmt->bind_param("i", $userId);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -90,28 +98,33 @@ SQL;
     }
 }
 
-// Vérifier si les paramètres nécessaires sont définis
-if (!isset($_GET['type']) || !isset($_GET['user_id'])) {
+// ✅ Vérifier si les paramètres nécessaires sont définis
+if (!isset($_GET['user_type']) || !isset($_GET['user_id'])) {
+    error_log("Paramètres manquants : " . json_encode($_GET)); // Journal pour le débogage
     echo json_encode(["error" => "Paramètres manquants."]);
     exit();
 }
 
-$type = $_GET['type']; // Type d'utilisateur (candidat, pilote, entreprise)
+error_log("Paramètres reçus : user_type=" . $_GET['user_type'] . ", user_id=" . $_GET['user_id']); // Journal pour le débogage
+
+$userType = $_GET['user_type']; // ✅ nouveau nom de paramètre
 $userId = intval($_GET['user_id']); // ID de l'utilisateur
 $context = $_GET['context'] ?? 'profile'; // Contexte : 'profile' ou 'students'
 
 // Initialiser le contrôleur
-$database = new Database();
-$dataController = new DataController($database);
+$dataController = new DataController();
 
 $response = [];
 if ($context === 'profile') {
-    $response = $dataController->getProfile($type, $userId);
-} elseif ($context === 'students' && $type === 'pilote') {
+    $response = $dataController->getProfile($userType, $userId);
+} elseif ($context === 'students' && $userType === 'pilote') {
     $response = $dataController->getStudents($userId);
 } else {
     $response = ["error" => "Contexte ou type d'utilisateur invalide."];
 }
+
+// Journal pour le débogage
+error_log("Réponse du contrôleur : " . json_encode($response));
 
 // Retourner les données au format JSON
 echo json_encode($response);

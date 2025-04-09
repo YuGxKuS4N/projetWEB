@@ -1,4 +1,5 @@
 <?php
+session_start();
 /**
  * Contrôleur pour gérer la soumission des candidatures.
  * 
@@ -8,9 +9,13 @@
  * - Utilise la classe `CandidatureController` pour encapsuler la logique.
  */
 
+// Activer l'affichage des erreurs pour le débogage
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-header('Content-Type: application/json');
-require '/Config/config.php'; // Inclusion du fichier de configuration
+header('Content-Type: application/json; charset=UTF-8');
+require __DIR__ . '/Config/config.php'; // Inclusion du fichier de configuration
 
 class CandidatureController {
     private $db;
@@ -90,6 +95,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $etudiantId = $_SESSION['user_id']; // Récupérer l'ID du stagiaire connecté
     $stageId = intval($_POST['stage_id']);
 
+    // Journaliser les données reçues pour le débogage
+    error_log("Données reçues : " . json_encode($_POST));
+    error_log("Fichiers reçus : " . json_encode($_FILES));
+
     $database = new Database();
     $candidatureController = new CandidatureController($database);
 
@@ -97,9 +106,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $etudiantId,
         $stageId,
         $_FILES['cv'],
-        $_FILES['motivation']
+        $_FILES['motivation'] ?? null // Vérifiez si le fichier de motivation est optionnel
     );
 
+    // Envoyer uniquement la réponse JSON
     echo json_encode($response);
+    exit();
 }
 ?>

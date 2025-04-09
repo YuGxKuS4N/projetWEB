@@ -15,17 +15,22 @@ include_once dirname(__DIR__) . '/Controllers/c_chargement.php';
 </head>  
 <body>  
     <header>  
-        <nav class="navbar">  
-            <div class="nav-logo">  
-                <a href="/projetWEB/MODEL-MVC/Public/index.php">  
-                     
-                </a>  
-            </div>  
-            <ul class="nav-right">  
-                <li><a href="/projetWEB/MODEL-MVC/Views/creation_compte/inscription.php">S'INSCRIRE</a></li>  
-                <li><a href="/projetWEB/MODEL-MVC/Views/creation_compte/connexion.php">CONNEXION</a></li>  
-            </ul>  
-        </nav>  
+        <nav class="navbar">
+            <ul class="nav-left">
+                <li><a href="/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php">ACCUEIL</a></li>
+                <li><a href="/projetWEB/MODEL-MVC/Views/stage/stage.php">STAGE</a></li>
+            </ul>    
+
+            <div class="nav-logo">
+                <a href="/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php">
+                    <img src="/projetWEB/MODEL-MVC/Public/image/logo.png" alt="Logo du Site">
+                </a>
+            </div>
+
+            <ul class="nav-right">
+                <li><a href="/projetWEB/MODEL-MVC/Views/creation_compte/inscription.php">S'INSCRIRE</a></li>
+            </ul>
+        </nav>
     </header>  
 
     <div class="container" id="profile-container">  
@@ -36,6 +41,7 @@ include_once dirname(__DIR__) . '/Controllers/c_chargement.php';
         </div>  
     </div>  
 
-    <script src="/projetWEB/MODEL-MVC/Public/js/responsive.js"></script>  
+    <!-- Inclure le script responsive.js -->
+    <script src="/projetWEB/MODEL-MVC/Public/js/responsive.js"></script>
 </body>  
-</html>  
+</html>

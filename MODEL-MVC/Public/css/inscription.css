@@ -5,7 +5,7 @@ body {
   padding: 0;
   background-color: #f4f4f4;
   background-image: url('../../../../images/fond_co.jpg');
-    background-size: cover;
+  background-size: cover;
   background-position: center;
   background-attachment: fixed;
 }
@@ -20,38 +20,50 @@ body {
 
 /* NAVBAR */
 .navbar {
+  background: #fff;
+  padding: 0px 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #333;
-  padding: 10px 20px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  height: 80px; /* Hauteur fixe de la navbar */
 }
 
-.navbar ul {
+.nav-left, .nav-right {
   list-style: none;
-  padding: 0;
   display: flex;
-  gap: 20px;
+  align-items: center;
 }
 
-.navbar ul li {
-  display: inline;
+.nav-left li, .nav-right li {
+  margin: 0 10px;
 }
 
-.navbar ul li a {
+.nav-left a, .nav-right a {
   text-decoration: none;
-  color: white;
-  font-weight: bold;
+  color: #333;
+  font-weight: 600;
+  transition: color 0.3s;
+  pointer-events: none; /* Désactive le clic */
 }
 
-/* Logo centré */
-.nav-logo img {
-  height: 100px;
+.nav-left a:hover, .nav-right a:hover {
+  color: #a67c52;
 }
+
+.nav-logo img {
+  height: 200px; /* Taille du logo ajustée */
+  width: auto; /* L'image garde sa proportion */
+}
+
 /* FORM BOX */
 .form-box {
   width: 50%;
-  margin: 50px auto;
+  margin: 150px auto; /* Ajuste la position verticale de la box */
   background: white;
   padding: 20px;
   border-radius: 10px;

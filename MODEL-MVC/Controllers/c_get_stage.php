@@ -5,8 +5,9 @@
 
 header('Content-Type: application/json');
 
-// Remplacer le chemin relatif par un chemin absolu pour inclure le fichier de configuration
-require '/Config/config.php'; // Exemple de chemin absolu
+// Inclure les fichiers nécessaires
+require_once dirname(__DIR__, 2) . '/Config/config.php';
+require_once dirname(__DIR__, 2) . '/Config/Database.php';
 
 class StageController {
     private $db;
@@ -50,6 +51,9 @@ SQL;
         $sql .= " ORDER BY Offre_Stage.date_publi DESC";
 
         $stmt = $this->conn->prepare($sql);
+        if (!$stmt) {
+            throw new Exception("Erreur de préparation de la requête : " . $this->conn->error);
+        }
 
         // Préparer les paramètres dynamiques
         $searchParam = '%' . $search . '%';
@@ -114,29 +118,35 @@ SQL;
 }
 
 // Initialiser le contrôleur
-$database = new Database();
-$stageController = new StageController($database);
+try {
+    $database = new Database();
+    $stageController = new StageController($database);
 
-// Vérifier le type de requête
-if (isset($_GET['action']) && $_GET['action'] === 'getFilters') {
-    $options = $stageController->getFilterOptions();
-    echo json_encode($options);
-    exit();
-}
+    // Vérifier le type de requête
+    if (isset($_GET['action']) && $_GET['action'] === 'getFilters') {
+        $options = $stageController->getFilterOptions();
+        echo json_encode($options);
+        exit();
+    }
 
-$search = $_GET['search'] ?? '';
-$filters = [
-    'lieu' => $_GET['lieu'] ?? '',
-    'duree' => $_GET['duree'] ?? '',
-    'profil' => $_GET['profil'] ?? ''
-];
+    $search = $_GET['search'] ?? '';
+    $filters = [
+        'lieu' => $_GET['lieu'] ?? '',
+        'duree' => $_GET['duree'] ?? '',
+        'profil' => $_GET['profil'] ?? ''
+    ];
 
-$stages = $stageController->getFilteredStages($search, $filters);
+    $stages = $stageController->getFilteredStages($search, $filters);
 
-if (!empty($stages)) {
-    echo json_encode($stages);
-} else {
-    http_response_code(404);
-    echo json_encode(["error" => "Aucun stage trouvé."]);
+    if (!empty($stages)) {
+        echo json_encode($stages);
+    } else {
+        http_response_code(404);
+        echo json_encode(["error" => "Aucun stage trouvé."]);
+    }
+} catch (Exception $e) {
+    error_log("Erreur dans c_get_stage.php : " . $e->getMessage());
+    http_response_code(500);
+    echo json_encode(["error" => "Erreur interne du serveur."]);
 }
 ?>

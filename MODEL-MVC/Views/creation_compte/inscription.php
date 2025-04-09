@@ -12,18 +12,11 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Controllers/c_ins
 </head>
 <body>
   <nav class="navbar">
-    <ul class="nav-left">
-      <li><a href="/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php">ACCUEIL</a></li>
-      <li><a href="/projetWEB/MODEL-MVC/Views/stage/stage.php">STAGE</a></li>
-    </ul>
     <div class="nav-logo">
-      <a href="/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php">
-        <img src="/projetWEB/MODEL-MVC/Public/images/logo.png" alt="Logo du Site" />
+        <img src="/projetWEB/MODEL-MVC/Public/image/logo.png" alt="Logo du Site" />
       </a>
     </div>
-    <ul class="nav-right">
-      <li><a href="/projetWEB/MODEL-MVC/Views/creation_compte/connexion.php">CONNEXION</a></li>
-    </ul>
+
   </nav>
 
   <div class="form-box">
