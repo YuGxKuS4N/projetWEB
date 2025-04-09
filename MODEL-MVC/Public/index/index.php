@@ -20,7 +20,7 @@ include_once dirname(__DIR__) . '/Controllers/c_chargement.php';
     <header>  
         <nav class="navbar">
             <div class="nav-logo">
-                <a href="/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php">
+                <a href="../../Views/acceuil/acceuil.php"></a>
                     <img src="/projetWEB/MODEL-MVC/Public/image/logo.png" alt="Logo du Site">
                 </a>
             </div>
