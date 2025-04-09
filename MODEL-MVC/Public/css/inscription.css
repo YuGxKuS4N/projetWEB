@@ -46,7 +46,7 @@ body {
 }
 
 .nav-right {
-  margin-right: 0; /* Réduction de la marge à droite */
+  margin-right: 20; /* Réduction de la marge à droite */
   padding-right: 20px; /* Ajout d'un padding pour un meilleur espacement */
 }
 
