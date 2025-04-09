@@ -1,4 +1,5 @@
 <?php
+// filepath: c:\projetWEB\MODEL-MVC\Views\stage\stage.php
 require_once dirname(__DIR__, 2) . '/Config/config.php'; // Correction du chemin
 
 try {
@@ -49,7 +50,7 @@ try {
 
     <section class="offers">
       <h2>Nos Offres de Stage</h2>
-      <div id="offers-container">
+      <div class="offers-list">
         <?php if (!empty($offres)): ?>
           <?php foreach ($offres as $offre): ?>
             <div class="offer">
@@ -60,7 +61,7 @@ try {
               <p><strong>Durée :</strong> <?php echo htmlspecialchars($offre['duree']); ?> mois</p>
               <p><strong>Lieu :</strong> <?php echo htmlspecialchars($offre['lieu']); ?></p>
               <p>
-                <button onclick="window.location.href='/projetWEB/MODEL-MVC/Views/stage/postuler.php?stage_id=<?php echo htmlspecialchars((int)$offre['id_offre']); ?>'">
+                <button onclick="window.location.href='/projetWEB/MODEL-MVC/Views/stage/postuler.php?id=<?php echo htmlspecialchars((int)$offre['stage-id']); ?>'">
                   Postuler
                 </button>
               </p>

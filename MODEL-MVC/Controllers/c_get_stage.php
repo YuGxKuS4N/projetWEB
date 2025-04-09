@@ -1,11 +1,11 @@
 <?php
 /**
- * Contrôleur pour récupérer les stages et les options de filtrage.
+ * Contrôleur pour récupérer les stages et les options de filtrage. 
  */
 
 header('Content-Type: application/json');
 
-// Inclure les fichiers nécessaires
+// Remplacer le chemin relatif par un chemin absolu pour inclure le fichier de configuration
 require_once dirname(__DIR__, 2) . '/Config/config.php';
 require_once dirname(__DIR__, 2) . '/Config/Database.php';
 
