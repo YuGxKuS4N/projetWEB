@@ -24,32 +24,6 @@ body {
   height: 80px; /* Hauteur fixe de la navbar */
 }
 
-.nav-left, .nav-right {
-  list-style: none;
-  display: flex;
-  align-items: center;
-}
-
-.nav-left li, .nav-right li {
-  margin: 0 10px;
-}
-
-.nav-left a, .nav-right a {
-  text-decoration: none;
-  color: #333;
-  font-weight: 600;
-  transition: color 0.3s;
-}
-
-.nav-left a:hover, .nav-right a:hover {
-  color: #a67c52;
-}
-
-.nav-right {
-  margin-right: 10px; /* Ajout d'un espace de 10px à droite */
-  transform: translateX(-150px); /* Décale la navigation vers la gauche */
-}
-
 .nav-logo img {
   height: 200px; /* Taille du logo ajustée */
   width: auto; /* L'image garde sa proportion */
@@ -116,4 +90,25 @@ button {
 
 button:hover {
   background-color: #218838;
+}
+
+/* Section SE CONNECTER */
+.form-section {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.form-section p {
+  font-size: 14px;
+  color: #555;
+}
+
+.form-section a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.form-section a:hover {
+  text-decoration: underline;
 }

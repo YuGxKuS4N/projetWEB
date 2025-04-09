@@ -17,9 +17,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Controllers/c_ins
                 <img src="/projetWEB/MODEL-MVC/Public/image/logo.png" alt="Logo du Site">
             </a>
         </div>
-        <uel class="nav-right">
-            <li><a href="../creation_compte/connexion.php">SE CONNECTER</a></li>
-        </ul>
     </nav>
 
   <div class="form-box">
@@ -91,6 +88,11 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Controllers/c_ins
         </div>
         <button type="submit" name="type" value="stagiaire">S'inscrire</button>
       </form>
+    </div>
+
+    <!-- Lien pour se connecter -->
+    <div class="form-section">
+      <p>Déjà un compte ? <a href="../creation_compte/connexion.php">SE CONNECTER</a></p>
     </div>
   </div>
 </body>
