@@ -11,8 +11,8 @@ body {
 }
 
 .navbar {
-  background: #252427;
-  padding: 0px 100px;
+  background: #fff;
+  padding: 0px 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;
