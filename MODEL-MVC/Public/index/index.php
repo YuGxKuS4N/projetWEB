@@ -22,7 +22,7 @@ include_once __DIR__ . '/projetWEB/MODEL-MVC/Controllers/c_chargement.php';
     <header>  
         <nav class="navbar">
             <div class="nav-logo">
-                <a href="../../Views/acceuil/acceuil.php"></a>
+                <a href="/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php"></a>
                     <img src="/projetWEB/MODEL-MVC/Public/image/logo.png" alt="Logo du Site">
                 </a>
             </div>
