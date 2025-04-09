@@ -1,4 +1,5 @@
-<!-- filepath: \projetWEB\MODEL-MVC\Views\footer\footer.php -->
+<!-- filepath: c:\wamp64\www\projetWEB\MODEL-MVC\Views\footer\footer.php -->
+<link rel="stylesheet" href="/projetWEB/MODEL-MVC/Public/css/footer.css"> <!-- Inclusion du CSS du footer -->
 <footer>
     <div class="footer-content">
         <h3>WEB4ALL</h3>
@@ -12,6 +13,6 @@
         </ul>
     </div>
     <div class="footer-bottom">
-        <p>Copyright &copy; 2025 <a href="#">WEB4ALL</a>. Tous droits réservés.</p>
+        <p>Copyright &copy; <?php echo date("Y"); ?> <a href="#">WEB4ALL</a>. Tous droits réservés.</p>
     </div>
 </footer>
