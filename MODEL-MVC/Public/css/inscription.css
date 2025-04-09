@@ -46,8 +46,8 @@ body {
 }
 
 .nav-right {
-  margin-right: 0; /* Réduction de la marge à droite */
-  padding-right: 20px; /* Ajout d'un padding pour un meilleur espacement */
+  margin-right: 10px; /* Ajout d'un espace de 10px à droite */
+  transform: translateX(-20px); /* Décale la navigation vers la gauche */
 }
 
 .nav-logo img {
