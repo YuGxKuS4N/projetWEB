@@ -11,12 +11,22 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Controllers/c_ins
   <script src="/projetWEB/MODEL-MVC/Public/js/inscription.js" defer></script> <!-- Appel du fichier JS -->
 </head>
 <body>
-  <nav class="navbar">
-    <div class="nav-logo">
-        <img src="/projetWEB/MODEL-MVC/Public/image/logo.png" alt="Logo du Site" />
-      </a>
-    </div>
-  </nav>
+    <nav class="navbar">
+        <ul class="nav-left">
+            <li><a href="/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php">ACCUEIL</a></li>
+            <li><a href="/projetWEB/MODEL-MVC/Views/stage/stage.php">STAGE</a></li>
+        </ul>    
+
+        <div class="nav-logo">
+            <a href="/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php">
+                <img src="/projetWEB/MODEL-MVC/Public/image/logo.png" alt="Logo du Site">
+            </a>
+        </div>
+
+        <uel class="nav-right">
+            <li><a href="../creation_compte/connexion.php">SE CONNECTER</a></li>
+        </ul>
+    </nav>
 
   <div class="form-box">
     <div class="tabs">

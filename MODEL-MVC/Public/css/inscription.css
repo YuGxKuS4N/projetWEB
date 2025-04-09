@@ -14,19 +14,40 @@ body {
   background: #fff;
   padding: 0px 50px;
   display: flex;
-  justify-content: center; /* Centrer le logo */
+  justify-content: space-between;
   align-items: center;
   position: fixed;
   width: 100%;
   top: 0;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-  height: 80px;
+  height: 80px; /* Hauteur fixe de la navbar */
+}
+
+.nav-left, .nav-right {
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+
+.nav-left li, .nav-right li {
+  margin: 0 10px;
+}
+
+.nav-left a, .nav-right a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.nav-left a:hover, .nav-right a:hover {
+  color: #a67c52;
 }
 
 .nav-logo img {
-  height: 120px;
-  width: auto;
+  height: 200px; /* Taille du logo ajustée */
+  width: auto; /* L'image garde sa proportion */
 }
 
 /* FORM BOX */
