@@ -5,7 +5,7 @@ body {
   padding: 0;
   background-color: #f4f4f4;
   background-image: url('../../../../images/fond_co.jpg');
-  background-size: cover;
+    background-size: cover;
   background-position: center;
   background-attachment: fixed;
 }
@@ -48,7 +48,6 @@ body {
   color: #333;
   font-weight: 600;
   transition: color 0.3s;
-  pointer-events: none; /* Désactive le clic */
 }
 
 .nav-left a:hover, .nav-right a:hover {
@@ -63,7 +62,7 @@ body {
 /* FORM BOX */
 .form-box {
   width: 50%;
-  margin: 150px auto; /* Ajuste la position verticale de la box */
+  margin: 50px auto;
   background: white;
   padding: 20px;
   border-radius: 10px;
