@@ -46,7 +46,8 @@ body {
 }
 
 .nav-right {
-  margin-right: 20px; /* Décale la nav-right vers la gauche */
+  margin-right: 0; /* Réduction de la marge à droite */
+  padding-right: 20px; /* Ajout d'un padding pour un meilleur espacement */
 }
 
 .nav-logo img {
