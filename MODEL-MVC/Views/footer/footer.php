@@ -1,4 +1,4 @@
-<!-- filepath: c:\wamp64\www\projetWEB\MODEL-MVC\Views\footer\footer.php -->
+<!-- filepath: \projetWEB\MODEL-MVC\Views\footer\footer.php -->
 <footer>
     <div class="footer-content">
         <h3>WEB4ALL</h3>
