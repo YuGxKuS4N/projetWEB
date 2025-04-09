@@ -45,6 +45,10 @@ body {
   color: #a67c52;
 }
 
+.nav-right {
+  margin-right: 20px; /* Décale la nav-right vers la gauche */
+}
+
 .nav-logo img {
   height: 200px; /* Taille du logo ajustée */
   width: auto; /* L'image garde sa proportion */
