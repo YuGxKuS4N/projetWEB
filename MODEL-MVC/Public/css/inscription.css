@@ -47,7 +47,7 @@ body {
 
 .nav-right {
   margin-right: 10px; /* Ajout d'un espace de 10px à droite */
-  transform: translateX(-60px); /* Décale la navigation vers la gauche */
+  transform: translateX(-150px); /* Décale la navigation vers la gauche */
 }
 
 .nav-logo img {
