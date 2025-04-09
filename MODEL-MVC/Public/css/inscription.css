@@ -47,7 +47,7 @@ body {
 
 .nav-right {
   margin-right: 20; /* Réduction de la marge à droite */
-  padding-right: 100px; /* Ajout d'un padding pour un meilleur espacement */
+  padding-right: -5px; /* Ajout d'un padding pour un meilleur espacement */
 }
 
 .nav-logo img {
