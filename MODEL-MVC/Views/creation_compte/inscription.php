@@ -11,7 +11,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Controllers/c_ins
   <script src="/projetWEB/MODEL-MVC/Public/js/inscription.js" defer></script> <!-- Appel du fichier JS -->
 </head>
 <body>
-  <!-- <nav class="navbar">
+  <nav class="navbar">
     <div class="nav-logo">
         <img src="/projetWEB/MODEL-MVC/Public/image/logo.png" alt="Logo du Site" />
       </a>
@@ -19,7 +19,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Controllers/c_ins
     <div class="nav-links">
       <a href="/projetWEB/MODEL-MVC/Views/connexion.php" class="btn-connexion">Se connecter</a>
     </div>
-  </nav> -->
+  </nav>
 
   <div class="form-box">
     <div class="tabs">
