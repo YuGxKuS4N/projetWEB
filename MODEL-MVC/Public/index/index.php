@@ -11,7 +11,7 @@ include_once dirname(__DIR__) . '/Controllers/c_chargement.php';
     <meta charset="UTF-8">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <title>WEB4ALL</title>  
-    <link rel="stylesheet" href="/projetWEB/MODEL-MVC/Public/css/style.css">  
+    <link rel="stylesheet" href="../css/style.css">   
 </head>  
 <body>  
     <header>  
