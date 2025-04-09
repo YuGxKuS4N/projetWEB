@@ -16,6 +16,9 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Controllers/c_ins
         <img src="/projetWEB/MODEL-MVC/Public/image/logo.png" alt="Logo du Site" />
       </a>
     </div>
+    <div class="nav-links">
+      <a href="/projetWEB/MODEL-MVC/Views/connexion.php" class="btn-connexion">Se connecter</a>
+    </div>
   </nav>
 
   <div class="form-box">
