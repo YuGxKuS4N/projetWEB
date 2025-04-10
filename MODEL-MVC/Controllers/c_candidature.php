@@ -60,6 +60,7 @@ SQL;
     }
 
     private function uploadFile($file, $uploadDirectory, &$errors) {
+        $uploadDirectory = __DIR__ . '/../../Public/uploads/' . basename($uploadDirectory); // Utiliser un chemin absolu
         $maxSize = 2 * 1024 * 1024; // 2 Mo
         $allowedExtensions = ['pdf'];
 
@@ -73,6 +74,10 @@ SQL;
         if (!in_array($fileExtension, $allowedExtensions)) {
             $errors[] = "Le fichier " . $file['name'] . " doit être au format PDF.";
             return null;
+        }
+
+        if (!file_exists($uploadDirectory)) {
+            mkdir($uploadDirectory, 0755, true); // Crée le répertoire s'il n'existe pas
         }
 
         $uploadPath = $uploadDirectory . uniqid() . '_' . basename($file['name']);
