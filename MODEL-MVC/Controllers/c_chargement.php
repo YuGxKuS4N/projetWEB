@@ -1,6 +1,16 @@
 <?php  
 session_start(); // Démarre la session PHP  
 
+// Vérifiez si la session a expiré (par exemple, après 30 minutes d'inactivité)
+$timeout = 1800; // 30 minutes
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $timeout)) {
+    session_unset();
+    session_destroy();
+    header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php");
+    exit();
+}
+$_SESSION['last_activity'] = time(); // Réinitialisez l'horodatage
+
 // BASE_PATH correspond à la racine de votre projet  
 define('BASE_PATH', dirname(__DIR__, 1)); // Ajusté pour être à la racine du projet  
 
@@ -56,4 +66,4 @@ if (!in_array($page . '.php', $viewPaths)) {
 
 // Chargement de la page demandée  
 loadPage($page);  
-?>  
+?>

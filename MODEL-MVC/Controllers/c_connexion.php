@@ -60,6 +60,7 @@ SQL;
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['role'] = $user['role'];
+                $_SESSION['last_activity'] = time(); // Ajoutez un horodatage pour suivre l'activité
                 return ["success" => true, "role" => $user['role']];
             } else {
                 return ["success" => false, "error" => "Mot de passe incorrect."];

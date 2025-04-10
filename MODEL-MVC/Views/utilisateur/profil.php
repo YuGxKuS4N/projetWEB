@@ -1,9 +1,11 @@
 <?php
-require_once dirname(__DIR__, 3) . '/MODEL-MVC/Controllers/c_get_data.php';
+session_start(); // Assurez-vous que la session est démarrée
 
-session_start();
+// Journal pour déboguer les variables de session
+error_log("Session actuelle : " . json_encode($_SESSION));
+
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
-    error_log("Session invalide : " . json_encode($_SESSION));
+    error_log("Session invalide : " . json_encode($_SESSION)); // Journal pour déboguer
     header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php");
     exit();
 }
