@@ -33,13 +33,7 @@ body {
   padding: 0 20px; /* Ajoutez un espace sur les côtés */  
 }  
 
-.nav-right {  
-  list-style: none;  
-  display: flex;  
-  align-items: center;  
-  justify-content: center; /* Centrer les éléments de la navigation si nécessaire */  
-  gap: 10px; /* Ajout d'espace entre les éléments de la liste */  
-}  
+
 
 .nav-logo img {
   height: 200px; /* Taille du logo ajustée */
