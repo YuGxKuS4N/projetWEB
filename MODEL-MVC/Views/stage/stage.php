@@ -1,13 +1,12 @@
 <?php
-// Inclure la configuration et démarrer la session
-require_once __DIR__ . '/../../Config/config.php';
-require_once __DIR__ . '/../../Config/Database.php';
+
 
 session_start();
 
 // Récupérer les données des stages via le contrôleur
 $offres = [];
 try {
+    // Utilisez l'URL complète pour accéder au contrôleur
     $url = "/projetWEB/MODEL-MVC/Controllers/c_get_stage.php";
     $response = file_get_contents($url);
     $offres = json_decode($response, true);

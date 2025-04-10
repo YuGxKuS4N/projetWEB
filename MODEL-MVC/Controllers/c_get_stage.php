@@ -5,9 +5,10 @@
 
 header('Content-Type: application/json');
 
-// Inclure les fichiers nécessaires
+// Inclusion de la configuration et de la classe Database
 require_once __DIR__ . '/../Config/config.php';
-require_once __DIR__ . '/../Config/Database.php';
+require_once __DIR__ . '/../Config/Database.php'; // Ajout de cette ligne
+
 
 class StageController {
     private $db;
