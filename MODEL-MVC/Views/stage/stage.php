@@ -8,7 +8,7 @@ session_start();
 // Récupérer les données des stages via le contrôleur
 $offres = [];
 try {
-    $url = "http://localhost/projetWEB/MODEL-MVC/Controllers/c_get_stage.php";
+    $url = "/projetWEB/MODEL-MVC/Controllers/c_get_stage.php";
     $response = file_get_contents($url);
     $offres = json_decode($response, true);
 
