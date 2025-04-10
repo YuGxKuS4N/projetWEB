@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const loadStages = (filters) => {
     const query = new URLSearchParams(filters).toString();
-    fetch(`../../Controllers/c_get_stage.php?${query}`)
+    fetch(`/projetWEB/MODEL-MVC/Controllers/c_get_stage.php?${query}`)
       .then(response => {
         if (!response.ok) {
           throw new Error(`Erreur HTTP : ${response.status}`);
