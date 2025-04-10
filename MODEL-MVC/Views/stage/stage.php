@@ -6,8 +6,8 @@ session_start();
 // Récupérer les données des stages via le contrôleur
 $offres = [];
 try {
-    // Utilisez l'URL complète pour accéder au contrôleur
-    $url = "http://86.71.46.25:200/projetWEB/MODEL-MVC/Controllers/c_get_stage.php"; // Correction de l'URL
+    // Utilisez un chemin relatif pour accéder au contrôleur
+    $url = __DIR__ . '/../../../Controllers/c_get_stage.php'; // Chemin relatif
     error_log("Tentative de récupération des données depuis : $url"); // Journal pour débogage
     $response = file_get_contents($url);
 
