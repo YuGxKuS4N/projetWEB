@@ -19,7 +19,7 @@ body {
 
 .navbar {
   background: #fff;
-  padding: 10px 20px;
+  padding: 0px ;
   box-sizing: border-box; 
   display: flex;
   justify-content: space-between;
