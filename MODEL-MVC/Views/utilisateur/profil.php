@@ -13,14 +13,19 @@ $userType = $_SESSION['role'];
 
 error_log("Paramètres transmis au contrôleur : type=$userType, user_id=$userId");
 
-// ✅ Appel direct à la classe PHP sans passer par HTTP
-$dataController = new DataController();
-$userData = [];
+// ✅ Appel HTTP via cURL
+$url = "http://localhost/projetWEB/MODEL-MVC/Controllers/c_get_data.php?user_type=$userType&user_id=$userId&context=profile";
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$data = curl_exec($ch);
+curl_close($ch);
 
-if ($userType === 'stagiaire' || $userType === 'pilote' || $userType === 'entreprise') {
-    $userData = $dataController->getProfile($userType, $userId);
+if ($data === false) {
+    error_log("Erreur lors de la récupération des données utilisateur : type=$userType, user_id=$userId");
+    $userData = ["error" => "Impossible de récupérer les données utilisateur."];
 } else {
-    $userData = ["error" => "Type d'utilisateur invalide"];
+    error_log("Données utilisateur récupérées : " . $data);
+    $userData = json_decode($data, true);
 }
 ?>
 <!DOCTYPE html>
@@ -62,3 +67,4 @@ if ($userType === 'stagiaire' || $userType === 'pilote' || $userType === 'entrep
     <script src="/projetWEB/MODEL-MVC/Public/js/profil.js"></script>
 </body>
 </html>
+<?php
