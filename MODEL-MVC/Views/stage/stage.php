@@ -72,5 +72,8 @@
   </div>
 
   <script src="/projetWEB/MODEL-MVC/Public/js/stage.js"></script>
+  <div class="footer-bottom">
+        <p>Copyright &copy; <?php echo date("Y"); ?> <a href="#">WEB4ALL</a>. Tous droits réservés.</p>
+    </div>
 </body>
 </html>

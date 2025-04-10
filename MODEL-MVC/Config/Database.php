@@ -1,15 +1,16 @@
 <?php
 
-require_once 'config.php'; // Charger les paramètres de configuration
+// Activer l'affichage des erreurs pour le débogage
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-// Configuration file
-
-// Define database constants
+// Définir les constantes de configuration de la base de données
 define('DB_HOST', '86.71.46.25');
 define('DB_USER', 'user');
 define('DB_PASS', 'Php@1234');
 define('DB_NAME', 'projet');
-define('DB_PORT', 212); // Ajout explicite du port
+define('DB_PORT', 212); // Port explicite
 define('DB_TIMEOUT', 5); // Timeout en secondes
 
 class Database {
@@ -22,7 +23,6 @@ class Database {
 
     public function connect() {
         if ($this->conn == null) {
-            // Ajouter un délai d'attente pour la connexion
             mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); // Activer les exceptions pour mysqli
             try {
                 $this->conn = new mysqli();
