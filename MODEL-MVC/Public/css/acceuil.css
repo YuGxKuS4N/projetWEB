@@ -122,3 +122,63 @@ footer {
   bottom: 0;
   left: 0;
 }
+
+
+footer {  
+  background: #111;  
+  width: 100%;  
+  padding: 3px 0;  
+  color: #fff;  
+  font-size: 9px; /* Taille globale minimale */
+}  
+
+.footer-content {  
+  display: flex;  
+  flex-direction: column;  
+  align-items: center;  
+  text-align: center;  
+  gap: 2px; /* Écart minimum entre les éléments */
+}  
+
+.footer-content h3 {  
+  font-size: 0.75rem; /* Plus petit */
+  margin: 0;
+}  
+
+.footer-content p {  
+  max-width: 250px;  
+  margin: 2px auto;  
+  line-height: 0.9rem;  
+  font-size: 9px;  
+  color: #cacdd2;  
+}  
+
+.socials {  
+  list-style: none;  
+  display: flex;  
+  gap: 4px; /* Écart minimal entre les icônes */
+  padding: 0;  
+  margin: 3px 0;
+}  
+
+.socials a img {  
+  width: 14px; /* Petites icônes */
+  height: auto;
+}  
+
+.footer-bottom {  
+  background: #000;  
+  width: 100%;  
+  padding: 3px 0;  
+  text-align: center;  
+}  
+
+.footer-bottom p {  
+  font-size: 7px;  
+  margin: 0;
+}  
+
+.footer-bottom p a {  
+  color: #44bae8;  
+  text-decoration: none;  
+}
