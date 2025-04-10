@@ -3,7 +3,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-image: url('/projetWEB/MODEL-MVC/Public/image/index.jpg'); /* Image de fond */
+  background-image: url('\projetWEB\MODEL-MVC\Public\image\index.jpg'); /* Image de fond */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
