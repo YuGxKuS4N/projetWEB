@@ -1,152 +1,162 @@
-<?php
-/**
- * Contrôleur pour récupérer les stages et les options de filtrage. 
- */
+<?php  
+/**  
+ * Contrôleur pour récupérer les stages et les options de filtrage.  
+ */  
 
-header('Content-Type: application/json');
+header('Content-Type: application/json');  
 
-// Remplacer le chemin relatif par un chemin absolu pour inclure le fichier de configuration
-require_once dirname(__DIR__, 2) . '/Config/config.php';
-require_once dirname(__DIR__, 2) . '/Config/Database.php';
+// Activer l'affichage des erreurs pour le débogage  
+ini_set('display_errors', 1);  
+ini_set('display_startup_errors', 1);  
+error_reporting(E_ALL);  
 
-class StageController {
-    private $db;
-    private $conn;
+// Inclusion des fichiers de configuration et de base de données  
+require_once dirname(__DIR__, 2) . '/Config/config.php';  
+require_once dirname(__DIR__, 2) . '/Config/Database.php';  
 
-    public function __construct(Database $database) {
-        $this->db = $database;
-        $this->conn = $this->db->connect();
-    }
+class StageController {  
+    private $db;  
+    private $conn;  
 
-    public function getFilteredStages($search = '', $filters = []) {
-        $sql = <<<SQL
-            SELECT 
-                Offre_Stage.id_offre AS id,
-                Offre_Stage.titre AS titre,
-                Offre_Stage.duree AS duree,
-                Offre_Stage.lieu_stage AS lieu,
-                Offre_Stage.profil_demande AS profil,
-                Entreprise.nom_entreprise AS entreprise
-            FROM 
-                Offre_Stage
-            LEFT JOIN 
-                Entreprise 
-            ON 
-                Offre_Stage.id_entreprise_fk = Entreprise.id_entreprise
-            WHERE 
-                (Offre_Stage.titre LIKE ? OR Entreprise.nom_entreprise LIKE ?)
-SQL;
+    public function __construct(Database $database) {  
+        $this->db = $database;  
+        $this->conn = $this->db->connect();  
 
-        // Ajout des filtres dynamiques
-        if (!empty($filters['lieu'])) {
-            $sql .= " AND Offre_Stage.lieu_stage = ?";
-        }
-        if (!empty($filters['duree'])) {
-            $sql .= " AND Offre_Stage.duree = ?";
-        }
-        if (!empty($filters['profil'])) {
-            $sql .= " AND Offre_Stage.profil_demande = ?";
-        }
+        if (!$this->conn) {  
+            error_log("Erreur de connexion à la base de données : " . $this->db->connect_error);  
+            http_response_code(500);  
+            echo json_encode(["error" => "Erreur de connexion à la base de données."]);  
+            exit();  
+        }  
+    }  
 
-        $sql .= " ORDER BY Offre_Stage.date_publi DESC";
+    public function getFilterOptions() {  
+        $options = [  
+            'lieux' => [],  
+            'durees' => [],  
+            'profils' => []  
+        ];  
 
-        $stmt = $this->conn->prepare($sql);
-        if (!$stmt) {
-            throw new Exception("Erreur de préparation de la requête : " . $this->conn->error);
-        }
+        try {  
+            // Récupérer les lieux uniques  
+            $sqlLieux = "SELECT DISTINCT lieu_stage FROM Offre_Stage";  
+            $resultLieux = $this->conn->query($sqlLieux);  
+            if (!$resultLieux) {  
+                throw new Exception("Erreur SQL lors de la récupération des lieux : " . $this->conn->error);  
+            }  
+            while ($row = $resultLieux->fetch_assoc()) {  
+                $options['lieux'][] = $row['lieu_stage'];  
+            }  
 
-        // Préparer les paramètres dynamiques
-        $searchParam = '%' . $search . '%';
-        $params = [$searchParam, $searchParam];
-        $types = "ss";
+            // Récupérer les durées uniques  
+            $sqlDurees = "SELECT DISTINCT duree FROM Offre_Stage";  
+            $resultDurees = $this->conn->query($sqlDurees);  
+            if (!$resultDurees) {  
+                throw new Exception("Erreur SQL lors de la récupération des durées : " . $this->conn->error);  
+            }  
+            while ($row = $resultDurees->fetch_assoc()) {  
+                $options['durees'][] = $row['duree'];  
+            }  
 
-        if (!empty($filters['lieu'])) {
-            $params[] = $filters['lieu'];
-            $types .= "s";
-        }
-        if (!empty($filters['duree'])) {
-            $params[] = $filters['duree'];
-            $types .= "i";
-        }
-        if (!empty($filters['profil'])) {
-            $params[] = $filters['profil'];
-            $types .= "s";
-        }
+            // Récupérer les profils demandés uniques  
+            $sqlProfils = "SELECT DISTINCT profil_demande FROM Offre_Stage";  
+            $resultProfils = $this->conn->query($sqlProfils);  
+            if (!$resultProfils) {  
+                throw new Exception("Erreur SQL lors de la récupération des profils : " . $this->conn->error);  
+            }  
+            while ($row = $resultProfils->fetch_assoc()) {  
+                $options['profils'][] = $row['profil_demande'];  
+            }  
 
-        $stmt->bind_param($types, ...$params);
-        $stmt->execute();
-        $result = $stmt->get_result();
+            return $options;  
+        } catch (Exception $e) {  
+            error_log("Erreur dans getFilterOptions : " . $e->getMessage());  
+            http_response_code(500);  
+            echo json_encode(["error" => "Erreur interne du serveur."]);  
+            exit();  
+        }  
+    }  
 
-        $stages = [];
-        while ($row = $result->fetch_assoc()) {
-            $stages[] = $row;
-        }
+    public function getStages($filters) {  
+        $sql = "SELECT * FROM Offre_Stage WHERE 1=1";  
+        $conditions = [];  
+        $params = [];  
+        $types = '';  
 
-        return $stages;
-    }
+        if (!empty($filters['lieu'])) {  
+            $conditions[] = "lieu_stage = ?";  
+            $params[] = $filters['lieu'];  
+            $types .= 's'; // s pour string  
+        }  
+        if (!empty($filters['duree'])) {  
+            $conditions[] = "duree = ?";  
+            $params[] = $filters['duree'];  
+            $types .= 's';  
+        }  
+        if (!empty($filters['profil'])) {  
+            $conditions[] = "profil_demande = ?";  
+            $params[] = $filters['profil'];  
+            $types .= 's';  
+        }  
 
-    public function getFilterOptions() {
-        $options = [
-            'lieux' => [],
-            'durees' => [],
-            'profils' => []
-        ];
+        if (count($conditions) > 0) {  
+            $sql .= " AND " . implode(" AND ", $conditions);  
+        }  
 
-        // Récupérer les lieux uniques
-        $sqlLieux = "SELECT DISTINCT lieu_stage FROM Offre_Stage";
-        $resultLieux = $this->conn->query($sqlLieux);
-        while ($row = $resultLieux->fetch_assoc()) {
-            $options['lieux'][] = $row['lieu_stage'];
-        }
+        $stmt = $this->conn->prepare($sql);  
+        if (!$stmt) {  
+            error_log("Erreur de préparation de la requête : " . $this->conn->error);  
+            http_response_code(500);  
+            echo json_encode(["error" => "Erreur interne de la requête."]);  
+            exit();  
+        }  
 
-        // Récupérer les durées uniques
-        $sqlDurees = "SELECT DISTINCT duree FROM Offre_Stage";
-        $resultDurees = $this->conn->query($sqlDurees);
-        while ($row = $resultDurees->fetch_assoc()) {
-            $options['durees'][] = $row['duree'];
-        }
+        if ($params) {  
+            $stmt->bind_param($types, ...$params);  
+        }  
 
-        // Récupérer les profils demandés uniques
-        $sqlProfils = "SELECT DISTINCT profil_demande FROM Offre_Stage";
-        $resultProfils = $this->conn->query($sqlProfils);
-        while ($row = $resultProfils->fetch_assoc()) {
-            $options['profils'][] = $row['profil_demande'];
-        }
+        if (!$stmt->execute()) {  
+            throw new Exception("Erreur SQL : " . $stmt->error);  
+        }  
 
-        return $options;
-    }
-}
+        $result = $stmt->get_result();  
+        $stages = [];  
+        while ($row = $result->fetch_assoc()) {  
+            $stages[] = $row;  
+        }  
 
-// Initialiser le contrôleur
-try {
-    $database = new Database();
-    $stageController = new StageController($database);
+        $stmt->close(); // Fermer la déclaration  
+        return $stages;  
+    }  
+}  
 
-    // Vérifier le type de requête
-    if (isset($_GET['action']) && $_GET['action'] === 'getFilters') {
-        $options = $stageController->getFilterOptions();
-        echo json_encode($options);
-        exit();
-    }
+// Initialiser le contrôleur  
+try {  
+    $database = new Database();  
+    $stageController = new StageController($database);  
 
-    $search = $_GET['search'] ?? '';
-    $filters = [
-        'lieu' => $_GET['lieu'] ?? '',
-        'duree' => $_GET['duree'] ?? '',
-        'profil' => $_GET['profil'] ?? ''
-    ];
+    if (isset($_GET['action']) && $_GET['action'] === 'getFilters') {  
+        $options = $stageController->getFilterOptions();  
+        echo json_encode($options);  
+        exit();  
+    }  
 
-    $stages = $stageController->getFilteredStages($search, $filters);
+    if (isset($_GET['search'])) {  
+        $filters = [  
+            'lieu' => $_GET['lieu'] ?? '',  
+            'duree' => $_GET['duree'] ?? '',  
+            'profil' => $_GET['profil'] ?? ''  
+        ];  
+        $stages = $stageController->getStages($filters);  
+        echo json_encode($stages);  
+        exit();  
+    }  
 
-    if (!empty($stages)) {
-        echo json_encode($stages);
-    } else {
-        http_response_code(404);
-        echo json_encode(["error" => "Aucun stage trouvé."]);
-    }
-} catch (Exception $e) {
-    error_log("Erreur dans c_get_stage.php : " . $e->getMessage());
-    http_response_code(500);
-    echo json_encode(["error" => "Erreur interne du serveur."]);
-}
-?>
+    http_response_code(400);  
+    echo json_encode(["error" => "Action invalide ou manquante."]);  
+} catch (Exception $e) {  
+    error_log("Erreur dans c_get_stage.php : " . $e->getMessage());  
+    http_response_code(500);  
+    echo json_encode(["error" => "Erreur interne du serveur."]);  
+}  
+?>  
