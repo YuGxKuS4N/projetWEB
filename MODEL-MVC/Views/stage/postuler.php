@@ -10,6 +10,20 @@ $stageId = $_GET['id'] ?? null;
 if (!$stageId) {
     die("ID du stage manquant.");
 }
+
+
+require_once dirname(__DIR__, 2) . '/Config/config.php';
+$conn = getDatabaseConnection();
+
+
+$stmt = $conn->prepare("SELECT titre FROM Offre_Stage WHERE `stage-id` = ?");
+$stmt->bind_param("i", $stageId);
+$stmt->execute();
+$result = $stmt->get_result();
+$stage = $result->fetch_assoc();
+$stageTitle = $stage['titre'] ?? "Stage inconnu";
+$stmt->close();
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -21,7 +35,7 @@ if (!$stageId) {
 </head>
 <body>
     <div class="container">
-        <h2 id="stage-title">Postuler pour le stage</h2>
+        <h2 id="stage-title">Postuler pour : <?php echo htmlspecialchars($stageTitle); ?></h2>
         <form action="/projetWEB/MODEL-MVC/Controllers/c_candidature.php" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="stage_id" value="<?php echo htmlspecialchars($stageId); ?>">
             <div class="form-group">
