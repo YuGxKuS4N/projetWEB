@@ -37,15 +37,10 @@ $role = $_SESSION['role'];
                 </a>
             </div>
             <ul class="nav-right">
-                <?php if (!isset($_SESSION['user_id'])): ?>
-                    <li><a href="/projetWEB/MODEL-MVC/Views/creation_compte/inscription.php">S'INSCRIRE</a></li>
-                    <li><a href="/projetWEB/MODEL-MVC/Views/creation_compte/connexion.php">CONNEXION</a></li>
-                <?php else: ?>
-                    <li>
-                        <a href="/projetWEB/MODEL-MVC/Controllers/c_deconnexion.php?redirect=connexion">DÉCONNEXION</a>
-                    </li>
-                <?php endif; ?>
-            </ul>
+    <li>
+        <a href="/projetWEB/MODEL-MVC/Controllers/c_deconnexion.php?redirect=connexion">DÉCONNEXION</a>
+    </li>
+</ul>
         </nav>
     </header>
     <section class="hero">
