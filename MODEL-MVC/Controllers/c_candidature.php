@@ -50,6 +50,9 @@ class CandidatureController {
 SQL;
 
         $stmt = $this->conn->prepare($sql);
+        if (!$stmt) {
+            error_log("Erreur de préparation de la requête SQL : " . $this->conn->error);
+        }
         $stmt->bind_param("iissss", $etudiantId, $stageId, $dateCandidature, $stageId, $cvPath, $motivationPath);
 
         if ($stmt->execute()) {
