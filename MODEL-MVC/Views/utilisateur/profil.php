@@ -2,8 +2,9 @@
 session_start(); 
 
 error_log("Session actuelle : " . json_encode($_SESSION)); // Journal pour vérifier la session
+error_log("Cookies actuels : " . json_encode($_COOKIE));
 
-if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || session_id() !== ($_SESSION['session_id'] ?? '')) {
     error_log("Session invalide ou expirée : " . json_encode($_SESSION)); // Journal pour déboguer
     header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php?error=session_invalid");
     exit();

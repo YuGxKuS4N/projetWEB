@@ -83,9 +83,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $response = $connexionController->login($email, $password);
 
     if ($response['success']) {
-        error_log("Connexion réussie pour l'utilisateur : $email"); // Journal de débogage
+        session_start();
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['email'] = $user['email'];
+        $_SESSION['role'] = $user['role'];
+        $_SESSION['session_id'] = session_id(); // Ajoutez un identifiant unique
+        $_SESSION['last_activity'] = time();
+        $_SESSION['session_start_time'] = time();
         error_log("Session après connexion : " . json_encode($_SESSION)); // Journal pour vérifier la session
-        // Rediriger l'utilisateur vers l'accueil après connexion
         header("Location: /projetWEB/MODEL-MVC/Views/acceuil/acceuil.php");
         exit();
     } else {

@@ -1,5 +1,6 @@
 <?php
 session_start();
+error_log("Déconnexion appelée. Session actuelle : " . json_encode($_SESSION));
 session_unset();
 session_destroy();
 

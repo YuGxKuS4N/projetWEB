@@ -4,6 +4,12 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+ini_set('session.cookie_secure', 0); 
+ini_set('session.cookie_httponly', 1);
+ini_set('session.use_strict_mode', 1);
+ini_set('session.gc_maxlifetime', 3600); 
+session_set_cookie_params(3600); 
+
 // Configuration de la base de données
 $mysql_hostname = "86.71.46.25";  
 $mysql_port = 212;  
