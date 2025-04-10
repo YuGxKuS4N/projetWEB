@@ -1,7 +1,7 @@
 <?php
 // Inclure la configuration et démarrer la session
-require_once dirname(__DIR__, 3) . '/MODEL-MVC/Config/config.php';
-require_once dirname(__DIR__, 3) . '/MODEL-MVC/Config/Database.php';
+require_once __DIR__ . '/../../Config/config.php';
+require_once __DIR__ . '/../../Config/Database.php';
 
 session_start();
 
@@ -62,7 +62,5 @@ try {
       </div>
     </section>
   </main>
-
-  
 </body>
 </html>
