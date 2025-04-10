@@ -26,7 +26,7 @@ class StageController {
                 Offre_Stage.titre AS titre,
                 Offre_Stage.description AS description,
                 Offre_Stage.duree AS duree,
-                Offre_Stage.lieu_stage AS lieu,
+                Offre_Stage.lieu AS lieu, -- Correction du champ
                 Offre_Stage.date_debut AS date_debut,
                 Offre_Stage.secteur_activite AS secteur_activite,
                 Entreprise.nom_entreprise AS entreprise
@@ -53,6 +53,9 @@ SQL;
 
         $sql .= " ORDER BY Offre_Stage.date_publi DESC";
 
+        // Ajout de journaux pour déboguer
+        error_log("Requête SQL : $sql");
+
         $stmt = $this->conn->prepare($sql);
         if (!$stmt) {
             throw new Exception("Erreur de préparation de la requête : " . $this->conn->error);
@@ -75,6 +78,9 @@ SQL;
             $params[] = $filters['secteur'];
             $types .= "s";
         }
+
+        // Ajout de journaux pour déboguer
+        error_log("Paramètres : " . json_encode($params));
 
         $stmt->bind_param($types, ...$params);
         $stmt->execute();
@@ -104,9 +110,11 @@ try {
     $stages = $stageController->getFilteredStages($search, $filters);
 
     if (!empty($stages)) {
+        error_log("Stages récupérés : " . json_encode($stages)); // Journal des stages récupérés
         echo json_encode($stages);
     } else {
         http_response_code(404);
+        error_log("Aucun stage trouvé."); // Journal si aucun stage n'est trouvé
         echo json_encode(["error" => "Aucun stage trouvé."]);
     }
 } catch (Exception $e) {

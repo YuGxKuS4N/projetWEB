@@ -60,6 +60,12 @@ document.addEventListener("DOMContentLoaded", () => {
       .then(stages => {
         if (stages.error) {
           console.error("Erreur API :", stages.error);
+          offersContainer.innerHTML = "<p>Erreur lors du chargement des stages.</p>";
+          return;
+        }
+
+        if (stages.length === 0) {
+          offersContainer.innerHTML = "<p>Aucune offre de stage disponible.</p>";
           return;
         }
 
@@ -74,12 +80,14 @@ document.addEventListener("DOMContentLoaded", () => {
             <p><strong>Date de début :</strong> ${stage.date_debut}</p>
             <p><strong>Durée :</strong> ${stage.duree} mois</p>
             <p><strong>Lieu :</strong> ${stage.lieu}</p>
-            <button class="postuler-btn" data-stage-id="${stage.id_offre}" data-stage-title="${stage.titre}">Postuler</button>
           `;
           offersContainer.appendChild(stageElement);
         });
       })
-      .catch(error => console.error("Erreur lors du chargement des stages :", error));
+      .catch(error => {
+        console.error("Erreur lors du chargement des stages :", error);
+        offersContainer.innerHTML = "<p>Erreur lors du chargement des stages.</p>";
+      });
   };
 
   loadFilterOptions();
