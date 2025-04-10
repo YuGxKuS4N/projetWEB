@@ -63,6 +63,6 @@ try {
     </section>
   </main>
 
-  <?php include dirname(__DIR__) . '/../footer/footer.php'; ?> <!-- Inclusion du footer -->
+  
 </body>
 </html>
