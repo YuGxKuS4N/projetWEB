@@ -3,7 +3,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-image: url('https://www.lelabocambrai.fr/iguana/uploads/image/Vous%20%C3%AAtes/Un%20professionnel%20de%20la%20culture/Emplois%20et%20stages/VousEtesUnProfessionnelDeLaCultureEmploisEtStages_1948x1096.jpg'); /* Image de fond */
+  background-image: url('\projetWEB\MODEL-MVC\Public\image\index.jpg'); /* Image de fond */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
