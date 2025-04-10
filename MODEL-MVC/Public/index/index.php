@@ -1,5 +1,12 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_start(); // Démarre la session PHP
+
+// Vérifier si la session contient les données attendues
+error_log("Session actuelle : " . json_encode($_SESSION));
 
 // Vérifier si l'utilisateur est connecté
 $isConnected = isset($_SESSION['user_id']) && isset($_SESSION['role']);
