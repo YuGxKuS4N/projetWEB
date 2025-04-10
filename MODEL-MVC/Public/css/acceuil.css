@@ -10,7 +10,7 @@ body {
   display: flex;
   flex-direction: column; /* Permet d'empiler les éléments verticalement */
   justify-content: space-between; /* Espace entre le contenu et le footer */
-  align-items: center;
+  align-items: stretch;
   min-height: 100vh; /* Assure que le contenu occupe toute la hauteur de la fenêtre */
   overflow: hidden;
   -webkit-backdrop-filter: blur(5px); /* Support for Safari */
@@ -23,7 +23,7 @@ body {
   box-sizing: border-box;
   display: flex;
   justify-content: space-between; /* Garde le logo à gauche et les liens à droite */
-  align-items: center;
+  align-items: stretch;
   position: fixed;
   width: 100%;
   top: 0;
