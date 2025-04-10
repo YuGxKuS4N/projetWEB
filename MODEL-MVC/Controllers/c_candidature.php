@@ -16,6 +16,7 @@ error_reporting(E_ALL);
 
 header('Content-Type: application/json; charset=UTF-8');
 require __DIR__ . '/../Config/config.php'; // Inclusion du fichier de configuration
+require_once __DIR__ . '/../Config/Database.php'; // Inclusion correcte de la classe Database
 
 class CandidatureController {
     private $db;
