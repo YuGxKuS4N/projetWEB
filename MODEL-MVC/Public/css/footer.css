@@ -6,7 +6,7 @@ footer {
     background: #111;
     height: auto;
     width: 100%;
-    padding-top: 40px;
+    padding-top: 20px; /* Réduit de moitié */
     color: #fff;
 }
 
@@ -19,17 +19,17 @@ footer {
 }
 
 .footer-content h3 {
-    font-size: 2.1rem;
+    font-size: 1.5rem; /* Réduit de moitié */
     font-weight: 500;
     text-transform: capitalize;
-    line-height: 3rem;
+    line-height: 1.5rem; /* Réduit de moitié */
 }
 
 .footer-content p {
     max-width: 500px;
-    margin: 10px auto;
-    line-height: 28px;
-    font-size: 14px;
+    margin: 5px auto; /* Réduit de moitié */
+    line-height: 14px; /* Réduit de moitié */
+    font-size: 12px; /* Réduit de moitié */
     color: #cacdd2;
 }
 
@@ -38,24 +38,24 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 1rem 0 3rem 0;
+    margin: 0.5rem 0 1.5rem 0; /* Réduit de moitié */
 }
 
 .socials li {
-    margin: 0 10px;
+    margin: 0 5px; /* Réduit de moitié */
 }
 
 .socials a {
     text-decoration: none;
     color: #fff;
-    border: 1.1px solid white;
-    padding: 5px;
+    border: 0.55px solid white; /* Réduit de moitié */
+    padding: 2.5px; /* Réduit de moitié */
     border-radius: 50%;
 }
 
 .socials a i {
-    font-size: 1.1rem;
-    width: 20px;
+    font-size: 0.55rem; /* Réduit de moitié */
+    width: 10px; /* Réduit de moitié */
     transition: color 0.4s ease;
 }
 
@@ -66,19 +66,19 @@ footer {
 .footer-bottom {
     background: #000;
     width: 100%;
-    padding: 20px;
+    padding: 10px; /* Réduit de moitié */
     text-align: center;
 }
 
 .footer-bottom p {
-    font-size: 14px;
-    word-spacing: 2px;
+    font-size: 7px; /* Réduit de moitié */
+    word-spacing: 1px; /* Réduit de moitié */
     text-transform: capitalize;
 }
 
 .footer-bottom p a {
     color: #44bae8;
-    font-size: 16px;
+    font-size: 8px; /* Réduit de moitié */
     text-decoration: none;
 }
 
