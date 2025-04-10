@@ -1,12 +1,11 @@
 <?php
-session_start(); // Assurez-vous que la session est démarrée
+session_start(); 
 
-// Journal pour déboguer les variables de session
 error_log("Session actuelle : " . json_encode($_SESSION));
 
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
-    error_log("Session invalide : " . json_encode($_SESSION)); // Journal pour déboguer
-    header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php");
+    error_log("Session invalide ou expirée : " . json_encode($_SESSION)); // Journal pour déboguer
+    header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php?error=session_invalid");
     exit();
 }
 

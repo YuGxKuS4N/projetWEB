@@ -3,12 +3,22 @@ session_start(); // Démarre la session PHP
 
 // Vérifiez si la session a expiré (par exemple, après 30 minutes d'inactivité)
 $timeout = 1800; // 30 minutes
+$maxSessionDuration = 3600; // 1 heure (durée maximale de la session)
+
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $timeout)) {
     session_unset();
     session_destroy();
-    header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php");
+    header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php?error=session_expired");
     exit();
 }
+
+if (isset($_SESSION['session_start_time']) && (time() - $_SESSION['session_start_time'] > $maxSessionDuration)) {
+    session_unset();
+    session_destroy();
+    header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php?error=session_timeout");
+    exit();
+}
+
 $_SESSION['last_activity'] = time(); // Réinitialisez l'horodatage
 
 // BASE_PATH correspond à la racine de votre projet  

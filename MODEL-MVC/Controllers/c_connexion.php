@@ -61,6 +61,7 @@ SQL;
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['role'] = $user['role'];
                 $_SESSION['last_activity'] = time(); // Ajoutez un horodatage pour suivre l'activité
+                $_SESSION['session_start_time'] = time(); // Ajoutez un horodatage pour la durée totale de la session
                 return ["success" => true, "role" => $user['role']];
             } else {
                 return ["success" => false, "error" => "Mot de passe incorrect."];
