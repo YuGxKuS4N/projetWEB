@@ -152,3 +152,69 @@ main {
 }
 
 
+/* Style pour les messages d'erreur */
+.error-message {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px 0;
+}
+
+/* Style pour le bouton étoile (wishlist) */
+.wishlist-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #ccc;
+    font-size: 20px;
+    margin-left: 10px;
+}
+
+.wishlist-btn:hover {
+    color: #f39c12;
+}
+
+.wishlist-btn .fa-star {
+    pointer-events: none;
+}
+
+/* Ajustement des marges pour les filtres */
+.search-filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.search-filters select, .search-filters input, .search-filters button {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Style pour les offres */
+.offers-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.offer {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border: 2px solid #cce0ff;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.offer h3 {
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.offer p {
+    margin: 5px 0;
+}
