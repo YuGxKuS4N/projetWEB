@@ -42,7 +42,7 @@
     </section>
   </main>
 
- 
+  <?php include dirname(__DIR__) . '/../footer/footer.php'; ?> <!-- Inclusion du footer -->
   <script src="/projetWEB/MODEL-MVC/Public/js/stage.js"></script>
 </body>
 </html>
