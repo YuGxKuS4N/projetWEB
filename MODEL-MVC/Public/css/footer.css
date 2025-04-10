@@ -1,87 +1,65 @@
-footer {
-    position: relative;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: #111;
-    height: auto;
-    width: 45%;
-    padding-top: 3cqh; /* Réduit de moitié */
-    color: #fff;
-}
+footer {  
+    position: relative;  
+    bottom: 0;  
+    left: 0;  
+    right: 0;  
+    background: #111;  
+    height: auto;  
+    width: 100%; /* Utiliser 100% au lieu de 45% pour couvrir toute la largeur */  
+    padding: 10px; /* Réduit le padding */  
+    color: #fff;  
+}  
 
-.footer-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-}
+.footer-content {  
+    display: flex;  
+    align-items: center;  
+    justify-content: center;  
+    flex-direction: column;  
+    text-align: center;  
+}  
 
-.footer-content h3 {
-    font-size: 1.5rem; /* Réduit de moitié */
-    font-weight: 500;
-    text-transform: capitalize;
-    line-height: 1.5rem; /* Réduit de moitié */
-}
+.footer-content h3 {  
+    font-size: 1.2rem; /* Réduit de moitié */  
+    font-weight: 500;  
+    text-transform: capitalize;  
+}  
 
-.footer-content p {
-    max-width: 500px;
-    margin: 5px auto; /* Réduit de moitié */
-    line-height: 14px; /* Réduit de moitié */
-    font-size: 12px; /* Réduit de moitié */
-    color: #cacdd2;
-}
+.footer-content p {  
+    max-width: 400px; /* Ajustement */  
+    margin: 5px auto;  
+    line-height: 1rem; /* Ajustement */  
+    font-size: 12px; /* Ajustement */  
+    color: #cacdd2;  
+}  
 
-.socials {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0.5rem 0 1.5rem 0; /* Réduit de moitié */
-}
+.socials {  
+    list-style: none;  
+    display: flex;  
+    align-items: center;  
+    justify-content: center;  
+    margin: 1rem 0; /* Ajustement */  
+}  
 
-.socials li {
-    margin: 0 5px; /* Réduit de moitié */
-}
+.socials li {  
+    margin: 0 5px; /* Réduit */  
+}  
 
-.socials a {
-    text-decoration: none;
-    color: #fff;
-    border: 0.55px solid white; /* Réduit de moitié */
-    padding: 2.5px; /* Réduit de moitié */
-    border-radius: 50%;
-}
+.socials a {  
+    text-decoration: none;  
+}  
 
-.socials a i {
-    font-size: 0.55rem; /* Réduit de moitié */
-    width: 10px; /* Réduit de moitié */
-    transition: color 0.4s ease;
-}
+.footer-bottom {  
+    background: #000;  
+    width: 100%;  
+    padding: 10px; /* Ajustement */  
+    text-align: center;  
+}  
 
-.socials a:hover i {
-    color: aqua;
-}
+.footer-bottom p {  
+    font-size: 8px; /* Réduit */  
+}  
 
-.footer-bottom {
-    background: #000;
-    width: 100%;
-    padding: 10px; /* Réduit de moitié */
-    text-align: center;
-}
-
-.footer-bottom p {
-    font-size: 7px; /* Réduit de moitié */
-    word-spacing: 1px; /* Réduit de moitié */
-    text-transform: capitalize;
-}
-
-.footer-bottom p a {
-    color: #44bae8;
-    font-size: 8px; /* Réduit de moitié */
-    text-decoration: none;
-}
-
-.footer-bottom p a:hover {
-    color: #27bcda;
-}
+.footer-bottom p a {  
+    color: #44bae8;  
+    text-decoration: none;  
+}  
