@@ -88,6 +88,6 @@ $role = $_SESSION['role'];
         </div>
     </section>
     
-    <?php include '../footer/footer.php'; ?> <!-- Inclusion du footer -->
+    <?php include '/projetWEB/MODEL-MVC/Views/footer/footer.php'; ?> <!-- Inclusion du footer -->
 </body>
 </html>
