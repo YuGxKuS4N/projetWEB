@@ -1,9 +1,28 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  background-image: url('projetWEB\MODEL-MVC\Public\image\logo.png');
+  background-size: cover; /* Pour que l'image couvre toute la page */
+  background-position: center; /* Centrer l'image */
+  background-attachment: fixed; /* Empêche l'image de se déplacer lors du défilement */
+  display: flex;
+  flex-direction: column; /* Permet d'empiler les éléments verticalement */
+  justify-content: space-between; /* Espace entre le contenu et le footer */
+  align-items: center;
+  min-height: 100vh; /* Assure que le contenu occupe toute la hauteur de la fenêtre */
+  overflow: hidden;
+  -webkit-backdrop-filter: blur(5px); /* Support for Safari */
+  backdrop-filter: blur(5px);
+}
+
 .navbar {  
   background: #fff;  
-  padding: 0 20px; /* Ajout d'un espace sur les côtés */  
+  padding: 0; /* Ajustez selon vos préférences */  
   box-sizing: border-box;   
   display: flex;  
-  justify-content: space-between; /* Espace entre le logo et les liens */  
+  justify-content: space-between; /* Changez cela à `center` */  
   align-items: center;  
   position: fixed;  
   width: 100%;  
@@ -11,41 +30,151 @@
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);  
   z-index: 1000;  
   height: 80px;  
+  padding: 0 20px; /* Ajoutez un espace sur les côtés */  
 }  
-
-.nav-logo img {
-  height: 50px; /* Taille ajustée pour le logo */
-  width: auto; /* L'image garde ses proportions */
-}
 
 .nav-right {  
   list-style: none;  
   display: flex;  
   align-items: center;  
-  gap: 15px; /* Espacement entre les éléments de la liste */  
-  margin: 0;  
-  padding: 0;  
+  justify-content: center; /* Centrer les éléments de la navigation si nécessaire */  
+  gap: 10px; /* Ajout d'espace entre les éléments de la liste */  
 }  
 
+.nav-logo img {
+  height: 200px; /* Taille du logo ajustée */
+  width: auto; /* L'image garde sa proportion */
+}
+
+
+
 .nav-right li {
-  margin: 0; /* Supprime les marges inutiles */
+  margin: 0 10px;
 }
 
 .nav-right a {
   text-decoration: none;
-  color: #333; /* Couleur par défaut des liens */
+  color: #333;
   font-weight: 600;
-  font-size: 16px; /* Taille de police ajustée */
-  padding: 10px 15px; /* Ajout d'un padding pour un meilleur clic */
-  border-radius: 5px; /* Coins arrondis pour un effet bouton */
-  transition: all 0.3s ease; /* Transition fluide pour les effets */
+  transition: color 0.3s;
 }
 
 .nav-right a:hover {
-  color: #a67c52; /* Couleur au survol */
-  background-color: rgba(166, 124, 82, 0.1); /* Fond léger au survol */
+  color: #a67c52;
 }
 
-.nav-right a:active {
-  background-color: rgba(166, 124, 82, 0.2); /* Fond plus foncé lors du clic */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
 }
+
+.background-video {
+  position: fixed; /* Fixe la vidéo en arrière-plan */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Place la vidéo derrière le contenu */
+  object-fit: cover; /* Ajuste la vidéo pour couvrir tout l'écran */
+  overflow: hidden;
+}
+
+.hero-box {
+  background: rgba(0, 0, 0, 0.7); /* Fond semi-transparent */
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  width: 90%; /* S'adapte aux petits écrans */
+  text-align: center;
+}
+
+.hero-box h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.hero-box .btn {
+  display: inline-block;
+  margin: 10px 5px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.hero-box .btn:hover {
+  background-color: #0056b3;
+}
+
+footer {  
+  z-index: 1; /* Assure que le footer est au-dessus de la vidéo */  
+  background: rgba(0, 0, 0, 0.8); /* Fond semi-transparent avec un peu plus d'opacité */  
+  color: #fff;  
+  text-align: center;  
+  padding: 20px;  /* Augmenté pour plus d'espace */  
+  width: 100%;  
+  position: fixed;  
+  bottom: 0;  
+}  
+
+.footer-content {  
+  display: flex;  
+  flex-direction: column;  
+  align-items: center;  
+  text-align: center;  
+  gap: 5px; /* Écart minimum entre les éléments */  
+}  
+
+.footer-content h3 {  
+  font-size: 1rem; /* Plus grand */  
+  margin: 0;  
+}  
+
+.footer-content p {  
+  max-width: 350px; /* Légèrement plus large */  
+  margin: 5px auto;  
+  line-height: 1.2rem; /* Augmenté pour une meilleure lisibilité */  
+  font-size: 12px; /* Augmenté */  
+  color: #cacdd2;   
+}  
+
+.socials {  
+  list-style: none;  
+  display: flex;  
+  gap: 8px; /* Écart entre les icônes */  
+  padding: 0;  
+  margin: 5px 0;  
+}  
+
+.socials a img {  
+  width: 20px; /* Plus grandes icônes */  
+  height: auto;  
+}  
+
+.footer-bottom {  
+  background: #000;  
+  width: 100%;  
+  padding: 10px 0;  /* Augmenté */  
+  text-align: center;  
+}  
+
+.footer-bottom p {  
+  font-size: 10px; /* Plus grand */  
+  margin: 0;  
+}  
+
+.footer-bottom p a {  
+  color: #44bae8;  
+  text-decoration: none;  
+}  
