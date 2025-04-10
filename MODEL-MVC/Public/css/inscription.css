@@ -1,15 +1,14 @@
 /* Styles généraux */
+/* Styles généraux */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f4f4f4;
-  background-image: url('/projetWEB/MODEL-MVC/Public/image/fond_co.jpg'); /* Chemin corrigé */
-  background-size: cover; /* Pour que l'image couvre toute la page */
+  background-image: url('/projetWEB/MODEL-MVC/Public/image/background.jpg'); /* Chemin vers l'image */
+  background-size: cover; /* L'image couvre toute la page */
   background-position: center; /* Centrer l'image */
-  background-attachment: fixed; /* Empêche l'image de se déplacer lors du défilement */
+  background-attachment: fixed; /* L'image reste fixe lors du défilement */
 }
-
 .navbar {
   background: #fff;
   padding: 0px 50px;
