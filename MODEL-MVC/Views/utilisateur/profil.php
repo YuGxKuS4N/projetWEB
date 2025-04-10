@@ -1,7 +1,7 @@
 <?php
 session_start(); 
 
-error_log("Session actuelle : " . json_encode($_SESSION));
+error_log("Session actuelle : " . json_encode($_SESSION)); // Journal pour vérifier la session
 
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
     error_log("Session invalide ou expirée : " . json_encode($_SESSION)); // Journal pour déboguer

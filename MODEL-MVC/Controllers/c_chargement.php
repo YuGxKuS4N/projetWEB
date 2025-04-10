@@ -6,6 +6,7 @@ $timeout = 1800; // 30 minutes
 $maxSessionDuration = 3600; // 1 heure (durée maximale de la session)
 
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $timeout)) {
+    error_log("Session expirée pour l'utilisateur : " . json_encode($_SESSION)); // Journal pour déboguer
     session_unset();
     session_destroy();
     header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php?error=session_expired");
@@ -13,6 +14,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 
 }
 
 if (isset($_SESSION['session_start_time']) && (time() - $_SESSION['session_start_time'] > $maxSessionDuration)) {
+    error_log("Durée maximale de session atteinte pour l'utilisateur : " . json_encode($_SESSION)); // Journal pour déboguer
     session_unset();
     session_destroy();
     header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php?error=session_timeout");

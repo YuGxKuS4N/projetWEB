@@ -84,6 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($response['success']) {
         error_log("Connexion réussie pour l'utilisateur : $email"); // Journal de débogage
+        error_log("Session après connexion : " . json_encode($_SESSION)); // Journal pour vérifier la session
         // Rediriger l'utilisateur vers l'accueil après connexion
         header("Location: /projetWEB/MODEL-MVC/Views/acceuil/acceuil.php");
         exit();

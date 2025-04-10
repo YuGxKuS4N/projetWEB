@@ -9,6 +9,7 @@ error_reporting(E_ALL);
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+error_log("Cookie de session : " . json_encode($_COOKIE)); // Journal pour vérifier les cookies
 
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
