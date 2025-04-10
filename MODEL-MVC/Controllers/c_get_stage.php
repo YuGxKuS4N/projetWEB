@@ -1,11 +1,16 @@
 <?php
 /**
- * Contrôleur pour récupérer les stages et les options de filtrage. 
+ * Contrôleur pour récupérer les stages et les options de filtrage.
  */
 
 header('Content-Type: application/json');
 
-// Remplacer le chemin relatif par un chemin absolu pour inclure le fichier de configuration
+// Activer l'affichage des erreurs pour le débogage
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Inclusion des fichiers de configuration et de base de données
 require_once dirname(__DIR__, 2) . '/Config/config.php';
 require_once dirname(__DIR__, 2) . '/Config/Database.php';
 
@@ -95,6 +100,9 @@ SQL;
         // Récupérer les lieux uniques
         $sqlLieux = "SELECT DISTINCT lieu_stage FROM Offre_Stage";
         $resultLieux = $this->conn->query($sqlLieux);
+        if (!$resultLieux) {
+            throw new Exception("Erreur SQL lors de la récupération des lieux : " . $this->conn->error);
+        }
         while ($row = $resultLieux->fetch_assoc()) {
             $options['lieux'][] = $row['lieu_stage'];
         }
@@ -102,6 +110,9 @@ SQL;
         // Récupérer les durées uniques
         $sqlDurees = "SELECT DISTINCT duree FROM Offre_Stage";
         $resultDurees = $this->conn->query($sqlDurees);
+        if (!$resultDurees) {
+            throw new Exception("Erreur SQL lors de la récupération des durées : " . $this->conn->error);
+        }
         while ($row = $resultDurees->fetch_assoc()) {
             $options['durees'][] = $row['duree'];
         }
@@ -109,6 +120,9 @@ SQL;
         // Récupérer les profils demandés uniques
         $sqlProfils = "SELECT DISTINCT profil_demande FROM Offre_Stage";
         $resultProfils = $this->conn->query($sqlProfils);
+        if (!$resultProfils) {
+            throw new Exception("Erreur SQL lors de la récupération des profils : " . $this->conn->error);
+        }
         while ($row = $resultProfils->fetch_assoc()) {
             $options['profils'][] = $row['profil_demande'];
         }
