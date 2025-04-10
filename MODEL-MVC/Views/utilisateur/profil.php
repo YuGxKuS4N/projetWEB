@@ -1,10 +1,9 @@
 <?php
-require_once dirname(__DIR__, 3) . '/MODEL-MVC/Controllers/c_get_data.php'; // Correction du chemin
+require_once dirname(__DIR__, 3) . '/MODEL-MVC/Controllers/c_get_data.php';
 
-// Vérifier si l'utilisateur est connecté
 session_start();
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
-    error_log("Session invalide : " . json_encode($_SESSION)); // Journal pour le débogage
+    error_log("Session invalide : " . json_encode($_SESSION));
     header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php");
     exit();
 }
@@ -12,17 +11,16 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
 $userId = $_SESSION['user_id'];
 $userType = $_SESSION['role'];
 
-// Journal des paramètres transmis au contrôleur
 error_log("Paramètres transmis au contrôleur : type=$userType, user_id=$userId");
 
-// Récupérer les données utilisateur
-$data = file_get_contents(dirname(__DIR__, 3) . "/MODEL-MVC/Controllers/c_get_data.php?type=$userType&user_id=$userId&context=profile");
-if ($data === false) {
-    error_log("Erreur lors de la récupération des données utilisateur : type=$userType, user_id=$userId");
-    $userData = ["error" => "Impossible de récupérer les données utilisateur."];
+// ✅ Appel direct à la classe PHP sans passer par HTTP
+$dataController = new DataController();
+$userData = [];
+
+if ($userType === 'stagiaire' || $userType === 'pilote' || $userType === 'entreprise') {
+    $userData = $dataController->getProfile($userType, $userId);
 } else {
-    error_log("Données utilisateur récupérées : " . $data); // Journal pour le débogage
-    $userData = json_decode($data, true);
+    $userData = ["error" => "Type d'utilisateur invalide"];
 }
 ?>
 <!DOCTYPE html>
