@@ -46,6 +46,40 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch(error => console.error("Erreur lors du chargement des options de filtrage :", error));
   };
 
+  const loadStages = (filters) => {
+    const query = new URLSearchParams(filters).toString();
+    fetch(`/projetWEB/MODEL-MVC/Controllers/c_get_stage.php?${query}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Erreur HTTP : ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(stages => {
+        if (stages.error) {
+          console.error("Erreur API :", stages.error);
+          return;
+        }
+
+        offersContainer.innerHTML = ""; // Réinitialiser le conteneur
+        stages.forEach(stage => {
+          const stageElement = document.createElement("div");
+          stageElement.className = "offer";
+          stageElement.innerHTML = `
+            <h3>${stage.titre}</h3>
+            <p>${stage.description}</p>
+            <p><strong>Secteur :</strong> ${stage.secteur_activite}</p>
+            <p><strong>Date de début :</strong> ${stage.date_debut}</p>
+            <p><strong>Durée :</strong> ${stage.duree} mois</p>
+            <p><strong>Lieu :</strong> ${stage.lieu}</p>
+            <button class="postuler-btn" data-stage-id="${stage.id_offre}" data-stage-title="${stage.titre}">Postuler</button>
+          `;
+          offersContainer.appendChild(stageElement);
+        });
+      })
+      .catch(error => console.error("Erreur lors du chargement des stages :", error));
+  };
+
   loadFilterOptions();
 
   searchButton.addEventListener("click", () => {
@@ -55,7 +89,6 @@ document.addEventListener("DOMContentLoaded", () => {
       profil: filterProfil.value
     };
 
-    console.log("Filtres appliqués :", filters);
-    // Vous pouvez ajouter ici une fonction pour charger les stages en fonction des filtres
+    loadStages(filters);
   });
 });
