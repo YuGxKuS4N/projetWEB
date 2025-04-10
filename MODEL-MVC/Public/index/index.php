@@ -1,3 +1,4 @@
+<!-- filepath: c:\wamp64\www\projetWEB\MODEL-MVC\Public\index\index.php -->
 <?php
 session_start(); // Démarre la session PHP
 
@@ -17,6 +18,13 @@ $logoutMessage = isset($_GET['logout']) && $_GET['logout'] === 'success' ? "Vous
     <link rel="stylesheet" href="/projetWEB/MODEL-MVC/Public/css/index.css">
 </head>
 <body>
+    <!-- Barre de navigation -->
+    <header class="navbar">
+        <div class="nav-logo">
+            <img src="/projetWEB/MODEL-MVC/Public/image/logo.png" alt="Logo WEB4ALL">
+        </div>
+    </header>
+
     <div class="container">
         <?php if ($logoutMessage): ?>
             <p class="error-message"><?php echo htmlspecialchars($logoutMessage); ?></p>

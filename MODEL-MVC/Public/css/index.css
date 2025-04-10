@@ -3,14 +3,33 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f4f4f4;
+  background-image: url('https://www.lelabocambrai.fr/iguana/uploads/image/Vous%20%C3%AAtes/Un%20professionnel%20de%20la%20culture/Emplois%20et%20stages/VousEtesUnProfessionnelDeLaCultureEmploisEtStages_1948x1096.jpg'); /* Image de fond */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Barre de navigation */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Fond semi-transparent */
+  padding: 10px 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-image: url('/projetWEB/MODEL-MVC/Public/image/background.jpg'); /* Image de fond */
-  background-size: cover;
-  background-position: center;
+  z-index: 1000;
+}
+
+.nav-logo img {
+  height: 50px; /* Taille du logo */
+  width: auto;
 }
 
 /* Conteneur principal */
@@ -21,6 +40,7 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
   width: 400px;
+  margin-top: 80px; /* Ajout d'un espace sous la navbar */
 }
 
 /* Titre */
