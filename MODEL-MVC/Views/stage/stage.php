@@ -7,12 +7,18 @@ session_start();
 $offres = [];
 try {
     // Utilisez l'URL complète pour accéder au contrôleur
-    $url = "/projetWEB/MODEL-MVC/Controllers/c_get_stage.php";
+    $url = "http://localhost/projetWEB/MODEL-MVC/Controllers/c_get_stage.php";
     $response = file_get_contents($url);
+
+    if ($response === false) {
+        throw new Exception("Erreur lors de la récupération des données.");
+    }
+
     $offres = json_decode($response, true);
 
     if (isset($offres['error'])) {
-        $offres = []; // Si une erreur est retournée, on vide les offres
+        error_log("Erreur API : " . $offres['error']);
+        $offres = [];
     }
 } catch (Exception $e) {
     error_log("Erreur lors de la récupération des stages : " . $e->getMessage());
