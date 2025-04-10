@@ -25,13 +25,18 @@ $logoutMessage = isset($_GET['logout']) && $_GET['logout'] === 'success' ? "Vous
         </div>
     </header>
 
-    <div class="container">
-        <?php if ($logoutMessage): ?>
-            <p class="error-message"><?php echo htmlspecialchars($logoutMessage); ?></p>
-        <?php endif; ?>
-        <h1>Veuillez vous connecter ou vous inscrire</h1>
-        <a href="/projetWEB/MODEL-MVC/Views/creation_compte/connexion.php">Se connecter</a>
-        <a href="/projetWEB/MODEL-MVC/Views/creation_compte/inscription.php">S'inscrire</a>
-    </div>
+    <main class="main-content">
+        <div class="container">
+            <?php if ($logoutMessage): ?>
+                <p class="error-message"><?php echo htmlspecialchars($logoutMessage); ?></p>
+            <?php endif; ?>
+            <h1>Bienvenue sur WEB4ALL</h1>
+            <p>Veuillez vous connecter ou vous inscrire pour continuer.</p>
+            <div class="button-group">
+                <a href="/projetWEB/MODEL-MVC/Views/creation_compte/connexion.php" class="btn">Se connecter</a>
+                <a href="/projetWEB/MODEL-MVC/Views/creation_compte/inscription.php" class="btn">S'inscrire</a>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
