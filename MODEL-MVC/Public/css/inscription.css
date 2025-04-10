@@ -4,7 +4,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-image: url('/projetWEB/MODEL-MVC/Public/image/background.jpg'); /* Chemin vers l'image */
+  background-image: url('/projetWEB/MODEL-MVC/Public/image/fond_co.jpg'); /* Chemin vers l'image */
   background-size: cover; /* L'image couvre toute la page */
   background-position: center; /* Centrer l'image */
   background-attachment: fixed; /* L'image reste fixe lors du défilement */
