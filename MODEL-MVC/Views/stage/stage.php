@@ -7,14 +7,20 @@ session_start();
 $offres = [];
 try {
     // Utilisez l'URL complète pour accéder au contrôleur
-    $url = "http://86.71.46.25:200//projetWEB/MODEL-MVC/Controllers/c_get_stage.php";
+    $url = "http://86.71.46.25:200/projetWEB/MODEL-MVC/Controllers/c_get_stage.php"; // Correction de l'URL
+    error_log("Tentative de récupération des données depuis : $url"); // Journal pour débogage
     $response = file_get_contents($url);
 
     if ($response === false) {
         throw new Exception("Erreur lors de la récupération des données.");
     }
 
+    error_log("Réponse brute de l'API : $response"); // Journal pour vérifier la réponse brute
     $offres = json_decode($response, true);
+
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        throw new Exception("Erreur de décodage JSON : " . json_last_error_msg());
+    }
 
     if (isset($offres['error'])) {
         error_log("Erreur API : " . $offres['error']);

@@ -107,6 +107,7 @@ try {
         'secteur' => $_GET['secteur'] ?? ''
     ];
 
+    error_log("Paramètres de recherche : " . json_encode($filters)); // Journal pour débogage
     $stages = $stageController->getFilteredStages($search, $filters);
 
     if (!empty($stages)) {
