@@ -60,8 +60,6 @@ SQL;
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['role'] = $user['role'];
-                $_SESSION['last_activity'] = time(); // Ajoutez un horodatage pour suivre l'activité
-                $_SESSION['session_start_time'] = time(); // Ajoutez un horodatage pour la durée totale de la session
                 return ["success" => true, "role" => $user['role']];
             } else {
                 return ["success" => false, "error" => "Mot de passe incorrect."];
@@ -83,14 +81,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $response = $connexionController->login($email, $password);
 
     if ($response['success']) {
-        session_start();
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['email'] = $user['email'];
-        $_SESSION['role'] = $user['role'];
-        $_SESSION['session_id'] = session_id(); // Ajoutez un identifiant unique
-        $_SESSION['last_activity'] = time();
-        $_SESSION['session_start_time'] = time();
-        error_log("Session après connexion : " . json_encode($_SESSION)); // Journal pour vérifier la session
+        error_log("Connexion réussie pour l'utilisateur : $email"); // Journal de débogage
+        // Rediriger l'utilisateur vers l'accueil après connexion
         header("Location: /projetWEB/MODEL-MVC/Views/acceuil/acceuil.php");
         exit();
     } else {
