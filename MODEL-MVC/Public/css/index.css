@@ -3,15 +3,12 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-image: url('\projetWEB\MODEL-MVC\Public\image\index.jpg'); /* Image de fond */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100vh;
+  background-color: #f4f4f4;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
 /* Barre de navigation */
@@ -19,7 +16,7 @@ body {
   position: fixed;
   top: 0;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.7); /* Fond semi-transparent */
+  background-color: rgba(0, 0, 0, 0.8); /* Fond semi-transparent */
   padding: 10px 0;
   display: flex;
   justify-content: center;
@@ -28,32 +25,51 @@ body {
 }
 
 .nav-logo img {
-  height: 50px; /* Taille du logo */
+  height: 60px; /* Taille du logo */
   width: auto;
+}
+
+/* Contenu principal */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 100px; /* Espace sous la barre de navigation */
 }
 
 /* Conteneur principal */
 .container {
-  background: rgba(255, 255, 255, 0.9); /* Fond blanc semi-transparent */
+  background: rgba(255, 255, 255, 0.95); /* Fond blanc semi-transparent */
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  text-align: center;
   width: 400px;
-  margin-top: 80px; /* Ajout d'un espace sous la navbar */
 }
 
 /* Titre */
 .container h1 {
   font-size: 24px;
   color: #333;
+  margin-bottom: 10px;
+}
+
+/* Texte */
+.container p {
+  font-size: 16px;
+  color: #555;
   margin-bottom: 20px;
 }
 
 /* Boutons */
-.container a {
+.button-group {
+  display: flex;
+  justify-content: space-around;
+}
+
+.btn {
   display: inline-block;
-  margin: 10px;
   padding: 10px 20px;
   background-color: #007bff;
   color: white;
@@ -63,7 +79,7 @@ body {
   transition: background-color 0.3s;
 }
 
-.container a:hover {
+.btn:hover {
   background-color: #0056b3;
 }
 
@@ -71,5 +87,5 @@ body {
 .error-message {
   color: red;
   font-weight: bold;
-  margin-top: 20px;
+  margin-bottom: 20px;
 }
