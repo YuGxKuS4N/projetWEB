@@ -43,34 +43,7 @@
     </section>
   </main>
 
-  <!-- Fenêtre modale -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn">&times;</span>
-      <h2 id="modal-title">Postuler pour le stage</h2>
-      <form id="postuler-form" action="/projetWEB/MODEL-MVC/Controllers/c_candidature.php" method="POST" enctype="multipart/form-data">
-        <input type="hidden" id="stage-id" name="stage_id">
-        <div class="form-group">
-          <label for="prenom">Prénom</label>
-          <input type="text" id="prenom" name="prenom" required>
-        </div>
-        <div class="form-group">
-          <label for="nom">Nom</label>
-          <input type="text" id="nom" name="nom" required>
-        </div>
-        <div class="form-group">
-          <label for="email">E-mail</label>
-          <input type="email" id="email" name="email" required>
-        </div>
-        <div class="form-group">
-          <label for="cv">Importer CV</label>
-          <input type="file" id="cv" name="cv" required>
-        </div>
-        <button type="submit">Envoyer la candidature</button>
-      </form>
-    </div>
-  </div>
-
+ 
   <script src="/projetWEB/MODEL-MVC/Public/js/stage.js"></script>
 </body>
 </html>
