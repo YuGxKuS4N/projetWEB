@@ -1,43 +1,51 @@
 .navbar {  
-  background: #fff; /* Couleur de fond */  
-  padding: 0 20px; /* Espacement latéral */  
+  background: #fff;  
+  padding: 0 20px; /* Ajout d'un espace sur les côtés */  
   box-sizing: border-box;   
   display: flex;  
-  justify-content: space-between; /* Distribue l'espace entre les éléments */  
-  align-items: center; /* Centre les éléments verticalement */  
+  justify-content: space-between; /* Espace entre le logo et les liens */  
+  align-items: center;  
   position: fixed;  
   width: 100%;  
   top: 0;  
-  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1); /* Ombre */  
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);  
   z-index: 1000;  
-  height: 80px; /* Hauteur de la barre */  
+  height: 80px;  
 }  
 
-.nav-logo img {  
-  height: 60px; /* Ajustez la taille selon vos besoins */  
-  width: auto; /* Conserve la proportion */  
-}  
+.nav-logo img {
+  height: 50px; /* Taille ajustée pour le logo */
+  width: auto; /* L'image garde ses proportions */
+}
 
 .nav-right {  
-  list-style: none; /* Retire les styles de liste */  
-  display: flex; /* Flexbox pour une disposition horizontale */  
-  align-items: center; /* Centre verticalement */  
-  gap: 20px; /* Espacement entre les éléments */  
-  margin: 0; /* Retire les marges par défaut */  
-  padding: 0; /* Retire les espacements internes */  
+  list-style: none;  
+  display: flex;  
+  align-items: center;  
+  gap: 15px; /* Espacement entre les éléments de la liste */  
+  margin: 0;  
+  padding: 0;  
 }  
 
-.nav-right li {  
-  margin: 0; /* Retire toute marge */  
-}  
+.nav-right li {
+  margin: 0; /* Supprime les marges inutiles */
+}
 
-.nav-right a {  
-  text-decoration: none; /* Retire le soulignement */  
-  color: #333; /* Couleur du texte */  
-  font-weight: 600; /* Gras */  
-  transition: color 0.3s; /* Transition douce pour le changement de couleur */  
-}  
+.nav-right a {
+  text-decoration: none;
+  color: #333; /* Couleur par défaut des liens */
+  font-weight: 600;
+  font-size: 16px; /* Taille de police ajustée */
+  padding: 10px 15px; /* Ajout d'un padding pour un meilleur clic */
+  border-radius: 5px; /* Coins arrondis pour un effet bouton */
+  transition: all 0.3s ease; /* Transition fluide pour les effets */
+}
 
-.nav-right a:hover {  
-  color: #a67c52; /* Couleur au survol */  
-}  
+.nav-right a:hover {
+  color: #a67c52; /* Couleur au survol */
+  background-color: rgba(166, 124, 82, 0.1); /* Fond léger au survol */
+}
+
+.nav-right a:active {
+  background-color: rgba(166, 124, 82, 0.2); /* Fond plus foncé lors du clic */
+}
