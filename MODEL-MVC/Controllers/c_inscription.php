@@ -5,7 +5,6 @@
  *
  * - Vérifie les données du formulaire.
  * - Insère les données dans la base de données en fonction du type d'utilisateur.
- * - Vérifie si l'adresse e-mail est déjà utilisée.
  */
 
 require_once dirname(__DIR__, 3) . '/projetWEB/MODEL-MVC/Config/config.php'; // Correction du chemin
@@ -15,7 +14,10 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require_once __DIR__ . 'Config/Database.php'; // Inclusion de la configuration
+// Inclusion de la configuration et de la classe Database
+require_once __DIR__ . '/../Config/config.php';
+require_once __DIR__ . '/../Config/Database.php'; // Ajout de cette ligne
+
 class User {
     private $db;
     private $conn;
@@ -48,14 +50,9 @@ class User {
                 - Et au moins 4 chiffres."
             );
         }
-
+//s
         if ($type === 'stagiaire' && empty($data['secteur'])) {
             die("Le champ secteur d'activité est obligatoire pour les stagiaires !");
-        }
-
-        // Vérifier si l'e-mail est déjà utilisé
-        if ($this->isEmailUsed($email)) {
-            die("Cette adresse e-mail est déjà utilisée. Veuillez en choisir une autre.");
         }
 
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -78,26 +75,6 @@ class User {
         $hasFourDigits = preg_match('/\d{4,}/', $password);
 
         return $hasUpperCase && $hasSpecialChar && $hasFourDigits;
-    }
-
-    private function isEmailUsed($email) {
-        $sql = <<<SQL
-            SELECT email FROM (
-                SELECT email FROM Stagiaire
-                UNION
-                SELECT email FROM entreprises
-                UNION
-                SELECT email FROM Pilote
-            ) AS all_emails
-            WHERE email = ?
-SQL;
-
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $stmt->store_result();
-
-        return $stmt->num_rows > 0; // Retourne true si l'e-mail existe déjà
     }
 
     private function registerCandidat($prenom, $nom, $email, $password, $data) {

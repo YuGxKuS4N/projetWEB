@@ -1,20 +1,26 @@
-<!-- filepath: c:\wamp64\www\projetWEB\MODEL-MVC\Views\acceuil\acceuil.php -->
 <?php
 // Activer l'affichage des erreurs
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Vérifier si la session est déjà active avant d'appeler session_start()
+//Vérifier si la session est déjà active avant d'appeler session_start()
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+ob_start(); // Démarre la mise en tampon de sortie
+$controllerPath = dirname(__DIR__, 3) . '/MODEL-MVC/Controllers/c_connexion.php';
+if (!file_exists($controllerPath)) {
+    die("Erreur : Le fichier c_connexion.php est introuvable à l'emplacement : $controllerPath");
+}
+require_once $controllerPath;
+ob_end_clean(); // Vide le tampon pour éviter toute sortie indésirable
+
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
-    // Rediriger vers la page de connexion si non connecté
-    header("Location: ../creation_compte/connexion.php");
-    exit();
+//     header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php"); // Rediriger vers la page de connexion si non connecté
+//     exit();
 }
 
 // Récupérer le rôle de l'utilisateur
@@ -33,7 +39,7 @@ $role = $_SESSION['role'];
         <nav class="navbar">
             <div class="nav-logo">
                 <a href="/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php">
-                    <img src="/projetWEB/MODEL-MVC/Public/image/logo.png" alt="Logo du Site">
+                    <img src="/projetWEB/MODEL-MVC/Public/image/logo.png" alt="Logo du Site"> <!-- Correction du chemin -->
                 </a>
             </div>
             <ul class="nav-right">
@@ -86,8 +92,9 @@ $role = $_SESSION['role'];
         </div>
     </section>
     
-    <div class="footer-bottom">
-        <p>Copyright &copy; <?php echo date("Y"); ?> <a href="#">WEB4ALL</a>. Tous droits réservés.</p>
-    </div>
+    <footer>
+        <p>&copy; <?php echo date("Y"); ?> WEB4ALL. Tous droits réservés.</p>
+    </footer>
+    <script src="/projetWEB/MODEL-MVC/Public/js/notifications.js"></script> <!-- Correction du chemin -->
 </body>
 </html>

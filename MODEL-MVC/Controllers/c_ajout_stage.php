@@ -7,7 +7,7 @@
  * - Utilise la classe `StageController` pour encapsuler la logique.
  */
 
- require_once __DIR__ . 'Config/Database.php'; // Inclusion de la configuration
+require_once '/Config/config.php'; // Inclusion de la configuration
 
 class StageController {
     private $db;

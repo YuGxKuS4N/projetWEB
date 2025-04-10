@@ -5,7 +5,8 @@
  * - Vérifie les statuts des candidatures pour les étudiants et les entreprises.
  * - Envoie des notifications pop-up et des e-mails en fonction des événements.
  */
-require_once __DIR__ . 'Config/Database.php'; // Inclusion de la configuration
+
+require_once dirname(__DIR__, 2) . '/Config/config.php';  // Chemin absolu pour la configuration
 require_once dirname(__DIR__, 2) . '/Utils/EmailUtils.php';  // Chemin absolu pour l'utilitaire EmailUtils
 
 class NotificationController {

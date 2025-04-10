@@ -7,7 +7,7 @@
  */
 
 
-require_once __DIR__ . 'Config/Database.php'; // Inclusion de la configuration
+require_once __DIR__ . 'Config/config.php'; // Inclusion de la configuration
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     echo json_encode(['error' => 'Accès non autorisé.']);

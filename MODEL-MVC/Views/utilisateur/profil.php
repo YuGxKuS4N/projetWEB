@@ -13,12 +13,12 @@ $userId = $_SESSION['user_id'];
 $userType = $_SESSION['role'];
 
 // Journal des paramètres transmis au contrôleur
-error_log("Paramètres transmis au contrôleur : user_type=$userType, user_id=$userId");
+error_log("Paramètres transmis au contrôleur : type=$userType, user_id=$userId");
 
 // Récupérer les données utilisateur
-$data = file_get_contents(dirname(__DIR__, 3) . "/MODEL-MVC/Controllers/c_get_data.php?user_type=$userType&user_id=$userId&context=profile");
+$data = file_get_contents(dirname(__DIR__, 3) . "/MODEL-MVC/Controllers/c_get_data.php?type=$userType&user_id=$userId&context=profile");
 if ($data === false) {
-    error_log("Erreur lors de la récupération des données utilisateur : user_type=$userType, user_id=$userId");
+    error_log("Erreur lors de la récupération des données utilisateur : type=$userType, user_id=$userId");
     $userData = ["error" => "Impossible de récupérer les données utilisateur."];
 } else {
     error_log("Données utilisateur récupérées : " . $data); // Journal pour le débogage
@@ -48,18 +48,19 @@ if ($data === false) {
         <h2 id="profile-title">Mon Profil</h2>
         <div id="dynamic-content">
             <?php if (isset($userData['error'])): ?>
-                <p class="error-message">Erreur : <?php echo htmlspecialchars($userData['error']); ?></p>
+                <p>Erreur : <?php echo htmlspecialchars($userData['error']); ?></p>
             <?php elseif (!empty($userData)): ?>
                 <?php foreach ($userData as $key => $value): ?>
                     <div class="profile-field">
-                        <label for="<?php echo htmlspecialchars($key); ?>"><?php echo htmlspecialchars(ucfirst(str_replace('_', ' ', $key))); ?></label>
+                        <label for="<?php echo htmlspecialchars($key); ?>"><?php echo htmlspecialchars($key); ?></label>
                         <input type="text" id="<?php echo htmlspecialchars($key); ?>" value="<?php echo htmlspecialchars($value); ?>" readonly>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
-                <p class="error-message">Aucune donnée utilisateur disponible.</p>
+                <p>Aucune donnée utilisateur disponible.</p>
             <?php endif; ?>
         </div>
     </div>
+    <script src="/projetWEB/MODEL-MVC/Public/js/profil.js"></script>
 </body>
 </html>

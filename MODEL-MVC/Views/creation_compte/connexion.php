@@ -11,6 +11,11 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Controllers/c_con
 </head>
 <body>
     <nav class="navbar">
+        <ul class="nav-left">
+            <li><a href="/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php">ACCUEIL</a></li>
+            <li><a href="/projetWEB/MODEL-MVC/Views/stage/stage.php">STAGE</a></li>
+        </ul>    
+
         <div class="nav-logo">
             <a href="/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php">
                 <img src="/projetWEB/MODEL-MVC/Public/image/logo.png" alt="Logo du Site">
