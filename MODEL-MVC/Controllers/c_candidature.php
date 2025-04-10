@@ -46,13 +46,27 @@ class CandidatureController {
             INSERT INTO Candidature 
                 (id_etudiant_fk, id_offre_fk, date_candidature, statut_candidature, commentaire, id_entreprise_fk, cv_path, motivation_path)
             VALUES 
-                (?, ?, ?, 'en attente', NULL, (SELECT id_entreprise_fk FROM Offre_Stage WHERE `stage-id` = ?), ?, ?)
+                (?, ?, ?, 'en attente', NULL, 
+                (SELECT id_entreprise_fk FROM Offre_Stage WHERE `stage-id` = ?), ?, ?)
 SQL;
 
         $stmt = $this->conn->prepare($sql);
         if (!$stmt) {
             error_log("Erreur de préparation de la requête SQL : " . $this->conn->error);
+            return ["errors" => ["Erreur interne du serveur."]];
         }
+
+        // Vérifiez si la sous-requête retourne un résultat valide
+        $checkSql = "SELECT id_entreprise_fk FROM Offre_Stage WHERE `stage-id` = ?";
+        $checkStmt = $this->conn->prepare($checkSql);
+        $checkStmt->bind_param("i", $stageId);
+        $checkStmt->execute();
+        $checkResult = $checkStmt->get_result();
+
+        if ($checkResult->num_rows === 0) {
+            return ["errors" => ["L'offre de stage spécifiée est invalide ou n'existe pas."]];
+        }
+
         $stmt->bind_param("iissss", $etudiantId, $stageId, $dateCandidature, $stageId, $cvPath, $motivationPath);
 
         if ($stmt->execute()) {
