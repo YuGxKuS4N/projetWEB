@@ -1,18 +1,22 @@
 <?php
-// filepath: c:\projetWEB\MODEL-MVC\Views\stage\stage.php
-require_once dirname(__DIR__, 2) . '/Config/config.php'; // Correction du chemin
 
+
+session_start();
+
+// Récupérer les données des stages via le contrôleur
+$offres = [];
 try {
-    $conn = getDatabaseConnection(); // Utilisation de la fonction pour obtenir la connexion
+    // Utilisez l'URL complète pour accéder au contrôleur
+    $url = "/projetWEB/MODEL-MVC/Controllers/c_get_stage.php";
+    $response = file_get_contents($url);
+    $offres = json_decode($response, true);
 
-    // Récupérer les offres de stage
-    $query = $conn->query("SELECT * FROM Offre_Stage");
-    $offres = $query->fetch_all(MYSQLI_ASSOC);
-
-    // Journaliser les données pour le débogage
-    error_log("Offres récupérées : " . json_encode($offres));
+    if (isset($offres['error'])) {
+        $offres = []; // Si une erreur est retournée, on vide les offres
+    }
 } catch (Exception $e) {
-    die("Erreur : " . $e->getMessage());
+    error_log("Erreur lors de la récupération des stages : " . $e->getMessage());
+    $offres = [];
 }
 ?>
 <!DOCTYPE html>
@@ -22,35 +26,19 @@ try {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stages - WEB4ALL</title>
   <link rel="stylesheet" href="/projetWEB/MODEL-MVC/Public/css/stage.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
   <header>
     <div class="logo">WEB4ALL</div>
     <nav>
       <a href="/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php">Accueil</a>
-      <a href="/projetWEB/MODEL-MVC/Views/creation_compte/entreprise.php">Entreprises</a>
     </nav>
   </header>
 
   <main>
-    <section class="search-filters">
-      <input type="text" id="search-input" placeholder="Rechercher un stage...">
-      <select id="filter-lieu">
-        <option value="">Lieu</option>
-      </select>
-      <select id="filter-duree">
-        <option value="">Durée</option>
-      </select>
-      <select id="filter-profil">
-        <option value="">Profil demandé</option>
-      </select>
-      <button id="search-button">Rechercher</button>
-    </section>
-
     <section class="offers">
       <h2>Nos Offres de Stage</h2>
-      <div class="offers-list">
+      <div id="offers-container" class="offers-list">
         <?php if (!empty($offres)): ?>
           <?php foreach ($offres as $offre): ?>
             <div class="offer">
@@ -61,7 +49,7 @@ try {
               <p><strong>Durée :</strong> <?php echo htmlspecialchars($offre['duree']); ?> mois</p>
               <p><strong>Lieu :</strong> <?php echo htmlspecialchars($offre['lieu']); ?></p>
               <p>
-                <button onclick="window.location.href='/projetWEB/MODEL-MVC/Views/stage/postuler.php?id=<?php echo htmlspecialchars((int)$offre['stage-id']); ?>'">
+                <button class="postuler-btn" data-stage-id="<?php echo htmlspecialchars((int)$offre['id']); ?>" data-stage-title="<?php echo htmlspecialchars($offre['titre']); ?>">
                   Postuler
                 </button>
               </p>
@@ -73,6 +61,5 @@ try {
       </div>
     </section>
   </main>
-  <script src="/projetWEB/MODEL-MVC/Public/js/stage.js"></script> <!-- Correction du chemin -->
 </body>
 </html>

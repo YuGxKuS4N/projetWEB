@@ -37,15 +37,10 @@ $role = $_SESSION['role'];
                 </a>
             </div>
             <ul class="nav-right">
-                <?php if (!isset($_SESSION['user_id'])): ?>
-                    <li><a href="/projetWEB/MODEL-MVC/Views/creation_compte/inscription.php">S'INSCRIRE</a></li>
-                    <li><a href="/projetWEB/MODEL-MVC/Views/creation_compte/connexion.php">CONNEXION</a></li>
-                <?php else: ?>
-                    <li>
-                        <a href="/projetWEB/MODEL-MVC/Controllers/c_deconnexion.php?redirect=connexion">DÉCONNEXION</a>
-                    </li>
-                <?php endif; ?>
-            </ul>
+    <li>
+        <a href="/projetWEB/MODEL-MVC/Controllers/c_deconnexion.php?redirect=connexion">DÉCONNEXION</a>
+    </li>
+</ul>
         </nav>
     </header>
     <section class="hero">
@@ -55,37 +50,44 @@ $role = $_SESSION['role'];
         </video>
         <div class="overlay"></div>
         <div class="hero-content">
-            <h1>
+            <div class="hero-box">
+                <h1>
+                    <?php
+                    // Afficher un titre différent en fonction du rôle
+                    if ($role === 'stagiaire') {
+                        echo "<span class='stagiaire-title'>PRENDS TON <br> FUTUR EN MAIN : <br> CESI TA CHANCE !</span>";
+                    } elseif ($role === 'entreprise') {
+                        echo "BIENVENUE DANS <br> VOTRE ESPACE ENTREPRISE";
+                    } elseif ($role === 'pilote') {
+                        echo "BIENVENUE DANS <br> VOTRE ESPACE PILOTE";
+                    } elseif ($role === 'admin') {
+                        echo "BIENVENUE DANS <br> L'ESPACE ADMINISTRATION";
+                    }
+                    ?>
+                </h1>
                 <?php
-                // Afficher un titre différent en fonction du rôle
+                // Afficher un bouton différent en fonction du rôle
                 if ($role === 'stagiaire') {
-                    echo "<span class='stagiaire-title'>PRENDS TON <br> FUTUR EN MAIN : <br> CESI TA CHANCE !</span>";
+                    echo '<a href="/projetWEB/MODEL-MVC/Views/stage/stage.php" class="btn">OFFRES DE STAGE</a>';
                 } elseif ($role === 'entreprise') {
-                    echo "BIENVENUE DANS <br> VOTRE ESPACE ENTREPRISE";
+                    echo '<a href="/projetWEB/MODEL-MVC/Views/ajout_stage/ajout.php" class="btn">DÉPOSER UNE OFFRE</a>';
                 } elseif ($role === 'pilote') {
-                    echo "BIENVENUE DANS <br> VOTRE ESPACE PILOTE";
+                    echo '<a href="/projetWEB/MODEL-MVC/Views/pilote/eleves.php" class="btn">MES ÉLÈVES</a>';
                 } elseif ($role === 'admin') {
-                    echo "BIENVENUE DANS <br> L'ESPACE ADMINISTRATION";
+                    echo '<a href="/projetWEB/MODEL-MVC/Views/admin/admin.php" class="btn">PANEL ADMINISTRATION</a>';
                 }
                 ?>
-            </h1>
-            <?php
-            // Afficher un bouton différent en fonction du rôle
-            if ($role === 'stagiaire') {
-                echo '<a href="/projetWEB/MODEL-MVC/Views/stage/stage.php" class="btn">OFFRES DE STAGE</a>';
-            } elseif ($role === 'entreprise') {
-                echo '<a href="/projetWEB/MODEL-MVC/Views/ajout_stage/ajout.php" class="btn">DÉPOSER UNE OFFRE</a>';
-            } elseif ($role === 'pilote') {
-                echo '<a href="/projetWEB/MODEL-MVC/Views/pilote/eleves.php" class="btn">MES ÉLÈVES</a>';
-            } elseif ($role === 'admin') {
-                echo '<a href="/projetWEB/MODEL-MVC/Views/admin/admin.php" class="btn">PANEL ADMINISTRATION</a>';
-            }
-            ?>
-            <!-- Bouton pour accéder à la page profil -->
-            <a href="/projetWEB/MODEL-MVC/Views/utilisateur/profil.php" class="btn">MON PROFIL</a>
+                <!-- Bouton pour accéder à la page profil -->
+                <a href="/projetWEB/MODEL-MVC/Views/utilisateur/profil.php" class="btn">MON PROFIL</a>
+            </div>
         </div>
     </section>
     
-    <?php include '../footer/footer.php'; ?> <!-- Inclusion du footer -->
+    <footer>
+
+    <div class="footer-bottom">
+        <p>Copyright &copy; <?php echo date("Y"); ?> <a href="#">WEB4ALL</a>. Tous droits réservés.</p>
+    </div>
+</footer>
 </body>
 </html>

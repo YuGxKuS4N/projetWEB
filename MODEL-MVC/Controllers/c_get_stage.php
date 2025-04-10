@@ -1,13 +1,14 @@
 <?php
 /**
- * Contrôleur pour récupérer les stages et les options de filtrage. 
+ * Contrôleur pour récupérer les stages et les options de filtrage.
  */
 
 header('Content-Type: application/json');
 
-// Remplacer le chemin relatif par un chemin absolu pour inclure le fichier de configuration
-require_once dirname(__DIR__, 2) . '/Config/config.php';
-require_once dirname(__DIR__, 2) . '/Config/Database.php';
+// Inclusion de la configuration et de la classe Database
+require_once __DIR__ . '/../Config/config.php';
+require_once __DIR__ . '/../Config/Database.php'; // Ajout de cette ligne
+
 
 class StageController {
     private $db;
@@ -23,9 +24,11 @@ class StageController {
             SELECT 
                 Offre_Stage.id_offre AS id,
                 Offre_Stage.titre AS titre,
+                Offre_Stage.description AS description,
                 Offre_Stage.duree AS duree,
                 Offre_Stage.lieu_stage AS lieu,
-                Offre_Stage.profil_demande AS profil,
+                Offre_Stage.date_debut AS date_debut,
+                Offre_Stage.secteur_activite AS secteur_activite,
                 Entreprise.nom_entreprise AS entreprise
             FROM 
                 Offre_Stage
@@ -44,8 +47,8 @@ SQL;
         if (!empty($filters['duree'])) {
             $sql .= " AND Offre_Stage.duree = ?";
         }
-        if (!empty($filters['profil'])) {
-            $sql .= " AND Offre_Stage.profil_demande = ?";
+        if (!empty($filters['secteur'])) {
+            $sql .= " AND Offre_Stage.secteur_activite = ?";
         }
 
         $sql .= " ORDER BY Offre_Stage.date_publi DESC";
@@ -68,8 +71,8 @@ SQL;
             $params[] = $filters['duree'];
             $types .= "i";
         }
-        if (!empty($filters['profil'])) {
-            $params[] = $filters['profil'];
+        if (!empty($filters['secteur'])) {
+            $params[] = $filters['secteur'];
             $types .= "s";
         }
 
@@ -84,37 +87,6 @@ SQL;
 
         return $stages;
     }
-
-    public function getFilterOptions() {
-        $options = [
-            'lieux' => [],
-            'durees' => [],
-            'profils' => []
-        ];
-
-        // Récupérer les lieux uniques
-        $sqlLieux = "SELECT DISTINCT lieu_stage FROM Offre_Stage";
-        $resultLieux = $this->conn->query($sqlLieux);
-        while ($row = $resultLieux->fetch_assoc()) {
-            $options['lieux'][] = $row['lieu_stage'];
-        }
-
-        // Récupérer les durées uniques
-        $sqlDurees = "SELECT DISTINCT duree FROM Offre_Stage";
-        $resultDurees = $this->conn->query($sqlDurees);
-        while ($row = $resultDurees->fetch_assoc()) {
-            $options['durees'][] = $row['duree'];
-        }
-
-        // Récupérer les profils demandés uniques
-        $sqlProfils = "SELECT DISTINCT profil_demande FROM Offre_Stage";
-        $resultProfils = $this->conn->query($sqlProfils);
-        while ($row = $resultProfils->fetch_assoc()) {
-            $options['profils'][] = $row['profil_demande'];
-        }
-
-        return $options;
-    }
 }
 
 // Initialiser le contrôleur
@@ -122,18 +94,11 @@ try {
     $database = new Database();
     $stageController = new StageController($database);
 
-    // Vérifier le type de requête
-    if (isset($_GET['action']) && $_GET['action'] === 'getFilters') {
-        $options = $stageController->getFilterOptions();
-        echo json_encode($options);
-        exit();
-    }
-
     $search = $_GET['search'] ?? '';
     $filters = [
         'lieu' => $_GET['lieu'] ?? '',
         'duree' => $_GET['duree'] ?? '',
-        'profil' => $_GET['profil'] ?? ''
+        'secteur' => $_GET['secteur'] ?? ''
     ];
 
     $stages = $stageController->getFilteredStages($search, $filters);
