@@ -1,6 +1,6 @@
 <?php
 // Inclusion du fichier EmailUtils.php avec un chemin absolu
-require_once dirname(__DIR__, 2) . '/Utils/EmailUtils.php';  // Chemin absolu depuis la racine du projet
+require_once dirname(__DIR__, 2) . 'EmailUtils.php';  // Chemin absolu depuis la racine du projet
 
 class EmailUtils {
     private $from;
