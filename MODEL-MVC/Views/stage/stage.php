@@ -7,7 +7,7 @@ session_start();
 $offres = [];
 try {
     // Utilisez l'URL complète pour accéder au contrôleur
-    $url = "http://localhost/projetWEB/MODEL-MVC/Controllers/c_get_stage.php";
+    $url = "http://86.71.46.25:200//projetWEB/MODEL-MVC/Controllers/c_get_stage.php";
     $response = file_get_contents($url);
 
     if ($response === false) {
