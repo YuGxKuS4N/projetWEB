@@ -34,11 +34,12 @@ switch ($page) {
 </head>
 <body>
     <?php
-    // Inclure la page déterminée
+    // Inclure la page déterminée dynamiquement
     $filePath = dirname(__DIR__) . '/../Views/' . $page;
     if (file_exists($filePath)) {
         include $filePath;
     } else {
+        // Afficher un message d'erreur si le fichier n'existe pas
         echo "<p>Erreur : La page demandée est introuvable.</p>";
     }
     ?>
