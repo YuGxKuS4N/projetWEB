@@ -73,6 +73,30 @@ class StageController {
             exit();
         }
     }
+
+    public function getStages($filters) {
+        $sql = "SELECT * FROM Offre_Stage WHERE 1=1";
+        if (!empty($filters['lieu'])) {
+            $sql .= " AND lieu_stage = '" . $this->conn->real_escape_string($filters['lieu']) . "'";
+        }
+        if (!empty($filters['duree'])) {
+            $sql .= " AND duree = '" . $this->conn->real_escape_string($filters['duree']) . "'";
+        }
+        if (!empty($filters['profil'])) {
+            $sql .= " AND profil_demande = '" . $this->conn->real_escape_string($filters['profil']) . "'";
+        }
+
+        $result = $this->conn->query($sql);
+        if (!$result) {
+            throw new Exception("Erreur SQL : " . $this->conn->error);
+        }
+
+        $stages = [];
+        while ($row = $result->fetch_assoc()) {
+            $stages[] = $row;
+        }
+        return $stages;
+    }
 }
 
 // Initialiser le contrôleur
@@ -80,14 +104,23 @@ try {
     $database = new Database();
     $stageController = new StageController($database);
 
-    // Vérifier le type de requête
     if (isset($_GET['action']) && $_GET['action'] === 'getFilters') {
         $options = $stageController->getFilterOptions();
         echo json_encode($options);
         exit();
     }
 
-    // Si aucune action n'est spécifiée
+    if (isset($_GET['search'])) {
+        $filters = [
+            'lieu' => $_GET['lieu'] ?? '',
+            'duree' => $_GET['duree'] ?? '',
+            'profil' => $_GET['profil'] ?? ''
+        ];
+        $stages = $stageController->getStages($filters);
+        echo json_encode($stages);
+        exit();
+    }
+
     http_response_code(400);
     echo json_encode(["error" => "Action invalide ou manquante."]);
 } catch (Exception $e) {

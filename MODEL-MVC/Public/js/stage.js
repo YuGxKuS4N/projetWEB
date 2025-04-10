@@ -5,6 +5,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const filterProfil = document.getElementById("filter-profil");
   const searchButton = document.getElementById("search-button");
 
+  if (!offersContainer || !filterLieu || !filterDuree || !filterProfil || !searchButton) {
+    console.error("Certains éléments HTML nécessaires sont manquants.");
+    return;
+  }
+
   const loadFilterOptions = () => {
     fetch('/projetWEB/MODEL-MVC/Controllers/c_get_stage.php?action=getFilters')
       .then(response => {
@@ -19,7 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
-        // Charger les options des lieux
         options.lieux.forEach(lieu => {
           const option = document.createElement("option");
           option.value = lieu;
@@ -27,7 +31,6 @@ document.addEventListener("DOMContentLoaded", () => {
           filterLieu.appendChild(option);
         });
 
-        // Charger les options des durées
         options.durees.forEach(duree => {
           const option = document.createElement("option");
           option.value = duree;
@@ -35,7 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
           filterDuree.appendChild(option);
         });
 
-        // Charger les options des profils
         options.profils.forEach(profil => {
           const option = document.createElement("option");
           option.value = profil;
