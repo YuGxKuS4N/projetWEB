@@ -1,7 +1,7 @@
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  padding: 0;
+  padding: 0 20px; /* Ajout d'un espace sur les côtés */  
   background-color: #f4f4f4;
   background-image: url('projetWEB\MODEL-MVC\Public\image\logo.png');
   background-size: cover; /* Pour que l'image couvre toute la page */
