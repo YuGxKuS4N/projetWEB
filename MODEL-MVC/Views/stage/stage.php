@@ -1,20 +1,3 @@
-<?php
-// filepath: c:\projetWEB\MODEL-MVC\Views\stage\stage.php
-require_once dirname(__DIR__, 2) . '/Config/config.php'; // Correction du chemin
-
-try {
-    $conn = getDatabaseConnection(); // Utilisation de la fonction pour obtenir la connexion
-
-    // Récupérer les offres de stage
-    $query = $conn->query("SELECT * FROM Offre_Stage");
-    $offres = $query->fetch_all(MYSQLI_ASSOC);
-
-    // Journaliser les données pour le débogage
-    error_log("Offres récupérées : " . json_encode($offres));
-} catch (Exception $e) {
-    die("Erreur : " . $e->getMessage());
-}
-?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -34,23 +17,9 @@ try {
   </header>
 
   <main>
-    <section class="search-filters">
-      <input type="text" id="search-input" placeholder="Rechercher un stage...">
-      <select id="filter-lieu">
-        <option value="">Lieu</option>
-      </select>
-      <select id="filter-duree">
-        <option value="">Durée</option>
-      </select>
-      <select id="filter-profil">
-        <option value="">Profil demandé</option>
-      </select>
-      <button id="search-button">Rechercher</button>
-    </section>
-
     <section class="offers">
       <h2>Nos Offres de Stage</h2>
-      <div class="offers-list">
+      <div id="offers-container" class="offers-list">
         <?php if (!empty($offres)): ?>
           <?php foreach ($offres as $offre): ?>
             <div class="offer">
@@ -61,7 +30,7 @@ try {
               <p><strong>Durée :</strong> <?php echo htmlspecialchars($offre['duree']); ?> mois</p>
               <p><strong>Lieu :</strong> <?php echo htmlspecialchars($offre['lieu']); ?></p>
               <p>
-                <button onclick="window.location.href='/projetWEB/MODEL-MVC/Views/stage/postuler.php?id=<?php echo htmlspecialchars((int)$offre['stage-id']); ?>'">
+                <button class="postuler-btn" data-stage-id="<?php echo htmlspecialchars((int)$offre['id_offre']); ?>" data-stage-title="<?php echo htmlspecialchars($offre['titre']); ?>">
                   Postuler
                 </button>
               </p>
@@ -73,6 +42,35 @@ try {
       </div>
     </section>
   </main>
-  <script src="/projetWEB/MODEL-MVC/Public/js/stage.js"></script> <!-- Correction du chemin -->
+
+  <!-- Fenêtre modale -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h2 id="modal-title">Postuler pour le stage</h2>
+      <form id="postuler-form" action="/projetWEB/MODEL-MVC/Controllers/c_candidature.php" method="POST" enctype="multipart/form-data">
+        <input type="hidden" id="stage-id" name="stage_id">
+        <div class="form-group">
+          <label for="prenom">Prénom</label>
+          <input type="text" id="prenom" name="prenom" required>
+        </div>
+        <div class="form-group">
+          <label for="nom">Nom</label>
+          <input type="text" id="nom" name="nom" required>
+        </div>
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="cv">Importer CV</label>
+          <input type="file" id="cv" name="cv" required>
+        </div>
+        <button type="submit">Envoyer la candidature</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="/projetWEB/MODEL-MVC/Public/js/stage.js"></script>
 </body>
 </html>

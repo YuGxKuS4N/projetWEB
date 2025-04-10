@@ -1,10 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
   const offersContainer = document.getElementById("offers-container");
-  const searchInput = document.getElementById("search-input");
   const filterLieu = document.getElementById("filter-lieu");
   const filterDuree = document.getElementById("filter-duree");
   const filterProfil = document.getElementById("filter-profil");
   const searchButton = document.getElementById("search-button");
+
+  if (!offersContainer || !filterLieu || !filterDuree || !filterProfil || !searchButton) {
+    console.error("Certains éléments HTML nécessaires sont manquants.");
+    return;
+  }
 
   const loadFilterOptions = () => {
     fetch('/projetWEB/MODEL-MVC/Controllers/c_get_stage.php?action=getFilters')
@@ -44,15 +48,9 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch(error => console.error("Erreur lors du chargement des options de filtrage :", error));
   };
 
-  const loadStages = (search = '', filters = {}) => {
-    const params = new URLSearchParams({
-      search: search,
-      lieu: filters.lieu || '',
-      duree: filters.duree || '',
-      profil: filters.profil || ''
-    });
-
-    fetch(`/projetWEB/MODEL-MVC/Controllers/c_get_stage.php?${params.toString()}`)
+  const loadStages = (filters) => {
+    const query = new URLSearchParams(filters).toString();
+    fetch(`/projetWEB/MODEL-MVC/Controllers/c_get_stage.php?${query}`)
       .then(response => {
         if (!response.ok) {
           throw new Error(`Erreur HTTP : ${response.status}`);
@@ -60,48 +58,39 @@ document.addEventListener("DOMContentLoaded", () => {
         return response.json();
       })
       .then(stages => {
-        offersContainer.innerHTML = '';
-
         if (stages.error) {
           console.error("Erreur API :", stages.error);
-          offersContainer.innerHTML = "<p>Erreur lors du chargement des stages.</p>";
           return;
         }
 
+        offersContainer.innerHTML = ""; // Réinitialiser le conteneur
         stages.forEach(stage => {
-          const offerCard = document.createElement("div");
-          offerCard.classList.add("offer-card");
-          offerCard.innerHTML = `
+          const stageElement = document.createElement("div");
+          stageElement.className = "offer";
+          stageElement.innerHTML = `
             <h3>${stage.titre}</h3>
-            <p><strong>Entreprise :</strong> ${stage.entreprise}</p>
-            <p><strong>Lieu :</strong> ${stage.lieu}</p>
+            <p>${stage.description}</p>
+            <p><strong>Secteur :</strong> ${stage.secteur_activite}</p>
+            <p><strong>Date de début :</strong> ${stage.date_debut}</p>
             <p><strong>Durée :</strong> ${stage.duree} mois</p>
-            <p><strong>Profil demandé :</strong> ${stage.profil}</p>
-            <button class="postuler-btn" onclick="redirectToPostuler(${stage.id})">Postuler</button>
+            <p><strong>Lieu :</strong> ${stage.lieu}</p>
+            <button class="postuler-btn" data-stage-id="${stage.id_offre}" data-stage-title="${stage.titre}">Postuler</button>
           `;
-          offersContainer.appendChild(offerCard);
+          offersContainer.appendChild(stageElement);
         });
       })
-      .catch(error => {
-        console.error("Erreur lors du chargement des stages :", error);
-        offersContainer.innerHTML = "<p>Erreur lors du chargement des stages.</p>";
-      });
+      .catch(error => console.error("Erreur lors du chargement des stages :", error));
   };
 
   loadFilterOptions();
-  loadStages();
 
   searchButton.addEventListener("click", () => {
-    const search = searchInput.value;
     const filters = {
       lieu: filterLieu.value,
       duree: filterDuree.value,
       profil: filterProfil.value
     };
-    loadStages(search, filters);
+
+    loadStages(filters);
   });
 });
-
-function redirectToPostuler(stageId) {
-  window.location.href = `/projetWEB/MODEL-MVC/Views/stage/postuler.php?stage_id=${stageId}`;
-}
