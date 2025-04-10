@@ -88,6 +88,11 @@ $role = $_SESSION['role'];
         </div>
     </section>
     
-    <?php include '/projetWEB/MODEL-MVC/Views/footer/footer.php'; ?> <!-- Inclusion du footer -->
+    <footer>
+
+    <div class="footer-bottom">
+        <p>Copyright &copy; <?php echo date("Y"); ?> <a href="#">WEB4ALL</a>. Tous droits réservés.</p>
+    </div>
+</footer>
 </body>
 </html>
