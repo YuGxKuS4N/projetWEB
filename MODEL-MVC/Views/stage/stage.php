@@ -18,10 +18,12 @@ try {
 
     if (isset($offres['error'])) {
         error_log("Erreur API : " . $offres['error']);
+        echo "<p>Erreur API : " . htmlspecialchars($offres['error']) . "</p>"; // Affiche l'erreur API
         $offres = [];
     }
 } catch (Exception $e) {
     error_log("Erreur lors de la récupération des stages : " . $e->getMessage());
+    echo "<p>Erreur : " . htmlspecialchars($e->getMessage()) . "</p>"; // Affiche l'erreur PHP
     $offres = [];
 }
 ?>
