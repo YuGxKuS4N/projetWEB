@@ -17,53 +17,56 @@ body {
   backdrop-filter: blur(5px);
 }
 
-.navbar {  
-  background: #fff;  
-  padding: 0 20px; /* Ajustez selon vos préférences */  
-  box-sizing: border-box;   
-  display: flex;  
-  justify-content: space-between; /* Changez cela à `center` */  
-  align-items: center;  
-  position: fixed;  
-  width: 100%;  
-  top: 0;  
-  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);  
-  z-index: 1000;  
-  height: 80px;  
-}  
-
-
-.nav-right {  
-  list-style: none;  
-  display: flex;  
-  align-items: center;  
-  gap: 15px; /* Espacement entre les éléments de la liste */  
-  margin: 0;  
-  padding: 0;  
-}  
-.nav-logo img {
-  height: 200px; /* Taille du logo ajustée */
-  width: auto; /* L'image garde sa proportion */
+.navbar {
+  background: #fff;
+  padding: 0 40px; /* Plus d'espace intérieur sur les côtés */
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between; /* Garde le logo à gauche et les liens à droite */
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  height: 80px;
 }
 
+.nav-logo img {
+  height: 50px;
+  width: auto;
+}
 
+.nav-right {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 0;
+  padding: 0;
+}
 
 .nav-right li {
-  margin: 0 ;
+  margin: 0;
 }
 
 .nav-right a {
   text-decoration: none;
-  color: #333; /* Couleur par défaut des liens */
+  color: #333;
   font-weight: 600;
-  font-size: 16px; /* Taille de police ajustée */
-  padding: 10px 15px; /* Ajout d'un padding pour un meilleur clic */
-  border-radius: 5px; /* Coins arrondis pour un effet bouton */
-  transition: all 0.3s ease; /* Transition fluide pour les effets */
+  font-size: 16px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
 }
 
 .nav-right a:hover {
   color: #a67c52;
+  background-color: rgba(166, 124, 82, 0.1);
+}
+
+.nav-right a:active {
+  background-color: rgba(166, 124, 82, 0.2);
 }
 
 .hero {
