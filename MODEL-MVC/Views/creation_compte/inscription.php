@@ -33,6 +33,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Controllers/c_ins
         <div class="form-container">
           <input type="text" class="input" name="prenom" placeholder="Prénom" required />
           <input type="text" class="input" name="nom" placeholder="Nom" required />
+          <input type="number" class="input" name="annee_promo" placeholder="Année de promotion" required />
           <input type="email" class="input" name="email" placeholder="E-mail" required />
           <input type="password" class="input" name="password" placeholder="Mot de passe" required />
           <input type="password" class="input" name="confirm_password" placeholder="Confirmez le mot de passe" required />
