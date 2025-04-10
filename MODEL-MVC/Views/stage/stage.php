@@ -1,3 +1,25 @@
+<?php
+// Inclure la configuration et démarrer la session
+require_once dirname(__DIR__, 3) . '/MODEL-MVC/Config/config.php';
+require_once dirname(__DIR__, 3) . '/MODEL-MVC/Config/Database.php';
+
+session_start();
+
+// Récupérer les données des stages via le contrôleur
+$offres = [];
+try {
+    $url = "http://localhost/projetWEB/MODEL-MVC/Controllers/c_get_stage.php";
+    $response = file_get_contents($url);
+    $offres = json_decode($response, true);
+
+    if (isset($offres['error'])) {
+        $offres = []; // Si une erreur est retournée, on vide les offres
+    }
+} catch (Exception $e) {
+    error_log("Erreur lors de la récupération des stages : " . $e->getMessage());
+    $offres = [];
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -5,7 +27,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stages - WEB4ALL</title>
   <link rel="stylesheet" href="/projetWEB/MODEL-MVC/Public/css/stage.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
   <header>
@@ -29,7 +50,7 @@
               <p><strong>Durée :</strong> <?php echo htmlspecialchars($offre['duree']); ?> mois</p>
               <p><strong>Lieu :</strong> <?php echo htmlspecialchars($offre['lieu']); ?></p>
               <p>
-                <button class="postuler-btn" data-stage-id="<?php echo htmlspecialchars((int)$offre['id_offre']); ?>" data-stage-title="<?php echo htmlspecialchars($offre['titre']); ?>">
+                <button class="postuler-btn" data-stage-id="<?php echo htmlspecialchars((int)$offre['id']); ?>" data-stage-title="<?php echo htmlspecialchars($offre['titre']); ?>">
                   Postuler
                 </button>
               </p>
@@ -43,6 +64,5 @@
   </main>
 
   <?php include dirname(__DIR__) . '/../footer/footer.php'; ?> <!-- Inclusion du footer -->
-  <script src="/projetWEB/MODEL-MVC/Public/js/stage.js"></script>
 </body>
 </html>
