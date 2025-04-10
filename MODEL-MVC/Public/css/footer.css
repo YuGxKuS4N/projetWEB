@@ -1,14 +1,3 @@
-footer {
-    position: relative;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: #111;
-    height: 10px;
-    width: 50%;
-    padding: 10px 0; /* Ajustement pour un espacement uniforme */
-    color: #fff;
-}
 
 .footer-content {
     display: flex;
