@@ -13,12 +13,12 @@ $userId = $_SESSION['user_id'];
 $userType = $_SESSION['role'];
 
 // Journal des paramètres transmis au contrôleur
-error_log("Paramètres transmis au contrôleur : type=$userType, user_id=$userId");
+error_log("Paramètres transmis au contrôleur : user_type=$userType, user_id=$userId");
 
 // Récupérer les données utilisateur
 $data = file_get_contents(dirname(__DIR__, 3) . "/MODEL-MVC/Controllers/c_get_data.php?user_type=$userType&user_id=$userId&context=profile");
 if ($data === false) {
-    error_log("Erreur lors de la récupération des données utilisateur : type=$userType, user_id=$userId");
+    error_log("Erreur lors de la récupération des données utilisateur : user_type=$userType, user_id=$userId");
     $userData = ["error" => "Impossible de récupérer les données utilisateur."];
 } else {
     error_log("Données utilisateur récupérées : " . $data); // Journal pour le débogage
