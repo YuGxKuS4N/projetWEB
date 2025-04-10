@@ -46,7 +46,7 @@ class CandidatureController {
             INSERT INTO Candidature 
                 (id_etudiant_fk, id_offre_fk, date_candidature, statut_candidature, commentaire, id_entreprise_fk, cv_path, motivation_path)
             VALUES 
-                (?, ?, ?, 'en attente', NULL, (SELECT id_entreprise_fk FROM Offre_Stage WHERE `stage-id` = ?), ?, ?)
+                (?, ?, ?, 'en attente', NULL, (SELECT id_entreprise_fk FROM Offre_Stage WHERE id_offre = ?), ?, ?)
 SQL;
 
         $stmt = $this->conn->prepare($sql);
