@@ -13,10 +13,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Inclusion de la configuration et de la classe Database
-require_once __DIR__ . '/../Config/config.php';
-require_once __DIR__ . '/../Config/Database.php'; // Ajout de cette ligne
-
+require_once __DIR__ . 'Config/Database.php'; // Inclusion de la configuration
 class ConnexionController {
     private $db;
     private $conn;

@@ -6,9 +6,7 @@
  * - Ajoute ou retire un stage de la wishlist.
  * - Utilise la classe `WishlistController` pour encapsuler la logique.
  */
-
-require_once dirname(__DIR__, 2) . '/Config/config.php'; // Inclusion de la configuration, chemin absolu
-
+require_once __DIR__ . 'Config/Database.php'; // Inclusion de la configuration
 class WishlistController {
     private $db;
     private $conn;

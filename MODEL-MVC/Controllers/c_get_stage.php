@@ -10,9 +10,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);  
 error_reporting(E_ALL);  
 
-// Inclusion des fichiers de configuration et de base de données  
-require_once dirname(__DIR__, 2) . '/Config/config.php';  
-require_once dirname(__DIR__, 2) . '/Config/Database.php';  
+require_once __DIR__ . '/../Config/Database.php'; // Chemin corrigé
 
 class StageController {  
     private $db;  
@@ -159,4 +157,4 @@ try {
     http_response_code(500);  
     echo json_encode(["error" => "Erreur interne du serveur."]);  
 }  
-?>  
+?>

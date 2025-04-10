@@ -6,8 +6,9 @@
  * - Utilise la classe `DataController` pour encapsuler la logique.
  */
 
-require __DIR__ . '/../Config/config.php'; // Correction du chemin
-require __DIR__ . '/../Config/Database.php'; // Inclure la classe Database avec le chemin relatif correct
+ require_once __DIR__ . 'Config/Database.php'; // Inclusion de la configuration
+
+ 
 
 class DataController {
     private $db;
