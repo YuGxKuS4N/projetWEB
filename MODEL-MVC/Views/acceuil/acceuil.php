@@ -78,7 +78,7 @@ $role = $_SESSION['role'];
                 }
                 ?>
                 <!-- Bouton pour accéder à la page profil -->
-                <a href="/projetWEB/MODEL-MVC/Views/utilisateur/profil.php" class="btn">MON PROFIL</a>
+                <a href="/projetWEB/MODEL-MVC/Views/utilisateur/profil.php?user_type=<?php echo htmlspecialchars($_SESSION['role']); ?>&user_id=<?php echo htmlspecialchars($_SESSION['user_id']); ?>" class="btn">MON PROFIL</a>
             </div>
         </div>
     </section>
