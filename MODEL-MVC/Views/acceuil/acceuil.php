@@ -77,6 +77,11 @@ $role = $_SESSION['role'];
                     echo '<a href="/projetWEB/MODEL-MVC/Views/admin/admin.php" class="btn">PANEL ADMINISTRATION</a>';
                 }
                 ?>
+                <?php
+                if ($role === 'entreprise') {
+                    echo '<a href="/projetWEB/MODEL-MVC/Views/entreprise/candidatures.php" class="btn">Voir les candidatures</a>';
+                }
+                ?>
                 <!-- Bouton pour accéder à la page profil -->
                 <a href="/projetWEB/MODEL-MVC/Views/utilisateur/profil.php" class="btn">MON PROFIL</a>
             </div>

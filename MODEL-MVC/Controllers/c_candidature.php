@@ -90,6 +90,28 @@ class CandidatureController {
 
         return $uploadPath;
     }
+
+    public function getCandidaturesByEntreprise($entrepriseId) {
+        $sql = <<<SQL
+            SELECT c.id_candidature, s.prenom, s.nom, c.cv_path, c.motivation_path, o.titre
+            FROM Candidature c
+            INNER JOIN Stagiaire s ON c.id_etudiant_fk = s.id_stagiaire
+            INNER JOIN Offre_Stage o ON c.id_offre_fk = o.`stage-id`
+            WHERE o.id_entreprise_fk = ?
+SQL;
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $entrepriseId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $candidatures = [];
+        while ($row = $result->fetch_assoc()) {
+            $candidatures[] = $row;
+        }
+
+        return $candidatures;
+    }
 }
 
 // Vérifier si l'utilisateur est connecté
