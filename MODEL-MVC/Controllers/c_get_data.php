@@ -1,7 +1,18 @@
 <?php
-session_start(); // Démarrage de la session
+require_once __DIR__ . '/c_connexion.php'; // Inclusion du fichier connexion
 require_once __DIR__ . '/../Config/config.php';
 require_once __DIR__ . '/../Config/Database.php';
+
+if (!isUserConnected()) {
+    error_log("Utilisateur non connecté."); // Log si l'utilisateur n'est pas connecté
+    header('Content-Type: application/json');
+    echo json_encode(["error" => "Utilisateur non connecté."]);
+    exit();
+}
+
+$user = getConnectedUser();
+$userId = $user['user_id'];
+$userType = $user['role'];
 
 class GetDateController {
     private $db;
@@ -50,19 +61,6 @@ class GetDateController {
         }
     }
 }
-
-// Vérifier si l'utilisateur est connecté
-if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
-    error_log("Utilisateur non connecté."); // Log si l'utilisateur n'est pas connecté
-    header('Content-Type: application/json');
-    echo json_encode(["error" => "Utilisateur non connecté."]);
-    exit();
-}
-
-$userId = $_SESSION['user_id'];
-$userType = $_SESSION['role'];
-
-error_log("Session dans c_get_data.php - user_id: $userId, role: $userType"); // Log des valeurs de session
 
 $getDateController = new GetDateController();
 $response = $getDateController->getUserData($userId, $userType);
