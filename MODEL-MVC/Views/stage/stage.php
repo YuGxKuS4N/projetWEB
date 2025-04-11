@@ -26,7 +26,6 @@ try {
     <div class="logo">WEB4ALL</div>
     <nav>
       <a href="/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php">Accueil</a>
-      <a href="/projetWEB/MODEL-MVC/Views/creation_compte/entreprise.php">Entreprises</a>
     </nav>
   </header>
 
