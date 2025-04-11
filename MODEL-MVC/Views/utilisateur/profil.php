@@ -6,25 +6,17 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
     exit();
 }
 
-// Appel au contrôleur pour récupérer les données utilisateur
-$url = "http://86.71.46.25:200/projetWEB/MODEL-MVC/Controllers/c_get_data.php";
-$ch = curl_init($url);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-$data = curl_exec($ch);
-$error = curl_error($ch);
-curl_close($ch);
+// Inclure directement c_get_data.php pour récupérer les données utilisateur
+ob_start();
+include __DIR__ . '/../../Controllers/c_get_data.php';
+$data = ob_get_clean();
 
-if ($data === false) {
-    error_log("Erreur CURL : $error"); // Log d'erreur CURL
-    $userData = ["error" => "Impossible de récupérer les données utilisateur."];
-} else {
-    error_log("Données récupérées via CURL : $data"); // Log des données récupérées
-    $userData = json_decode($data, true);
+// Décoder la réponse JSON
+$userData = json_decode($data, true);
 
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        error_log("Erreur JSON : " . json_last_error_msg()); // Log d'erreur JSON
-        $userData = ["error" => "Erreur lors du décodage des données utilisateur."];
-    }
+if (json_last_error() !== JSON_ERROR_NONE) {
+    error_log("Erreur JSON : " . json_last_error_msg()); // Log d'erreur JSON
+    $userData = ["error" => "Erreur lors du décodage des données utilisateur."];
 }
 
 error_log("Données utilisateur après décodage : " . print_r($userData, true)); // Log des données après décodage
@@ -65,11 +57,5 @@ error_log("Données utilisateur après décodage : " . print_r($userData, true))
             <?php endif; ?>
         </div>
     </div>
-
-    <!-- Ajout d'un script pour afficher les logs dans la console -->
-    <script>
-        // Affiche la réponse brute dans la console
-        console.log("Réponse brute de c_get_data.php :", <?php echo json_encode($data); ?>);
-    </script>
 </body>
 </html>
