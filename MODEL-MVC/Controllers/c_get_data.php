@@ -3,6 +3,9 @@ require_once __DIR__ . '/c_connexion.php'; // Inclusion du fichier connexion
 require_once __DIR__ . '/../Config/config.php';
 require_once __DIR__ . '/../Config/Database.php';
 
+// Vérifiez si c_connexion.php est bien inclus
+error_log("c_connexion.php inclus avec succès.");
+
 if (!isUserConnected()) {
     error_log("Utilisateur non connecté."); // Log si l'utilisateur n'est pas connecté
     header('Content-Type: application/json');
