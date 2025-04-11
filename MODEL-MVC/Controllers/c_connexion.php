@@ -85,6 +85,20 @@ SQL;
             return ["success" => false, "error" => "Aucun compte trouvé avec cet email."];
         }
     }
+     // --- Méthodes ajoutées pour vérifier la connexion utilisateur ---
+    public static function isUserConnected() {
+        return isset($_SESSION['user_id']) && isset($_SESSION['role']);
+    }
+    
+    public static function getConnectedUser() {
+        if (self::isUserConnected()) {
+            return [
+                'user_id' => $_SESSION['user_id'],
+                'role' => $_SESSION['role']
+            ];
+        }
+        return null;
+    }
 }
 
 // Traitement de la requête POST

@@ -16,7 +16,7 @@ curl_close($ch);
 
 if ($data === false) {
     error_log("Erreur CURL : $error"); // Log d'erreur CURL
-    $userData = ["error" => "Impossible de récupérer les données utilisateur."];
+    $userData = ["error" => "Impossible de récupérer les données utilisateur. Erreur CURL : $error"];
 } else {
     error_log("Données récupérées via CURL : $data"); // Log des données récupérées
     $userData = json_decode($data, true);
