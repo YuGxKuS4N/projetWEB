@@ -125,6 +125,7 @@ SQL;
             $candidatures[] = $row;
         }
 
+        error_log("Candidatures récupérées : " . print_r($candidatures, true)); // Log des candidatures
         return $candidatures;
     }
 }
