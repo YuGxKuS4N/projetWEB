@@ -51,7 +51,7 @@ error_log("Données utilisateur après décodage : " . print_r($userData, true))
                 <?php foreach ($userData as $key => $value): ?>
                     <div class="profile-field">
                         <label for="<?php echo htmlspecialchars($key); ?>"><?php echo htmlspecialchars($key); ?></label>
-                        <input type="text" id="<?php echo htmlspecialchars($key); ?>" value="<?php echo htmlspecialchars($value ?? ''); ?>" readonly>
+                        <input type="text" id="<?php echo htmlspecialchars($key); ?>" value="<?php echo htmlspecialchars($value ?? 'Non défini'); ?>" readonly>
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>
