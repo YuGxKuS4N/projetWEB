@@ -26,7 +26,7 @@ $lieu = $_GET['lieu'] ?? '';
 $duree = $_GET['duree'] ?? '';
 $profil = $_GET['profil'] ?? '';
 
-$sql = "SELECT * FROM Offre_Stage WHERE (titre LIKE ? OR secteur_activite LIKE ?)";
+$sql = "SELECT stage-id, titre, description, duree, lieu, date_debut, secteur_activite FROM Offre_Stage WHERE (titre LIKE ? OR secteur_activite LIKE ?)";
 $params = ["%$search%", "%$search%"];
 $types = "ss";
 
@@ -113,7 +113,7 @@ $offres = $result->fetch_all(MYSQLI_ASSOC);
                             <p><strong>Durée :</strong> <?php echo htmlspecialchars($offre['duree']); ?> mois</p>
                             <p><strong>Lieu :</strong> <?php echo htmlspecialchars($offre['lieu']); ?></p>
                             <p>
-                                <button onclick="window.location.href='/projetWEB/MODEL-MVC/Views/stage/postuler.php?id=<?php echo htmlspecialchars((int)$offre['id_offre']); ?>'">
+                                <button onclick="window.location.href='/projetWEB/MODEL-MVC/Views/stage/postuler.php?id=<?php echo htmlspecialchars($offre['stage-id']); ?>'">
                                     Postuler
                                 </button>
                             </p>
