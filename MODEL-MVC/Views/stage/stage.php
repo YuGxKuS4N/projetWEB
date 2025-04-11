@@ -59,6 +59,49 @@ $offres = $result->fetch_all(MYSQLI_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stages - WEB4ALL</title>
     <link rel="stylesheet" href="/projetWEB/MODEL-MVC/Public/css/stage.css">
+    <script>
+        // Fonction pour gérer l'ajout ou la suppression de la wishlist
+        function toggleWishlist(stageId, action) {
+            fetch('/projetWEB/MODEL-MVC/Controllers/wishlist.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ stageId: stageId, action: action })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    // Change l'apparence de l'étoile en fonction de l'action
+                    const star = document.getElementById(`wishlist-star-${stageId}`);
+                    if (action === 'add') {
+                        star.classList.add('active');
+                        star.setAttribute('onclick', `toggleWishlist(${stageId}, 'remove')`);
+                    } else {
+                        star.classList.remove('active');
+                        star.setAttribute('onclick', `toggleWishlist(${stageId}, 'add')`);
+                    }
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Erreur lors de la requête wishlist:', error);
+                alert('Une erreur est survenue.');
+            });
+        }
+    </script>
+    <style>
+        .wishlist-star {
+            font-size: 24px;
+            color: gray;
+            cursor: pointer;
+        }
+        .wishlist-star.active {
+            color: gold;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -106,6 +149,13 @@ $offres = $result->fetch_all(MYSQLI_ASSOC);
                 <?php if (!empty($offres)): ?>
                     <?php foreach ($offres as $offre): ?>
                         <div class="offer">
+                            <!-- Étoile pour la wishlist -->
+                            <span 
+                                id="wishlist-star-<?php echo htmlspecialchars($offre['stage-id']); ?>" 
+                                class="wishlist-star" 
+                                onclick="toggleWishlist(<?php echo htmlspecialchars($offre['stage-id']); ?>, 'add')">
+                                ★
+                            </span>
                             <h3><?php echo htmlspecialchars($offre['titre']); ?></h3>
                             <p><?php echo htmlspecialchars($offre['description']); ?></p>
                             <p><strong>Secteur :</strong> <?php echo htmlspecialchars($offre['secteur_activite']); ?></p>
