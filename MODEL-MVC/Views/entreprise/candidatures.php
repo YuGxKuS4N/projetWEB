@@ -5,12 +5,11 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'entreprise') {
     exit();
 }
 
-require_once dirname(__DIR__, 2) . '/Config/Database.php';
-require_once dirname(__DIR__, 2) . '/Controllers/c_candidature.php';
+require_once __DIR__ . '/../../Controllers/c_candidature.php';
 
-$database = new Database();
-$candidatureController = new CandidatureController($database);
-$candidatures = $candidatureController->getCandidaturesByEntreprise($_SESSION['user_id']);
+$entrepriseId = $_SESSION['user_id'];
+$candidatureController = new CandidatureController();
+$candidatures = $candidatureController->getCandidaturesByEntreprise($entrepriseId);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -23,36 +22,36 @@ $candidatures = $candidatureController->getCandidaturesByEntreprise($_SESSION['u
 <body>
     <div class="container">
         <h2>Candidatures reçues</h2>
-        <?php if (!empty($candidatures)): ?>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nom du stagiaire</th>
-                        <th>Offre de stage</th>
-                        <th>CV</th>
-                        <th>Lettre de motivation</th>
-                    </tr>
-                </thead>
-                <tbody>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom du stagiaire</th>
+                    <th>Offre de stage</th>
+                    <th>CV</th>
+                    <th>Lettre de motivation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (!empty($candidatures)): ?>
                     <?php foreach ($candidatures as $candidature): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($candidature['prenom'] . ' ' . $candidature['nom']); ?></td>
-                            <td><?php echo htmlspecialchars($candidature['titre']); ?></td>
-                            <td><a href="<?php echo htmlspecialchars($candidature['cv_path']); ?>" target="_blank">Télécharger</a></td>
+                            <td><?php echo htmlspecialchars($candidature['stagiaire_prenom'] . ' ' . $candidature['stagiaire_nom']); ?></td>
+                            <td><?php echo htmlspecialchars($candidature['offre_titre']); ?></td>
                             <td>
-                                <?php if (!empty($candidature['motivation_path'])): ?>
-                                    <a href="<?php echo htmlspecialchars($candidature['motivation_path']); ?>" target="_blank">Télécharger</a>
-                                <?php else: ?>
-                                    Non fourni
-                                <?php endif; ?>
+                                <a href="<?php echo htmlspecialchars($candidature['cv_path']); ?>" target="_blank">Télécharger</a>
+                            </td>
+                            <td>
+                                <a href="<?php echo htmlspecialchars($candidature['motivation_path']); ?>" target="_blank">Télécharger</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php else: ?>
-            <p>Aucune candidature reçue pour le moment.</p>
-        <?php endif; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="4">Aucune candidature reçue pour le moment.</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
     </div>
 </body>
 </html>
