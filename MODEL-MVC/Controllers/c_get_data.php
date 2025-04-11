@@ -1,10 +1,11 @@
 <?php
-require_once __DIR__ . '/session_manager.php';
+require_once __DIR__ . '/c_connexion.php';
 require_once __DIR__ . '/../Config/config.php';
 require_once __DIR__ . '/../Config/Database.php';
 
-// Vérifiez si l'utilisateur est connecté
-if (!SessionManager::isUserConnected()) {
+// Vérifiez si l'utilisateur est connecté via la session
+session_start();
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
     error_log("Utilisateur non connecté.");
     header('Content-Type: application/json');
     echo json_encode(["error" => "Utilisateur non connecté."]);
@@ -12,9 +13,8 @@ if (!SessionManager::isUserConnected()) {
 }
 
 // Récupérez les informations de l'utilisateur connecté
-$user = SessionManager::getConnectedUser();
-$userId = $user['user_id'];
-$userType = $user['role'];
+$userId = $_SESSION['user_id'];
+$userType = $_SESSION['role'];
 
 class GetDateController {
     private $db;
