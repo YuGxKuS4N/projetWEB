@@ -60,6 +60,8 @@ class GetDateController {
                     WHERE Stagiaire.annee_promo = ?
                     GROUP BY Stagiaire.id_stagiaire";
 
+            error_log("Requête SQL : $sql"); // Log de la requête SQL
+
             $stmt = $this->conn->prepare($sql);
             if (!$stmt) {
                 error_log("Erreur de préparation de la requête : " . $this->conn->error);
