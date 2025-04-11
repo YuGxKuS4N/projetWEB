@@ -5,9 +5,10 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Inclusion de la configuration et de la classe Database
+// Inclusion de la configuration, de la classe Database et de SessionManager
 require_once __DIR__ . '/../Config/config.php';
 require_once __DIR__ . '/../Config/Database.php';
+require_once __DIR__ . '/session_manager.php';
 
 class ConnexionController {
     private $db;
@@ -47,10 +48,8 @@ SQL;
             $user = $result->fetch_assoc();
 
             if (password_verify($password, $user['password'])) {
-                session_start();
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['email'] = $user['email'];
-                $_SESSION['role'] = $user['role'];
+                // Utilisation de SessionManager pour définir les variables de session
+                SessionManager::setUserSession($user['id'], $user['role'], $user['email']);
 
                 // Ajouter annee_promo pour les pilotes
                 if ($user['role'] === 'pilote') {
@@ -59,7 +58,7 @@ SQL;
                     $stmt->execute();
                     $resultPromo = $stmt->get_result();
                     if ($promoRow = $resultPromo->fetch_assoc()) {
-                        $_SESSION['annee_promo'] = $promoRow['annee_promo'];
+                        SessionManager::setAdditionalSessionData('annee_promo', $promoRow['annee_promo']);
                     }
                 }
 
