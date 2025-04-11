@@ -1,8 +1,8 @@
 <?php
 session_start();
-require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Controllers/c_connexion.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Config/config.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/projetWEB/MODEL-MVC/Config/Database.php';
+require_once __DIR__  . '/projetWEB/MODEL-MVC/Controllers/c_connexion.php';
+require_once __DIR__ . '/projetWEB/MODEL-MVC/Config/config.php';
+require_once __DIR__ . '/projetWEB/MODEL-MVC/Config/Database.php';
 
 // Vérifiez si l'utilisateur est connecté via la session
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
