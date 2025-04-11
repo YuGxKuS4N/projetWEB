@@ -42,16 +42,15 @@ class CandidatureController {
         }
 
         // Enregistrer la candidature dans la base de données
-        $sql = <<<SQL
-            INSERT INTO Candidature 
-                (id_etudiant_fk, id_offre_fk, date_candidature, statut_candidature, commentaire, id_entreprise_fk, cv_path, motivation_path)
-            VALUES 
-                (?, ?, ?, 'en attente', NULL, (SELECT id_entreprise_fk FROM Offre_Stage WHERE `stage-id` = ?), ?, ?)
-SQL;
+        $sql = "INSERT INTO Candidature 
+                    (id_etudiant_fk, id_offre_fk, date_candidature, statut_candidature, commentaire, id_entreprise_fk, cv_path, motivation_path)
+                VALUES 
+                    (?, ?, ?, 'en attente', NULL, (SELECT id_entreprise_fk FROM Offre_Stage WHERE `stage-id` = ?), ?, ?)";
 
         $stmt = $this->conn->prepare($sql);
         if (!$stmt) {
             error_log("Erreur de préparation de la requête SQL : " . $this->conn->error);
+            return ["errors" => ["Erreur interne du serveur."]];
         }
         $stmt->bind_param("iissss", $etudiantId, $stageId, $dateCandidature, $stageId, $cvPath, $motivationPath);
 

@@ -20,67 +20,41 @@ class StageController {
     }
 
     public function getFilteredStages($search = '', $filters = []) {
-        $sql = <<<SQL
-            SELECT 
-                Offre_Stage.id_offre AS id,
-                Offre_Stage.titre AS titre,
-                Offre_Stage.description AS description,
-                Offre_Stage.duree AS duree,
-                Offre_Stage.lieu AS lieu, -- Correction du champ
-                Offre_Stage.date_debut AS date_debut,
-                Offre_Stage.secteur_activite AS secteur_activite,
-                Entreprise.nom_entreprise AS entreprise
-            FROM 
-                Offre_Stage
-            LEFT JOIN 
-                Entreprise 
-            ON 
-                Offre_Stage.id_entreprise_fk = Entreprise.id_entreprise
-            WHERE 
-                (Offre_Stage.titre LIKE ? OR Entreprise.nom_entreprise LIKE ?)
-SQL;
+        $sql = "SELECT Offre_Stage.`stage-id` AS id, Offre_Stage.titre, Offre_Stage.description, 
+                       Offre_Stage.duree, Offre_Stage.lieu, Offre_Stage.date_debut, 
+                       Offre_Stage.secteur_activite, entreprises.nom_entreprise AS entreprise
+                FROM Offre_Stage
+                LEFT JOIN entreprises ON Offre_Stage.id_entreprise_fk = entreprises.id_entreprise
+                WHERE (Offre_Stage.titre LIKE ? OR entreprises.nom_entreprise LIKE ?)";
 
-        // Ajout des filtres dynamiques
+        $params = [];
+        $types = "ss";
+        $searchParam = '%' . $search . '%';
+        $params[] = $searchParam;
+        $params[] = $searchParam;
+
         if (!empty($filters['lieu'])) {
-            $sql .= " AND Offre_Stage.lieu_stage = ?";
+            $sql .= " AND Offre_Stage.lieu = ?";
+            $params[] = $filters['lieu'];
+            $types .= "s";
         }
         if (!empty($filters['duree'])) {
             $sql .= " AND Offre_Stage.duree = ?";
+            $params[] = $filters['duree'];
+            $types .= "i";
         }
         if (!empty($filters['secteur'])) {
             $sql .= " AND Offre_Stage.secteur_activite = ?";
+            $params[] = $filters['secteur'];
+            $types .= "s";
         }
 
-        $sql .= " ORDER BY Offre_Stage.date_publi DESC";
-
-        // Ajout de journaux pour déboguer
-        error_log("Requête SQL : $sql");
+        $sql .= " ORDER BY Offre_Stage.date_debut ASC";
 
         $stmt = $this->conn->prepare($sql);
         if (!$stmt) {
             throw new Exception("Erreur de préparation de la requête : " . $this->conn->error);
         }
-
-        // Préparer les paramètres dynamiques
-        $searchParam = '%' . $search . '%';
-        $params = [$searchParam, $searchParam];
-        $types = "ss";
-
-        if (!empty($filters['lieu'])) {
-            $params[] = $filters['lieu'];
-            $types .= "s";
-        }
-        if (!empty($filters['duree'])) {
-            $params[] = $filters['duree'];
-            $types .= "i";
-        }
-        if (!empty($filters['secteur'])) {
-            $params[] = $filters['secteur'];
-            $types .= "s";
-        }
-
-        // Ajout de journaux pour déboguer
-        error_log("Paramètres : " . json_encode($params));
 
         $stmt->bind_param($types, ...$params);
         $stmt->execute();

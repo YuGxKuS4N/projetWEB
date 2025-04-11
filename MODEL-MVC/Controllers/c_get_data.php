@@ -51,7 +51,7 @@ class GetDateController {
     }
 
     public function getStudentsByPromo($promoYear) {
-        $sql = "SELECT prenom, nom, COUNT(candidature.id_candidature) AS nb_candidatures
+        $sql = "SELECT Stagiaire.prenom, Stagiaire.nom, COUNT(Candidature.id_candidature) AS nb_candidatures
                 FROM Stagiaire
                 LEFT JOIN Candidature ON Stagiaire.id_stagiaire = Candidature.id_etudiant_fk
                 WHERE Stagiaire.annee_promo = ?
