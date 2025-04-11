@@ -95,8 +95,14 @@ $response = $getDateController->getUserData($userId, $userType);
 if (isset($_GET['context']) && $_GET['context'] === 'students') {
     $promoYear = $_GET['promo_year'] ?? null;
     if ($promoYear) {
-        $response = $getDateController->getStudentsByPromo($promoYear);
-        echo json_encode($response);
+        try {
+            $response = $getDateController->getStudentsByPromo($promoYear);
+            header('Content-Type: application/json');
+            echo json_encode($response);
+        } catch (Exception $e) {
+            error_log("Erreur lors de la récupération des élèves : " . $e->getMessage());
+            echo json_encode(["error" => "Erreur interne du serveur."]);
+        }
     } else {
         echo json_encode(["error" => "Année de promotion manquante."]);
     }
