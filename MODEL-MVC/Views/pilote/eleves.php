@@ -22,18 +22,22 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'pilote') {
   </div>
 </div>
 <script>
-  // Charger les élèves dynamiquement
   document.addEventListener('DOMContentLoaded', () => {
-    const userId = <?php echo json_encode($_SESSION['user_id']); ?>; // JSON pour éviter les erreurs JS
-    const type = 'pilote';
+    const userId = <?php echo json_encode($_SESSION['user_id']); ?>;
+    const promoYear = <?php echo json_encode($_SESSION['annee_promo']); ?>;
 
-    fetch(`/projetWEB/MODEL-MVC/Controllers/c_get_data.php?type=${type}&user_id=${userId}&context=students`)
-      .then(response => response.json())
+    fetch(`/projetWEB/MODEL-MVC/Controllers/c_get_data.php?context=students&promo_year=${promoYear}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Erreur HTTP : ${response.status}`);
+        }
+        return response.json();
+      })
       .then(data => {
         const container = document.getElementById('students-container');
         if (data.error) {
           container.innerHTML = `<p>${data.error}</p>`;
-        } else {
+        } else if (data.length > 0) {
           data.forEach(student => {
             const studentCard = `
               <div class="student-card">
@@ -43,10 +47,13 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'pilote') {
             `;
             container.innerHTML += studentCard;
           });
+        } else {
+          container.innerHTML = `<p>Aucun élève trouvé pour cette année de promotion.</p>`;
         }
       })
       .catch(error => {
         console.error('Erreur lors du chargement des élèves :', error);
+        document.getElementById('students-container').innerHTML = `<p>Erreur lors du chargement des élèves.</p>`;
       });
   });
 </script>
