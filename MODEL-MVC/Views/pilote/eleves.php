@@ -24,6 +24,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'pilote') {
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const promoYear = <?php echo json_encode($_SESSION['annee_promo']); ?>;
+    console.log("Année de promotion envoyée :", promoYear); // Log pour vérifier promoYear
 
     fetch(`/projetWEB/MODEL-MVC/Controllers/c_get_data.php?context=students&promo_year=${promoYear}`)
       .then(response => {
@@ -33,7 +34,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'pilote') {
         return response.json();
       })
       .then(data => {
-        console.log("Réponse reçue :", data); // Log pour vérifier la réponse
+        console.log("Données reçues par le client :", data); // Log pour vérifier les données reçues
         const container = document.getElementById('students-container');
         if (data.error) {
           container.innerHTML = `<p>${data.error}</p>`;

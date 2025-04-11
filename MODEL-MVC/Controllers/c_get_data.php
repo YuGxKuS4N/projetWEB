@@ -74,6 +74,7 @@ class GetDateController {
 
             $students = [];
             while ($row = $result->fetch_assoc()) {
+                error_log("Ligne récupérée : " . json_encode($row)); // Log chaque ligne récupérée
                 $students[] = $row;
             }
 
@@ -108,6 +109,7 @@ if (isset($_GET['context']) && $_GET['context'] === 'students') {
         try {
             $response = $getDateController->getStudentsByPromo($promoYear);
             header('Content-Type: application/json');
+            error_log("Réponse envoyée au client : " . json_encode($response)); // Log de la réponse envoyée
             echo json_encode($response);
         } catch (Exception $e) {
             error_log("Exception dans getStudentsByPromo : " . $e->getMessage()); // Log de l'exception
