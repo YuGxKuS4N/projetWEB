@@ -1,6 +1,7 @@
 <?php
 require_once dirname(__DIR__, 2) . '/Config/config.php';
 require_once dirname(__DIR__, 2) . '/Config/Database.php';
+require_once dirname(__DIR__, 2) . '/Controllers/c_responsive.php';
 
 session_start();
 
@@ -127,6 +128,7 @@ while ($row = $result->fetch_assoc()) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stages - WEB4ALL</title>
+    <?php echo ResponsiveController::generateResponsiveNavbar(); ?>
     <link rel="stylesheet" href="/projetWEB/MODEL-MVC/Public/css/stage.css">
     <style>
         .wishlist-star {
@@ -141,9 +143,17 @@ while ($row = $result->fetch_assoc()) {
 </head>
 <body>
     <header>
-        <div class="logo">WEB4ALL</div>
-        <nav>
-            <a href="/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php">Accueil</a>
+        <nav class="navbar">
+            <div class="nav-logo">
+                <a href="/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php">
+                    <img src="/projetWEB/MODEL-MVC/Public/image/logo.png" alt="Logo du Site">
+                </a>
+            </div>
+            <ul class="navbar-menu">
+                <li><a href="/projetWEB/MODEL-MVC/Views/stage/liste_stages.php">Stages</a></li>
+                <li><a href="/projetWEB/MODEL-MVC/Views/stage/mes_candidatures.php">Mes Candidatures</a></li>
+                <li><a href="/projetWEB/MODEL-MVC/Views/creation_compte/deconnexion.php">Déconnexion</a></li>
+            </ul>
         </nav>
     </header>
 
