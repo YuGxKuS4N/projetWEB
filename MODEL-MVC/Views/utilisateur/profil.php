@@ -5,18 +5,14 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
     exit();
 }
 
-// Appel au contrôleur pour récupérer les données utilisateur
-$url = "http://localhost/projetWEB/MODEL-MVC/Controllers/c_get_date.php";
-$ch = curl_init($url);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-$data = curl_exec($ch);
-curl_close($ch);
+// Inclure le contrôleur pour récupérer les données utilisateur
+require_once dirname(__DIR__, 2) . '/Controllers/c_get_date.php';
 
-if ($data === false) {
-    $userData = ["error" => "Impossible de récupérer les données utilisateur."];
-} else {
-    $userData = json_decode($data, true);
-}
+$userId = $_SESSION['user_id'];
+$userType = $_SESSION['role'];
+
+$getDateController = new GetDateController();
+$userData = $getDateController->getUserData($userId, $userType);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
