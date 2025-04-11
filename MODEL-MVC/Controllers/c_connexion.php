@@ -1,24 +1,31 @@
 <?php
 
-// Activer l'affichage des erreurs pour le débogage
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-// Inclusion de la configuration, de la classe Database et de SessionManager
 require_once __DIR__ . '/../Config/config.php';
 require_once __DIR__ . '/../Config/Database.php';
 
-
+/**
+ * Classe ConnexionController
+ * Gère la logique de connexion des utilisateurs.
+ */
 class ConnexionController {
     private $db;
     private $conn;
 
+    /**
+     * Constructeur de la classe.
+     * @param Database $database
+     */
     public function __construct(Database $database) {
         $this->db = $database;
         $this->conn = $this->db->connect();
     }
 
+    /**
+     * Authentifie un utilisateur avec son email et son mot de passe.
+     * @param string $email
+     * @param string $password
+     * @return array
+     */
     public function login($email, $password) {
         $sql = <<<SQL
             SELECT id_stagiaire AS id, email, password, 'stagiaire' AS role 
@@ -48,44 +55,16 @@ SQL;
             $user = $result->fetch_assoc();
 
             if (password_verify($password, $user['password'])) {
-                // Utilisation de SessionManager pour définir les variables de session
-                SessionManager::setUserSession($user['id'], $user['role'], $user['email']);
-
-                // Ajouter annee_promo pour les pilotes
-                if ($user['role'] === 'pilote') {
-                    $stmt = $this->conn->prepare("SELECT annee_promo FROM Pilote WHERE id_pilote = ?");
-                    $stmt->bind_param("i", $user['id']);
-                    $stmt->execute();
-                    $resultPromo = $stmt->get_result();
-                    if ($promoRow = $resultPromo->fetch_assoc()) {
-                        SessionManager::setAdditionalSessionData('annee_promo', $promoRow['annee_promo']);
-                    }
-                }
-
-                return ["success" => true, "role" => $user['role']];
+                return [
+                    "success" => true,
+                    "user_id" => $user['id'],
+                    "role" => $user['role']
+                ];
             } else {
                 return ["success" => false, "error" => "Mot de passe incorrect."];
             }
         } else {
             return ["success" => false, "error" => "Aucun compte trouvé avec cet email."];
         }
-    }
-}
-
-// Traitement de la requête POST
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = trim($_POST['email']);
-    $password = trim($_POST['password']);
-
-    $database = new Database();
-    $connexionController = new ConnexionController($database);
-    $response = $connexionController->login($email, $password);
-
-    if ($response['success']) {
-        header("Location: /projetWEB/MODEL-MVC/Views/acceuil/acceuil.php");
-        exit();
-    } else {
-        header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php?error=" . urlencode($response['error']));
-        exit();
     }
 }
