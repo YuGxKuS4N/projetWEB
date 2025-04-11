@@ -60,6 +60,11 @@ SQL;
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['role'] = $user['role'];
+                $_SESSION['annee_promo'] = $user['annee_promo'] ?? null; // Initialiser annee_promo à null par défaut
+                $_SESSION['id_entreprise'] = $user['id_entreprise'] ?? null; // Initialiser id_entreprise à null par défaut
+                $_SESSION['id_stagiaire'] = $user['id_stagiaire'] ?? null; // Initialiser id_stagiaire à null par défaut
+                $_SESSION['id_pilote'] = $user['id_pilote'] ?? null; // Initialiser id_pilote à null par défaut
+                $_SESSION['id'] = $user['id']; // ID de l'utilisateur
 
                 // Ajouter annee_promo pour les pilotes
                 if ($user['role'] === 'pilote') {

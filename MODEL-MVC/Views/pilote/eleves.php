@@ -2,6 +2,7 @@
 session_start(); // Assure que la session est démarrée
 
 error_log("Session actuelle : " . json_encode($_SESSION)); // Log pour vérifier la session
+error_log("Année de promotion dans la session : " . json_encode($_SESSION['annee_promo'] ?? 'Non définie'));
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'pilote') {
     header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php");
