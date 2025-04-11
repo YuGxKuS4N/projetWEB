@@ -52,7 +52,6 @@ class GetDateController {
 }
 
 // Vérifier si l'utilisateur est connecté
-session_start();
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
     error_log("Utilisateur non connecté."); // Log si l'utilisateur n'est pas connecté
     echo json_encode(["error" => "Utilisateur non connecté."]);
@@ -62,12 +61,19 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
 $userId = $_SESSION['user_id'];
 $userType = $_SESSION['role'];
 
-error_log("Session - userId: $userId, userType: $userType"); // Log des valeurs de session
+error_log("Session dans c_get_data.php - user_id: $userId, role: $userType"); // Log des valeurs de session
 
 $getDateController = new GetDateController();
 $response = $getDateController->getUserData($userId, $userType);
 
-error_log("Réponse envoyée : " . json_encode($response)); // Log de la réponse envoyée
-
 header('Content-Type: application/json');
-echo json_encode($response);
+$jsonResponse = json_encode($response);
+
+if (json_last_error() !== JSON_ERROR_NONE) {
+    error_log("Erreur JSON dans c_get_data.php : " . json_last_error_msg());
+    echo json_encode(["error" => "Erreur lors de l'encodage des données utilisateur."]);
+    exit();
+}
+
+error_log("JSON envoyé par c_get_data.php : " . $jsonResponse); // Log de la réponse JSON
+echo $jsonResponse;
