@@ -26,7 +26,7 @@ $lieu = $_GET['lieu'] ?? '';
 $duree = $_GET['duree'] ?? '';
 $profil = $_GET['profil'] ?? '';
 
-$sql = "SELECT stage-id, titre, description, duree, lieu, date_debut, secteur_activite FROM Offre_Stage WHERE (titre LIKE ? OR secteur_activite LIKE ?)";
+$sql = "SELECT `stage-id`, titre, description, duree, lieu, date_debut, secteur_activite FROM Offre_Stage WHERE (titre LIKE ? OR secteur_activite LIKE ?)";
 $params = ["%$search%", "%$search%"];
 $types = "ss";
 
