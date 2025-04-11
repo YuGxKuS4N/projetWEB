@@ -1,13 +1,10 @@
 <?php
-/**
- * Contrôleur pour gérer la wishlist.
- * 
- * - Vérifie si l'utilisateur est connecté.
- * - Ajoute ou retire un stage de la wishlist.
- * - Utilise la classe `WishlistController` pour encapsuler la logique.
- */
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-require_once dirname(__DIR__, 2) . '/Config/config.php'; // Inclusion de la configuration, chemin absolu
+require_once dirname(__DIR__, 2) . '/Config/config.php';
+require_once dirname(__DIR__, 2) . '/Config/Database.php';
 
 class WishlistController {
     private $db;
@@ -19,18 +16,7 @@ class WishlistController {
     }
 
     public function addToWishlist($idStagiaire, $stageId) {
-        // Vérifier si le stage est déjà dans la wishlist
-        $sqlCheck = <<<SQL
-            SELECT 
-                * 
-            FROM 
-                wishlist 
-            WHERE 
-                id_stagiaire = ? 
-            AND 
-                id_stage = ?
-SQL;
-
+        $sqlCheck = "SELECT * FROM wishlist WHERE id_stagiaire = ? AND id_stage = ?";
         $stmt = $this->conn->prepare($sqlCheck);
         $stmt->bind_param("ii", $idStagiaire, $stageId);
         $stmt->execute();
@@ -40,15 +26,7 @@ SQL;
             return ['success' => false, 'message' => 'Ce stage est déjà dans votre wishlist.'];
         }
 
-        // Ajouter le stage à la wishlist
-        $sqlInsert = <<<SQL
-            INSERT INTO 
-                wishlist 
-                (id_stagiaire, id_stage) 
-            VALUES 
-                (?, ?)
-SQL;
-
+        $sqlInsert = "INSERT INTO wishlist (id_stagiaire, id_stage) VALUES (?, ?)";
         $stmt = $this->conn->prepare($sqlInsert);
         $stmt->bind_param("ii", $idStagiaire, $stageId);
 
@@ -60,16 +38,7 @@ SQL;
     }
 
     public function removeFromWishlist($idStagiaire, $stageId) {
-        // Supprimer le stage de la wishlist
-        $sqlDelete = <<<SQL
-            DELETE FROM 
-                wishlist 
-            WHERE 
-                id_stagiaire = ? 
-            AND 
-                id_stage = ?
-SQL;
-
+        $sqlDelete = "DELETE FROM wishlist WHERE id_stagiaire = ? AND id_stage = ?";
         $stmt = $this->conn->prepare($sqlDelete);
         $stmt->bind_param("ii", $idStagiaire, $stageId);
 
@@ -81,25 +50,24 @@ SQL;
     }
 }
 
-// Vérifier si l'utilisateur est connecté
+session_start();
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'stagiaire') {
+    header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'Accès non autorisé.']);
     exit();
 }
 
-// Récupérer les données de la requête POST
 $data = json_decode(file_get_contents('php://input'), true);
 $stageId = $data['stageId'] ?? null;
 $action = $data['action'] ?? null;
 
 if (!$stageId || !$action) {
+    header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'Paramètres manquants.']);
     exit();
 }
 
-$idStagiaire = $_SESSION['user_id']; // ID du stagiaire connecté
-
-// Initialiser le contrôleur
+$idStagiaire = $_SESSION['user_id'];
 $database = new Database();
 $wishlistController = new WishlistController($database);
 
@@ -111,5 +79,5 @@ if ($action === 'add') {
     $response = ['success' => false, 'message' => 'Action invalide.'];
 }
 
+header('Content-Type: application/json');
 echo json_encode($response);
-?>

@@ -1,7 +1,21 @@
 <?php
-session_start(); // Démarrage de la session
+require_once __DIR__ . '/c_connexion.php'; // Inclusion du fichier connexion
 require_once __DIR__ . '/../Config/config.php';
 require_once __DIR__ . '/../Config/Database.php';
+
+// Vérifiez si c_connexion.php est bien inclus
+error_log("c_connexion.php inclus avec succès.");
+
+if (!isUserConnected()) {
+    error_log("Utilisateur non connecté."); // Log si l'utilisateur n'est pas connecté
+    header('Content-Type: application/json');
+    echo json_encode(["error" => "Utilisateur non connecté."]);
+    exit();
+}
+
+$user = getConnectedUser();
+$userId = $user['user_id'];
+$userType = $user['role'];
 
 class GetDateController {
     private $db;
@@ -49,84 +63,10 @@ class GetDateController {
             return ["error" => "Utilisateur non trouvé."];
         }
     }
-
-    public function getStudentsByPromo($promoYear) {
-        try {
-            error_log("Début de getStudentsByPromo avec promoYear: $promoYear"); // Log pour vérifier la valeur de promoYear
-
-            $sql = "SELECT Stagiaire.prenom, Stagiaire.nom, COUNT(Candidature.id_candidature) AS nb_candidatures
-                    FROM Stagiaire
-                    LEFT JOIN Candidature ON Stagiaire.id_stagiaire = Candidature.id_etudiant_fk
-                    WHERE Stagiaire.annee_promo = ?
-                    GROUP BY Stagiaire.id_stagiaire";
-
-            error_log("Requête SQL : $sql"); // Log de la requête SQL
-
-            $stmt = $this->conn->prepare($sql);
-            if (!$stmt) {
-                error_log("Erreur de préparation de la requête : " . $this->conn->error);
-                return ["error" => "Erreur de préparation de la requête."];
-            }
-
-            $stmt->bind_param("i", $promoYear);
-            $stmt->execute();
-            $result = $stmt->get_result();
-
-            $students = [];
-            while ($row = $result->fetch_assoc()) {
-                error_log("Ligne récupérée : " . json_encode($row)); // Log chaque ligne récupérée
-                $students[] = $row;
-            }
-
-            error_log("Données récupérées dans getStudentsByPromo : " . json_encode($students)); // Log des données récupérées
-            return $students;
-        } catch (Exception $e) {
-            error_log("Exception dans getStudentsByPromo : " . $e->getMessage());
-            return ["error" => "Erreur interne du serveur."];
-        }
-    }
 }
-
-// Vérifier si l'utilisateur est connecté
-if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
-    error_log("Utilisateur non connecté."); // Log si l'utilisateur n'est pas connecté
-    header('Content-Type: application/json');
-    echo json_encode(["error" => "Utilisateur non connecté."]);
-    exit();
-}
-
-$userId = $_SESSION['user_id'];
-$userType = $_SESSION['role'];
-
-error_log("Session dans c_get_data.php - user_id: $userId, role: $userType"); // Log des valeurs de session
 
 $getDateController = new GetDateController();
 $response = $getDateController->getUserData($userId, $userType);
-
-if (isset($_GET['context']) && $_GET['context'] === 'students') {
-    error_log("Session actuelle dans c_get_data.php : " . json_encode($_SESSION)); // Log pour vérifier la session
-
-    $promoYear = $_GET['promo_year'] ?? null;
-    if ($promoYear) {
-        try {
-            $response = $getDateController->getStudentsByPromo($promoYear);
-            header('Content-Type: application/json');
-            error_log("Réponse envoyée au client : " . json_encode($response)); // Log de la réponse envoyée
-            echo json_encode($response);
-        } catch (Exception $e) {
-            error_log("Exception dans getStudentsByPromo : " . $e->getMessage()); // Log de l'exception
-            header('Content-Type: application/json');
-            echo json_encode(["error" => "Erreur interne du serveur. Veuillez réessayer plus tard."]);
-        }
-    } else {
-        error_log("Année de promotion manquante dans la requête."); // Log si promo_year est manquant
-        header('Content-Type: application/json');
-        echo json_encode(["error" => "Année de promotion manquante."]);
-    }
-    exit();
-}
-
-error_log("Réponse envoyée : " . json_encode($response)); // Log de la réponse envoyée
 
 header('Content-Type: application/json');
 $jsonResponse = json_encode($response);
