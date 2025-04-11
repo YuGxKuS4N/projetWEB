@@ -100,11 +100,12 @@ if (isset($_GET['context']) && $_GET['context'] === 'students') {
             header('Content-Type: application/json');
             echo json_encode($response);
         } catch (Exception $e) {
-            error_log("Erreur lors de la récupération des élèves : " . $e->getMessage());
+            error_log("Exception dans getStudentsByPromo : " . $e->getMessage()); // Log de l'exception
             header('Content-Type: application/json');
-            echo json_encode(["error" => "Erreur interne du serveur."]);
+            echo json_encode(["error" => "Erreur interne du serveur. Veuillez réessayer plus tard."]);
         }
     } else {
+        error_log("Année de promotion manquante dans la requête."); // Log si promo_year est manquant
         header('Content-Type: application/json');
         echo json_encode(["error" => "Année de promotion manquante."]);
     }
