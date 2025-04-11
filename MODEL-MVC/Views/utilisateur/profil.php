@@ -6,7 +6,7 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
     exit();
 }
 
-// Inclure c_get_data.php pour récupérer les données
+// Inclure c_get_data.php pour récupérer les données utilisateur
 ob_start();
 include __DIR__ . '/../../Controllers/c_get_data.php';
 $data = ob_get_clean();
@@ -18,6 +18,9 @@ if (json_last_error() !== JSON_ERROR_NONE) {
     error_log("Erreur JSON : " . json_last_error_msg());
     $userData = ["error" => "Erreur lors du décodage des données utilisateur."];
 }
+
+// Log pour débogage
+error_log("Données utilisateur après décodage : " . print_r($userData, true));
 ?>
 
 <!DOCTYPE html>

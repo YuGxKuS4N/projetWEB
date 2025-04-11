@@ -14,9 +14,15 @@ if (!isUserConnected()) {
     exit();
 }
 
+// Récupérer les informations de l'utilisateur connecté
 $user = getConnectedUser();
 $userId = $user['user_id'];
 $userType = $user['role'];
+
+// Log pour débogage
+error_log("Session user_id : " . (isset($_SESSION['user_id']) ? $_SESSION['user_id'] : "Non défini"));
+error_log("Session role : " . (isset($_SESSION['role']) ? $_SESSION['role'] : "Non défini"));
+error_log("Valeur de userType : " . $userType);
 
 class GetDataController {
     private $conn;
@@ -29,14 +35,14 @@ class GetDataController {
     public function getUserData($userId, $userType) {
         $sql = '';
         switch ($userType) {
-            case 'Etudiant': // Anciennement 'stagiaire'
-                $sql = "SELECT * FROM Etudiant WHERE id_etudiant = ?";
+            case 'stagiaire': // Correspond à la table Stagiaire
+                $sql = "SELECT * FROM Stagiaire WHERE id_stagiaire = ?";
                 break;
-            case '¨Pilote':
+            case 'pilote': // Correspond à la table Pilote
                 $sql = "SELECT * FROM Pilote WHERE id_pilote = ?";
                 break;
-            case 'Entreprise':
-                $sql = "SELECT * FROM Entreprise WHERE id_entreprise = ?";
+            case 'entreprise': // Correspond à la table Entreprises
+                $sql = "SELECT * FROM Entreprises WHERE id_entreprise = ?";
                 break;
             default:
                 return ["error" => "Type d'utilisateur invalide."];
@@ -48,6 +54,7 @@ class GetDataController {
         $result = $stmt->get_result();
 
         if ($row = $result->fetch_assoc()) {
+            // Fournir des valeurs par défaut pour les colonnes nulles
             foreach ($row as $key => $value) {
                 if (is_null($value)) {
                     $row[$key] = "Non défini";
