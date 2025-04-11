@@ -3,6 +3,13 @@ require_once __DIR__ . '/c_connexion.php'; // Inclusion du fichier connexion
 require_once __DIR__ . '/../Config/config.php';
 require_once __DIR__ . '/../Config/Database.php';
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+error_log("Session démarrée."); // Log de démarrage de session  
+error_log("Session user_id : " . (isset($_SESSION['user_id']) ? $_SESSION['user_id'] : "Non défini"));
+error_log("Session role : " . (isset($_SESSION['role']) ? $_SESSION['role'] : "Non défini"));
+
 // Vérifiez si c_connexion.php est bien inclus
 error_log("c_connexion.php inclus avec succès.");
 
