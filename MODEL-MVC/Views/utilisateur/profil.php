@@ -45,15 +45,15 @@ error_log("Données utilisateur après décodage : " . print_r($userData, true))
         <div id="dynamic-content">
             <?php if (isset($userData['error'])): ?>
                 <p>Erreur : <?php echo htmlspecialchars($userData['error']); ?></p>
-            <?php elseif (!empty($userData)): ?>
+            <?php elseif (empty($userData)): ?>
+                <p>Aucune donnée utilisateur disponible.</p>
+            <?php else: ?>
                 <?php foreach ($userData as $key => $value): ?>
                     <div class="profile-field">
                         <label for="<?php echo htmlspecialchars($key); ?>"><?php echo htmlspecialchars($key); ?></label>
-                        <input type="text" id="<?php echo htmlspecialchars($key); ?>" value="<?php echo htmlspecialchars($value); ?>" readonly>
+                        <input type="text" id="<?php echo htmlspecialchars($key); ?>" value="<?php echo htmlspecialchars($value ?? ''); ?>" readonly>
                     </div>
                 <?php endforeach; ?>
-            <?php else: ?>
-                <p>Aucune donnée utilisateur disponible.</p>
             <?php endif; ?>
         </div>
     </div>
