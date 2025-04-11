@@ -21,6 +21,20 @@ $candidatures = $candidatureController->getCandidaturesByEntreprise($_SESSION['u
     <link rel="stylesheet" href="/projetWEB/MODEL-MVC/Public/css/candidatures.css">
 </head>
 <body>
+<nav class="navbar">
+        <div class="nav-logo">
+            <a href="/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php">
+                <img src="/projetWEB/MODEL-MVC/Public/image/logo.png" alt="Logo du Site">
+            </a>
+        </div>
+
+        <uel class="nav-right">
+            <li><a href="/projetWEB/MODEL-MVC/Views/creation_compte/inscription.php">S'INSCRIRE</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>Bienvenue, <?php echo htmlspecialchars($_SESSION['user_name']); ?></h1>
+        <p><a href="/projetWEB/MODEL-MVC/Views/creation_compte/deconnexion.php">Déconnexion</a></p>
     <div class="container">
         <h2>Candidatures reçues</h2>
         <?php if (!empty($candidatures)): ?>
