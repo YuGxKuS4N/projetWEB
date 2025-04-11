@@ -51,28 +51,36 @@ class GetDateController {
     }
 
     public function getStudentsByPromo($promoYear) {
-        $sql = "SELECT Stagiaire.prenom, Stagiaire.nom, COUNT(Candidature.id_candidature) AS nb_candidatures
-                FROM Stagiaire
-                LEFT JOIN Candidature ON Stagiaire.id_stagiaire = Candidature.id_etudiant_fk
-                WHERE Stagiaire.annee_promo = ?
-                GROUP BY Stagiaire.id_stagiaire";
+        try {
+            error_log("Début de getStudentsByPromo avec promoYear: $promoYear"); // Log pour vérifier la valeur de promoYear
 
-        $stmt = $this->conn->prepare($sql);
-        if (!$stmt) {
-            error_log("Erreur de préparation de la requête : " . $this->conn->error);
-            return ["error" => "Erreur de préparation de la requête."];
+            $sql = "SELECT Stagiaire.prenom, Stagiaire.nom, COUNT(Candidature.id_candidature) AS nb_candidatures
+                    FROM Stagiaire
+                    LEFT JOIN Candidature ON Stagiaire.id_stagiaire = Candidature.id_etudiant_fk
+                    WHERE Stagiaire.annee_promo = ?
+                    GROUP BY Stagiaire.id_stagiaire";
+
+            $stmt = $this->conn->prepare($sql);
+            if (!$stmt) {
+                error_log("Erreur de préparation de la requête : " . $this->conn->error);
+                return ["error" => "Erreur de préparation de la requête."];
+            }
+
+            $stmt->bind_param("i", $promoYear);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            $students = [];
+            while ($row = $result->fetch_assoc()) {
+                $students[] = $row;
+            }
+
+            error_log("Données récupérées dans getStudentsByPromo : " . json_encode($students)); // Log des données récupérées
+            return $students;
+        } catch (Exception $e) {
+            error_log("Exception dans getStudentsByPromo : " . $e->getMessage());
+            return ["error" => "Erreur interne du serveur."];
         }
-
-        $stmt->bind_param("i", $promoYear);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        $students = [];
-        while ($row = $result->fetch_assoc()) {
-            $students[] = $row;
-        }
-
-        return $students;
     }
 }
 

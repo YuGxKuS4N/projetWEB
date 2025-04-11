@@ -33,6 +33,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'pilote') {
         return response.json();
       })
       .then(data => {
+        console.log("Réponse reçue :", data); // Log pour vérifier la réponse
         const container = document.getElementById('students-container');
         if (data.error) {
           container.innerHTML = `<p>${data.error}</p>`;
