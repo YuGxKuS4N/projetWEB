@@ -1,13 +1,5 @@
 <?php
 
-/**
- * Contrôleur pour gérer la connexion des utilisateurs.
- * 
- * - Vérifie les identifiants de connexion.
- * - Initialise une session pour l'utilisateur connecté.
- * - Utilise la classe `ConnexionController` pour encapsuler la logique.
- */
-
 // Activer l'affichage des erreurs pour le débogage
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -15,7 +7,7 @@ error_reporting(E_ALL);
 
 // Inclusion de la configuration et de la classe Database
 require_once __DIR__ . '/../Config/config.php';
-require_once __DIR__ . '/../Config/Database.php'; // Ajout de cette ligne
+require_once __DIR__ . '/../Config/Database.php';
 
 class ConnexionController {
     private $db;
@@ -47,8 +39,7 @@ SQL;
             return ["success" => false, "error" => "Erreur interne. Veuillez réessayer plus tard."];
         }
 
-        // Corriger le nombre de variables passées à bind_param
-        $stmt->bind_param("sss", $email, $email, $email); // Trois paramètres pour trois `?`
+        $stmt->bind_param("sss", $email, $email, $email);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -60,11 +51,6 @@ SQL;
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['role'] = $user['role'];
-                $_SESSION['annee_promo'] = $user['annee_promo'] ?? null; 
-                $_SESSION['id_entreprise'] = $user['id_entreprise'] ?? null; 
-                $_SESSION['id_stagiaire'] = $user['id_stagiaire'] ?? null; 
-                $_SESSION['id_pilote'] = $user['id_pilote'] ?? null; 
-                $_SESSION['id'] = $user['id']; 
 
                 // Ajouter annee_promo pour les pilotes
                 if ($user['role'] === 'pilote') {
@@ -85,25 +71,10 @@ SQL;
             return ["success" => false, "error" => "Aucun compte trouvé avec cet email."];
         }
     }
-     // --- Méthodes ajoutées pour vérifier la connexion utilisateur ---
-    public static function isUserConnected() {
-        return isset($_SESSION['user_id']) && isset($_SESSION['role']);
-    }
-    
-    public static function getConnectedUser() {
-        if (self::isUserConnected()) {
-            return [
-                'user_id' => $_SESSION['user_id'],
-                'role' => $_SESSION['role']
-            ];
-        }
-        return null;
-    }
 }
 
 // Traitement de la requête POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    error_log("Début du traitement de la connexion"); // Journal de débogage
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
 
@@ -112,21 +83,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $response = $connexionController->login($email, $password);
 
     if ($response['success']) {
-        error_log("Connexion réussie pour l'utilisateur : $email"); // Journal de débogage
-        // Rediriger l'utilisateur vers l'accueil après connexion
         header("Location: /projetWEB/MODEL-MVC/Views/acceuil/acceuil.php");
         exit();
     } else {
-        error_log("Échec de la connexion : " . $response['error']); // Journal de débogage
-        // Rediriger vers la page de connexion avec un message d'erreur
         header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php?error=" . urlencode($response['error']));
         exit();
     }
 }
-
-error_log("Fin du script c_connexion.php"); // Journal de débogage
-
-
-
-
-?>
