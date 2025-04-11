@@ -49,6 +49,31 @@ class GetDateController {
             return ["error" => "Utilisateur non trouvé."];
         }
     }
+
+    public function getStudentsByPromo($promoYear) {
+        $sql = "SELECT prenom, nom, COUNT(candidature.id_candidature) AS nb_candidatures
+                FROM Stagiaire
+                LEFT JOIN Candidature ON Stagiaire.id_stagiaire = Candidature.id_etudiant_fk
+                WHERE Stagiaire.annee_promo = ?
+                GROUP BY Stagiaire.id_stagiaire";
+
+        $stmt = $this->conn->prepare($sql);
+        if (!$stmt) {
+            error_log("Erreur de préparation de la requête : " . $this->conn->error);
+            return ["error" => "Erreur de préparation de la requête."];
+        }
+
+        $stmt->bind_param("i", $promoYear);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $students = [];
+        while ($row = $result->fetch_assoc()) {
+            $students[] = $row;
+        }
+
+        return $students;
+    }
 }
 
 // Vérifier si l'utilisateur est connecté
@@ -66,6 +91,17 @@ error_log("Session - userId: $userId, userType: $userType"); // Log des valeurs 
 
 $getDateController = new GetDateController();
 $response = $getDateController->getUserData($userId, $userType);
+
+if (isset($_GET['context']) && $_GET['context'] === 'students') {
+    $promoYear = $_GET['promo_year'] ?? null;
+    if ($promoYear) {
+        $response = $getDateController->getStudentsByPromo($promoYear);
+        echo json_encode($response);
+    } else {
+        echo json_encode(["error" => "Année de promotion manquante."]);
+    }
+    exit();
+}
 
 error_log("Réponse envoyée : " . json_encode($response)); // Log de la réponse envoyée
 
