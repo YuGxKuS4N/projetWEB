@@ -4,6 +4,11 @@ require_once __DIR__ . '/c_connexion.php'; // Inclusion du fichier connexion
 require_once __DIR__ . '/../Config/config.php';
 require_once __DIR__ . '/../Config/Database.php';
 
+// Vérifiez si la session est active et si les variables de session sont définies
+error_log("Session active : " . (session_status() === PHP_SESSION_ACTIVE ? "Oui" : "Non"));
+error_log("Session user_id : " . (isset($_SESSION['user_id']) ? $_SESSION['user_id'] : "Non défini"));
+error_log("Session role : " . (isset($_SESSION['role']) ? $_SESSION['role'] : "Non défini"));
+
 // Vérifiez si l'utilisateur est connecté
 if (!isUserConnected()) {
     error_log("Utilisateur non connecté.");
