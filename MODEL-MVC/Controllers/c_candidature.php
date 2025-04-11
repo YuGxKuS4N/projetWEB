@@ -131,7 +131,7 @@ class CandidatureController {
         $sql = "INSERT INTO Candidature 
                     (id_etudiant_fk, id_offre_fk, date_candidature, statut_candidature, commentaire, id_entreprise_fk, cv_path, motivation_path)
                 VALUES 
-                    (?, ?, ?, 'en attente', NULL, ?, ?, ?)";
+                    (?, ?, ?, 'en attente', NULL, ?, ?, ?)"; // Suppression de cv_blob
 
         $stmt = $this->conn->prepare($sql);
         if (!$stmt) {
