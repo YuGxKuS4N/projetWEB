@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start(); // Démarre la session uniquement si elle n'est pas déjà active
+}
 /**
  * Contrôleur pour gérer la soumission des candidatures.
  * 
@@ -15,7 +17,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 header('Content-Type: application/json; charset=UTF-8');
-require __DIR__ . '/../Config/config.php'; // Inclusion du fichier de configuration
+require_once __DIR__ . '/../Config/config.php'; // Inclusion du fichier de configuration
 require_once __DIR__ . '/../Config/Database.php'; // Inclusion correcte de la classe Database
 
 class CandidatureController {

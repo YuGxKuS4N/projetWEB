@@ -12,16 +12,18 @@ $mysql_password = "Php@1234";
 $mysql_dbname = "projet";  
 
 // Fonction pour établir une connexion à la base de données
-function getDatabaseConnection() {
-    global $mysql_hostname, $mysql_port, $mysql_username, $mysql_password, $mysql_dbname;
+if (!function_exists('getDatabaseConnection')) {
+    function getDatabaseConnection() {
+        global $mysql_hostname, $mysql_port, $mysql_username, $mysql_password, $mysql_dbname;
 
-    $conn = new mysqli($mysql_hostname, $mysql_username, $mysql_password, $mysql_dbname, $mysql_port);
+        $conn = new mysqli($mysql_hostname, $mysql_username, $mysql_password, $mysql_dbname, $mysql_port);
 
-    // Vérifier la connexion
-    if ($conn->connect_error) {  
-        die("Connexion à la base de données échouée : " . $conn->connect_error);  
+        // Vérifier la connexion
+        if ($conn->connect_error) {  
+            die("Connexion à la base de données échouée : " . $conn->connect_error);  
+        }
+
+        return $conn;
     }
-
-    return $conn;
 }
 ?>
