@@ -94,7 +94,8 @@ class CandidatureController {
             return null;
         }
 
-        return $filePath;
+        // Retourner le chemin relatif pour la base de données
+        return '/Public/uploads/candidatures/' . $fileName;
     }
 
     public function submitCandidature($etudiantId, $stageId, $cvFile, $motivationFile) {
@@ -163,6 +164,9 @@ SQL;
 
         $candidatures = [];
         while ($row = $result->fetch_assoc()) {
+            // Corriger les chemins pour les rendre relatifs
+            $row['cv_path'] = $row['cv_path'] ? $row['cv_path'] : null;
+            $row['motivation_path'] = $row['motivation_path'] ? $row['motivation_path'] : null;
             $candidatures[] = $row;
         }
 
