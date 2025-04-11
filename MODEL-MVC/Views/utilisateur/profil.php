@@ -1,10 +1,6 @@
 <?php
 
-if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
-    error_log("Redirection : utilisateur non connecté.");
-    header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php");
-    exit();
-}
+
 
 // Appel au contrôleur pour récupérer les données utilisateur
 $url = "http://86.71.46.25:200/projetWEB/MODEL-MVC/Controllers/c_get_data.php";
