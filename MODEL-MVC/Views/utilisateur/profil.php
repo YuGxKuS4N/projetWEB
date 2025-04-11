@@ -1,7 +1,8 @@
+-MVC\Views\utilisateur\profil.php
 <?php
 session_start();
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
-    error_log("Redirection : utilisateur non connecté."); // Log si l'utilisateur n'est pas connecté
+    error_log("Redirection : utilisateur non connecté.");
     header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php");
     exit();
 }
@@ -15,19 +16,17 @@ $error = curl_error($ch);
 curl_close($ch);
 
 if ($data === false) {
-    error_log("Erreur CURL : $error"); // Log d'erreur CURL
+    error_log("Erreur CURL : $error");
     $userData = ["error" => "Impossible de récupérer les données utilisateur. Erreur CURL : $error"];
 } else {
-    error_log("Données récupérées via CURL : $data"); // Log des données récupérées
+    error_log("Données récupérées via CURL : $data");
     $userData = json_decode($data, true);
 
     if (json_last_error() !== JSON_ERROR_NONE) {
-        error_log("Erreur JSON : " . json_last_error_msg()); // Log d'erreur JSON
+        error_log("Erreur JSON : " . json_last_error_msg());
         $userData = ["error" => "Erreur lors du décodage des données utilisateur."];
     }
 }
-
-error_log("Données utilisateur après décodage : " . print_r($userData, true)); // Log des données après décodage
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -65,11 +64,5 @@ error_log("Données utilisateur après décodage : " . print_r($userData, true))
             <?php endif; ?>
         </div>
     </div>
-
-    <!-- Ajout d'un script pour afficher les logs dans la console -->
-    <script>
-        // Affiche la réponse brute dans la console
-        console.log("Réponse brute de c_get_data.php :", <?php echo json_encode($data); ?>);
-    </script>
 </body>
 </html>

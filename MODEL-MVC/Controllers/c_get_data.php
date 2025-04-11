@@ -1,11 +1,11 @@
 <?php
-require_once __DIR__ . '/session_manager.php'; // Inclusion du gestionnaire de session
+require_once __DIR__ . '/session_manager.php';
 require_once __DIR__ . '/../Config/config.php';
 require_once __DIR__ . '/../Config/Database.php';
 
 // Vérifiez si l'utilisateur est connecté
 if (!SessionManager::isUserConnected()) {
-    error_log("Utilisateur non connecté."); // Log si l'utilisateur n'est pas connecté
+    error_log("Utilisateur non connecté.");
     header('Content-Type: application/json');
     echo json_encode(["error" => "Utilisateur non connecté."]);
     exit();

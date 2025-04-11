@@ -8,7 +8,7 @@ error_reporting(E_ALL);
 // Inclusion de la configuration, de la classe Database et de SessionManager
 require_once __DIR__ . '/../Config/config.php';
 require_once __DIR__ . '/../Config/Database.php';
-require_once __DIR__ . '/session_manager.php';
+
 
 class ConnexionController {
     private $db;
