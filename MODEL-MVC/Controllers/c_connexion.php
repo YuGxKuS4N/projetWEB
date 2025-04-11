@@ -60,6 +60,18 @@ SQL;
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['role'] = $user['role'];
+
+                // Ajouter annee_promo pour les pilotes
+                if ($user['role'] === 'pilote') {
+                    $stmt = $this->conn->prepare("SELECT annee_promo FROM Pilote WHERE id_pilote = ?");
+                    $stmt->bind_param("i", $user['id']);
+                    $stmt->execute();
+                    $resultPromo = $stmt->get_result();
+                    if ($promoRow = $resultPromo->fetch_assoc()) {
+                        $_SESSION['annee_promo'] = $promoRow['annee_promo'];
+                    }
+                }
+
                 return ["success" => true, "role" => $user['role']];
             } else {
                 return ["success" => false, "error" => "Mot de passe incorrect."];

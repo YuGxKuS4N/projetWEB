@@ -1,6 +1,8 @@
 <?php
 session_start(); // Assure que la session est démarrée
 
+error_log("Session actuelle : " . json_encode($_SESSION)); // Log pour vérifier la session
+
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'pilote') {
     header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php");
     exit();
@@ -23,7 +25,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'pilote') {
 </div>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const promoYear = <?php echo json_encode($_SESSION['annee_promo']); ?>;
+    const promoYear = <?php echo json_encode($_SESSION['annee_promo'] ?? null); ?>;
     console.log("Année de promotion envoyée :", promoYear); // Log pour vérifier promoYear
 
     fetch(`/projetWEB/MODEL-MVC/Controllers/c_get_data.php?context=students&promo_year=${promoYear}`)

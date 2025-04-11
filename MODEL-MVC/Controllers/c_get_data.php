@@ -104,6 +104,8 @@ $getDateController = new GetDateController();
 $response = $getDateController->getUserData($userId, $userType);
 
 if (isset($_GET['context']) && $_GET['context'] === 'students') {
+    error_log("Session actuelle dans c_get_data.php : " . json_encode($_SESSION)); // Log pour vérifier la session
+
     $promoYear = $_GET['promo_year'] ?? null;
     if ($promoYear) {
         try {
