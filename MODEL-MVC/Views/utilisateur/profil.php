@@ -65,5 +65,11 @@ error_log("Données utilisateur après décodage : " . print_r($userData, true))
             <?php endif; ?>
         </div>
     </div>
+
+    <!-- Ajout d'un script pour afficher les logs dans la console -->
+    <script>
+        // Affiche la réponse brute dans la console
+        console.log("Réponse brute de c_get_data.php :", <?php echo json_encode($data); ?>);
+    </script>
 </body>
 </html>
