@@ -1,32 +1,33 @@
 <?php
-require_once dirname(__DIR__, 3) . '/MODEL-MVC/Controllers/c_get_data.php';
-
 session_start();
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
-    error_log("Session invalide : " . json_encode($_SESSION));
+    error_log("Redirection : utilisateur non connecté."); // Log si l'utilisateur n'est pas connecté
     header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php");
     exit();
 }
 
-$userId = $_SESSION['user_id'];
-$userType = $_SESSION['role'];
-
-error_log("Paramètres transmis au contrôleur : type=$userType, user_id=$userId");
-
-// ✅ Appel HTTP via cURL
-$url = "http://localhost/projetWEB/MODEL-MVC/Controllers/c_get_data.php?user_type=$userType&user_id=$userId&context=profile";
+// Appel au contrôleur pour récupérer les données utilisateur
+$url = "http://86.71.46.25:200/projetWEB/MODEL-MVC/Controllers/c_get_data.php";
 $ch = curl_init($url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $data = curl_exec($ch);
+$error = curl_error($ch);
 curl_close($ch);
 
 if ($data === false) {
-    error_log("Erreur lors de la récupération des données utilisateur : type=$userType, user_id=$userId");
+    error_log("Erreur CURL : $error"); // Log d'erreur CURL
     $userData = ["error" => "Impossible de récupérer les données utilisateur."];
 } else {
-    error_log("Données utilisateur récupérées : " . $data);
+    error_log("Données récupérées via CURL : $data"); // Log des données récupérées
     $userData = json_decode($data, true);
+
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        error_log("Erreur JSON : " . json_last_error_msg()); // Log d'erreur JSON
+        $userData = ["error" => "Erreur lors du décodage des données utilisateur."];
+    }
 }
+
+error_log("Données utilisateur après décodage : " . print_r($userData, true)); // Log des données après décodage
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -64,7 +65,5 @@ if ($data === false) {
             <?php endif; ?>
         </div>
     </div>
-    <script src="/projetWEB/MODEL-MVC/Public/js/profil.js"></script>
 </body>
 </html>
-<?php

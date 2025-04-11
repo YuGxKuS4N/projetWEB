@@ -1,15 +1,9 @@
 <?php
-/**
- * Contrôleur pour récupérer les données utilisateur ou les élèves d'un pilote.
- * 
- * - Retourne les informations du profil ou la liste des élèves en fonction du contexte.
- * - Utilise la classe `DataController` pour encapsuler la logique.
- */
+session_start(); // Démarrage de la session
+require_once __DIR__ . '/../Config/config.php';
+require_once __DIR__ . '/../Config/Database.php';
 
-require __DIR__ . '/../Config/config.php'; // Correction du chemin
-require __DIR__ . '/../Config/Database.php'; // Inclure la classe Database avec le chemin relatif correct
-
-class DataController {
+class GetDateController {
     private $db;
     private $conn;
 
@@ -18,36 +12,28 @@ class DataController {
         $this->conn = $this->db->connect();
     }
 
-    public function getProfile($userType, $userId) {
+    public function getUserData($userId, $userType) {
+        error_log("Début de getUserData - userId: $userId, userType: $userType"); // Log de début
+
         $sql = '';
         switch ($userType) {
             case 'stagiaire':
-                $sql = <<<SQL
-                    SELECT * 
-                    FROM Stagiaire 
-                    WHERE id_stagiaire = ?
-SQL;
+                $sql = "SELECT * FROM Stagiaire WHERE id_stagiaire = ?";
                 break;
             case 'pilote':
-                $sql = <<<SQL
-                    SELECT * 
-                    FROM Pilote 
-                    WHERE id_pilote = ?
-SQL;
+                $sql = "SELECT * FROM Pilote WHERE id_pilote = ?";
                 break;
             case 'entreprise':
-                $sql = <<<SQL
-                    SELECT * 
-                    FROM Entreprise 
-                    WHERE id_entreprise = ?
-SQL;
+                $sql = "SELECT * FROM Entreprise WHERE id_entreprise = ?";
                 break;
             default:
+                error_log("Type d'utilisateur invalide : $userType"); // Log d'erreur
                 return ["error" => "Type d'utilisateur invalide."];
         }
 
         $stmt = $this->conn->prepare($sql);
         if (!$stmt) {
+            error_log("Erreur de préparation de la requête : " . $this->conn->error); // Log d'erreur SQL
             return ["error" => "Erreur de préparation de la requête : " . $this->conn->error];
         }
 
@@ -56,76 +42,32 @@ SQL;
         $result = $stmt->get_result();
 
         if ($row = $result->fetch_assoc()) {
+            error_log("Données utilisateur trouvées : " . json_encode($row)); // Log des données récupérées
             return $row;
         } else {
+            error_log("Aucune donnée trouvée pour userId: $userId, userType: $userType"); // Log si aucune donnée
             return ["error" => "Utilisateur non trouvé."];
         }
     }
-
-    public function getStudents($userId) {
-        $sql = <<<SQL
-            SELECT 
-                e.nom, 
-                e.prenom, 
-                COUNT(c.id_candidature) AS nb_candidatures
-            FROM 
-                Etudiant e
-            LEFT JOIN 
-                Candidature c 
-            ON 
-                e.id_etudiant = c.id_etudiant_fk
-            WHERE 
-                e.id_pilote_fk = ?
-            GROUP BY 
-                e.id_etudiant
-SQL;
-
-        $stmt = $this->conn->prepare($sql);
-        if (!$stmt) {
-            return ["error" => "Erreur de préparation de la requête : " . $this->conn->error];
-        }
-
-        $stmt->bind_param("i", $userId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        $students = [];
-        while ($row = $result->fetch_assoc()) {
-            $students[] = $row;
-        }
-
-        return $students;
-    }
 }
 
-// ✅ Vérifier si les paramètres nécessaires sont définis
-if (!isset($_GET['user_type']) || !isset($_GET['user_id'])) {
-    error_log("Paramètres manquants : " . json_encode($_GET)); // Journal pour le débogage
-    echo json_encode(["error" => "Paramètres manquants."]);
+// Vérifier si l'utilisateur est connecté
+session_start();
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
+    error_log("Utilisateur non connecté."); // Log si l'utilisateur n'est pas connecté
+    echo json_encode(["error" => "Utilisateur non connecté."]);
     exit();
 }
 
-error_log("Paramètres reçus : user_type=" . $_GET['user_type'] . ", user_id=" . $_GET['user_id']); // Journal pour le débogage
+$userId = $_SESSION['user_id'];
+$userType = $_SESSION['role'];
 
-$userType = $_GET['user_type']; // ✅ nouveau nom de paramètre
-$userId = intval($_GET['user_id']); // ID de l'utilisateur
-$context = $_GET['context'] ?? 'profile'; // Contexte : 'profile' ou 'students'
+error_log("Session - userId: $userId, userType: $userType"); // Log des valeurs de session
 
-// Initialiser le contrôleur
-$dataController = new DataController();
+$getDateController = new GetDateController();
+$response = $getDateController->getUserData($userId, $userType);
 
-$response = [];
-if ($context === 'profile') {
-    $response = $dataController->getProfile($userType, $userId);
-} elseif ($context === 'students' && $userType === 'pilote') {
-    $response = $dataController->getStudents($userId);
-} else {
-    $response = ["error" => "Contexte ou type d'utilisateur invalide."];
-}
+error_log("Réponse envoyée : " . json_encode($response)); // Log de la réponse envoyée
 
-// Journal pour le débogage
-error_log("Réponse du contrôleur : " . json_encode($response));
-
-// Retourner les données au format JSON
+header('Content-Type: application/json');
 echo json_encode($response);
-?>
