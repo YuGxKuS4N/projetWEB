@@ -14,6 +14,37 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'stagiaire') {
 $database = new Database();
 $conn = $database->connect();
 
+// Récupérer l'utilisateur connecté
+$idStagiaire = $_SESSION['user_id'];
+
+// Gestion des actions pour la wishlist
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['stage_id'])) {
+    $stageId = intval($_POST['stage_id']);
+    $action = $_POST['action'];
+
+    if ($action === 'add') {
+        // Ajouter à la wishlist
+        $sqlCheck = "SELECT * FROM wishlist WHERE id_stagiaire = ? AND id_stage = ?";
+        $stmt = $conn->prepare($sqlCheck);
+        $stmt->bind_param("ii", $idStagiaire, $stageId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 0) {
+            $sqlInsert = "INSERT INTO wishlist (id_stagiaire, id_stage) VALUES (?, ?)";
+            $stmt = $conn->prepare($sqlInsert);
+            $stmt->bind_param("ii", $idStagiaire, $stageId);
+            $stmt->execute();
+        }
+    } elseif ($action === 'remove') {
+        // Retirer de la wishlist
+        $sqlDelete = "DELETE FROM wishlist WHERE id_stagiaire = ? AND id_stage = ?";
+        $stmt = $conn->prepare($sqlDelete);
+        $stmt->bind_param("ii", $idStagiaire, $stageId);
+        $stmt->execute();
+    }
+}
+
 // Récupérer les filtres de recherche
 $search = $_GET['search'] ?? '';
 $lieu = $_GET['lieu'] ?? '';
@@ -53,6 +84,17 @@ while ($row = $result->fetch_assoc()) {
     $offres[] = $row;
 }
 
+// Récupérer les stages dans la wishlist
+$wishlist = [];
+$sqlWishlist = "SELECT id_stage FROM wishlist WHERE id_stagiaire = ?";
+$stmt = $conn->prepare($sqlWishlist);
+$stmt->bind_param("i", $idStagiaire);
+$stmt->execute();
+$result = $stmt->get_result();
+while ($row = $result->fetch_assoc()) {
+    $wishlist[] = $row['id_stage'];
+}
+
 // Récupérer les filtres disponibles
 $filters = [
     'lieux' => [],
@@ -86,43 +128,6 @@ while ($row = $result->fetch_assoc()) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stages - WEB4ALL</title>
     <link rel="stylesheet" href="/projetWEB/MODEL-MVC/Public/css/stage.css">
-    <script>
-        // Fonction pour gérer l'ajout ou la suppression de la wishlist
-        function toggleWishlist(stageId, action) {
-            fetch('/projetWEB/MODEL-MVC/Controllers/wishlist.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ stageId: stageId, action: action })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Erreur réseau : ' + response.status);
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    alert(data.message);
-                    const star = document.getElementById(`wishlist-star-${stageId}`);
-                    if (action === 'add') {
-                        star.classList.add('active');
-                        star.setAttribute('onclick', `toggleWishlist(${stageId}, 'remove')`);
-                    } else {
-                        star.classList.remove('active');
-                        star.setAttribute('onclick', `toggleWishlist(${stageId}, 'add')`);
-                    }
-                } else {
-                    alert(data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Erreur lors de la requête wishlist:', error);
-                alert('Une erreur est survenue. Veuillez réessayer.');
-            });
-        }
-    </script>
     <style>
         .wishlist-star {
             font-size: 24px;
@@ -180,13 +185,13 @@ while ($row = $result->fetch_assoc()) {
                 <?php if (!empty($offres)): ?>
                     <?php foreach ($offres as $offre): ?>
                         <div class="offer">
-                            <!-- Étoile pour la wishlist -->
-                            <span 
-                                id="wishlist-star-<?php echo htmlspecialchars($offre['stage-id']); ?>" 
-                                class="wishlist-star" 
-                                onclick="toggleWishlist(<?php echo htmlspecialchars($offre['stage-id']); ?>, 'add')">
-                                ★
-                            </span>
+                            <form method="POST" action="">
+                                <!-- Étoile pour la wishlist -->
+                                <button type="submit" name="action" value="<?php echo in_array($offre['stage-id'], $wishlist) ? 'remove' : 'add'; ?>" class="wishlist-star <?php echo in_array($offre['stage-id'], $wishlist) ? 'active' : ''; ?>">
+                                    ★
+                                </button>
+                                <input type="hidden" name="stage_id" value="<?php echo htmlspecialchars($offre['stage-id']); ?>">
+                            </form>
                             <h3><?php echo htmlspecialchars($offre['titre']); ?></h3>
                             <p><?php echo htmlspecialchars($offre['description']); ?></p>
                             <p><strong>Secteur :</strong> <?php echo htmlspecialchars($offre['secteur_activite']); ?></p>
