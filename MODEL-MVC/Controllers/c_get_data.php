@@ -50,6 +50,12 @@ class GetDateController {
         $result = $stmt->get_result();
 
         if ($row = $result->fetch_assoc()) {
+            // Fournir des valeurs par défaut pour les colonnes nulles
+            foreach ($row as $key => $value) {
+                if (is_null($value)) {
+                    $row[$key] = "Non défini";
+                }
+            }
             return $row;
         } else {
             return ["error" => "Utilisateur non trouvé."];
