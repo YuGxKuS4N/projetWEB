@@ -1,4 +1,3 @@
--MVC\Views\utilisateur\profil.php
 <?php
 session_start();
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
@@ -10,10 +9,19 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
 // Appel au contrôleur pour récupérer les données utilisateur
 $url = "http://86.71.46.25:200/projetWEB/MODEL-MVC/Controllers/c_get_data.php";
 $ch = curl_init($url);
+
+// Inclure les cookies de session dans l'appel CURL
+$cookieFile = tempnam(sys_get_temp_dir(), 'CURLCOOKIE');
+curl_setopt($ch, CURLOPT_COOKIEJAR, $cookieFile);
+curl_setopt($ch, CURLOPT_COOKIEFILE, $cookieFile);
+
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $data = curl_exec($ch);
 $error = curl_error($ch);
 curl_close($ch);
+
+// Supprimer le fichier temporaire des cookies
+unlink($cookieFile);
 
 if ($data === false) {
     error_log("Erreur CURL : $error");
