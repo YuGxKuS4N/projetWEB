@@ -5,22 +5,7 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
     header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php");
     exit();
 }
-// Activer l'affichage des erreurs
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
-// Vérifier si la session est déjà active avant d'appeler session_start()
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
-// Vérifier si l'utilisateur est connecté
-if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
-    // Rediriger vers la page de connexion si non connecté
-    header("Location: ../creation_compte/connexion.php");
-    exit();
-}
 // Appel au contrôleur pour récupérer les données utilisateur
 $url = "http://86.71.46.25:200/projetWEB/MODEL-MVC/Controllers/c_get_data.php";
 $ch = curl_init($url);
