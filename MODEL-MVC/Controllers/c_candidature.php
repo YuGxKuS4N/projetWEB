@@ -1,22 +1,7 @@
 <?php
 session_start();
-/**
- * Contrôleur pour gérer la soumission des candidatures.
- * 
- * - Vérifie si l'utilisateur est connecté.
- * - Téléverse les fichiers (CV et lettre de motivation).
- * - Enregistre la candidature dans la base de données.
- * - Utilise la classe `CandidatureController` pour encapsuler la logique.
- */
-
-// Activer l'affichage des erreurs pour le débogage
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-header('Content-Type: application/json; charset=UTF-8');
-require __DIR__ . '/../Config/config.php'; // Inclusion du fichier de configuration
-require_once __DIR__ . '/../Config/Database.php'; // Inclusion correcte de la classe Database
+require __DIR__ . '/../Config/config.php';
+require_once __DIR__ . '/../Config/Database.php';
 
 class CandidatureController {
     private $db;
@@ -29,7 +14,7 @@ class CandidatureController {
 
     public function submitCandidature($etudiantId, $stageId, $cvFile, $motivationFile) {
         $errors = [];
-        $dateCandidature = date('Y-m-d'); // Date actuelle
+        $dateCandidature = date('Y-m-d');
 
         // Téléverser le CV
         $cvPath = $this->uploadFile($cvFile, '../../Public/uploads/cv/', $errors);
@@ -46,12 +31,13 @@ class CandidatureController {
             INSERT INTO Candidature 
                 (id_etudiant_fk, id_offre_fk, date_candidature, statut_candidature, commentaire, id_entreprise_fk, cv_path, motivation_path)
             VALUES 
-                (?, ?, ?, 'en attente', NULL, (SELECT id_entreprise_fk FROM Offre_Stage WHERE `stage-id` = ?), ?, ?)
+                (?, ?, ?, 'en attente', NULL, (SELECT id_entreprise_fk FROM Offre_Stage WHERE id_offre = ?), ?, ?)
 SQL;
 
         $stmt = $this->conn->prepare($sql);
         if (!$stmt) {
             error_log("Erreur de préparation de la requête SQL : " . $this->conn->error);
+            return ["errors" => ["Erreur interne du serveur."]];
         }
         $stmt->bind_param("iissss", $etudiantId, $stageId, $dateCandidature, $stageId, $cvPath, $motivationPath);
 
@@ -63,7 +49,7 @@ SQL;
     }
 
     private function uploadFile($file, $uploadDirectory, &$errors) {
-        $uploadDirectory = __DIR__ . '/../../Public/uploads/' . basename($uploadDirectory); // Utiliser un chemin absolu
+        $uploadDirectory = __DIR__ . '/../../Public/uploads/' . basename($uploadDirectory);
         $maxSize = 2 * 1024 * 1024; // 2 Mo
         $allowedExtensions = ['pdf'];
 
@@ -80,7 +66,7 @@ SQL;
         }
 
         if (!file_exists($uploadDirectory)) {
-            mkdir($uploadDirectory, 0755, true); // Crée le répertoire s'il n'existe pas
+            mkdir($uploadDirectory, 0755, true);
         }
 
         $uploadPath = $uploadDirectory . uniqid() . '_' . basename($file['name']);
@@ -95,18 +81,14 @@ SQL;
 
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['user_id'])) {
-    echo json_encode(["error" => "Vous devez être connecté pour postuler."]);
+    header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php");
     exit();
 }
 
 // Vérifier si la requête est une requête POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $etudiantId = $_SESSION['user_id']; // Récupérer l'ID du stagiaire connecté
+    $etudiantId = $_SESSION['user_id'];
     $stageId = intval($_POST['stage_id']);
-
-    // Journaliser les données reçues pour le débogage
-    error_log("Données reçues : " . json_encode($_POST));
-    error_log("Fichiers reçus : " . json_encode($_FILES));
 
     $database = new Database();
     $candidatureController = new CandidatureController($database);
@@ -115,11 +97,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $etudiantId,
         $stageId,
         $_FILES['cv'],
-        $_FILES['motivation'] ?? null // Vérifiez si le fichier de motivation est optionnel
+        $_FILES['motivation'] ?? null
     );
 
-    // Envoyer uniquement la réponse JSON
-    echo json_encode($response);
+    // Rediriger vers postuler.php avec les messages de succès ou d'erreur
+    if (isset($response['success'])) {
+        header("Location: /projetWEB/MODEL-MVC/Views/stage/postuler.php?id=$stageId&success=" . urlencode($response['success']));
+    } else {
+        $errorMessage = implode(", ", $response['errors']);
+        header("Location: /projetWEB/MODEL-MVC/Views/stage/postuler.php?id=$stageId&error=" . urlencode($errorMessage));
+    }
     exit();
 }
 ?>

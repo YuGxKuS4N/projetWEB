@@ -10,6 +10,10 @@ $stageId = $_GET['id'] ?? null;
 if (!$stageId) {
     die("ID du stage manquant.");
 }
+
+// Récupérer les messages de succès ou d'erreur
+$successMessage = $_GET['success'] ?? null;
+$errorMessage = $_GET['error'] ?? null;
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -22,6 +26,16 @@ if (!$stageId) {
 <body>
     <div class="container">
         <h2 id="stage-title">Postuler pour le stage</h2>
+
+        <!-- Affichage des messages -->
+        <?php if ($successMessage): ?>
+            <div class="success-message"><?php echo htmlspecialchars($successMessage); ?></div>
+        <?php endif; ?>
+
+        <?php if ($errorMessage): ?>
+            <div class="error-message"><?php echo htmlspecialchars($errorMessage); ?></div>
+        <?php endif; ?>
+
         <form action="/projetWEB/MODEL-MVC/Controllers/c_candidature.php" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="stage_id" value="<?php echo htmlspecialchars($stageId); ?>">
             <div class="form-group">
