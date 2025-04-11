@@ -1,15 +1,9 @@
 <?php
-/**
- * Contrôleur pour récupérer les données utilisateur ou les élèves d'un pilote.
- * 
- * - Retourne les informations du profil ou la liste des élèves en fonction du contexte.
- * - Utilise la classe `DataController` pour encapsuler la logique.
- */
+require_once __DIR__ . '/../Config/config.php';
+require_once __DIR__ . '/../Config/Database.php';
+require_once __DIR__ . '/c_connexion.php'; // Inclure le contrôleur de connexion pour récupérer l'utilisateur connecté
 
-require __DIR__ . '/../Config/config.php'; // Correction du chemin
-require __DIR__ . '/../Config/Database.php'; // Inclure la classe Database avec le chemin relatif correct
-
-class DataController {
+class GetDateController {
     private $db;
     private $conn;
 
@@ -18,29 +12,17 @@ class DataController {
         $this->conn = $this->db->connect();
     }
 
-    public function getProfile($userType, $userId) {
+    public function getUserData($userId, $userType) {
         $sql = '';
         switch ($userType) {
             case 'stagiaire':
-                $sql = <<<SQL
-                    SELECT * 
-                    FROM Stagiaire 
-                    WHERE id_stagiaire = ?
-SQL;
+                $sql = "SELECT * FROM Stagiaire WHERE id_stagiaire = ?";
                 break;
             case 'pilote':
-                $sql = <<<SQL
-                    SELECT * 
-                    FROM Pilote 
-                    WHERE id_pilote = ?
-SQL;
+                $sql = "SELECT * FROM Pilote WHERE id_pilote = ?";
                 break;
             case 'entreprise':
-                $sql = <<<SQL
-                    SELECT * 
-                    FROM Entreprise 
-                    WHERE id_entreprise = ?
-SQL;
+                $sql = "SELECT * FROM Entreprise WHERE id_entreprise = ?";
                 break;
             default:
                 return ["error" => "Type d'utilisateur invalide."];
@@ -61,71 +43,22 @@ SQL;
             return ["error" => "Utilisateur non trouvé."];
         }
     }
-
-    public function getStudents($userId) {
-        $sql = <<<SQL
-            SELECT 
-                e.nom, 
-                e.prenom, 
-                COUNT(c.id_candidature) AS nb_candidatures
-            FROM 
-                Etudiant e
-            LEFT JOIN 
-                Candidature c 
-            ON 
-                e.id_etudiant = c.id_etudiant_fk
-            WHERE 
-                e.id_pilote_fk = ?
-            GROUP BY 
-                e.id_etudiant
-SQL;
-
-        $stmt = $this->conn->prepare($sql);
-        if (!$stmt) {
-            return ["error" => "Erreur de préparation de la requête : " . $this->conn->error];
-        }
-
-        $stmt->bind_param("i", $userId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        $students = [];
-        while ($row = $result->fetch_assoc()) {
-            $students[] = $row;
-        }
-
-        return $students;
-    }
 }
 
-// ✅ Vérifier si les paramètres nécessaires sont définis
-if (!isset($_GET['user_type']) || !isset($_GET['user_id'])) {
-    error_log("Paramètres manquants : " . json_encode($_GET)); // Journal pour le débogage
-    echo json_encode(["error" => "Paramètres manquants."]);
+// Vérifier si l'utilisateur est connecté
+session_start();
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
+    echo json_encode(["error" => "Utilisateur non connecté."]);
     exit();
 }
 
-error_log("Paramètres reçus : user_type=" . $_GET['user_type'] . ", user_id=" . $_GET['user_id']); // Journal pour le débogage
-
-$userType = $_GET['user_type']; // ✅ nouveau nom de paramètre
-$userId = intval($_GET['user_id']); // ID de l'utilisateur
-$context = $_GET['context'] ?? 'profile'; // Contexte : 'profile' ou 'students'
+$userId = $_SESSION['user_id'];
+$userType = $_SESSION['role'];
 
 // Initialiser le contrôleur
-$dataController = new DataController();
-
-$response = [];
-if ($context === 'profile') {
-    $response = $dataController->getProfile($userType, $userId);
-} elseif ($context === 'students' && $userType === 'pilote') {
-    $response = $dataController->getStudents($userId);
-} else {
-    $response = ["error" => "Contexte ou type d'utilisateur invalide."];
-}
-
-// Journal pour le débogage
-error_log("Réponse du contrôleur : " . json_encode($response));
+$getDateController = new GetDateController();
+$response = $getDateController->getUserData($userId, $userType);
 
 // Retourner les données au format JSON
+header('Content-Type: application/json');
 echo json_encode($response);
-?>
