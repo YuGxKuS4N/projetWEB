@@ -37,7 +37,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'pilote') {
         const container = document.getElementById('students-container');
         if (data.error) {
           container.innerHTML = `<p>${data.error}</p>`;
-        } else if (data.length > 0) {
+        } else if (Array.isArray(data) && data.length > 0) {
           data.forEach(student => {
             const studentCard = `
               <div class="student-card">
@@ -53,7 +53,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'pilote') {
       })
       .catch(error => {
         console.error('Erreur lors du chargement des élèves :', error);
-        document.getElementById('students-container').innerHTML = `<p>Erreur lors du chargement des élèves.</p>`;
+        document.getElementById('students-container').innerHTML = `<p>Erreur lors du chargement des élèves. Veuillez réessayer plus tard.</p>`;
       });
   });
 </script>

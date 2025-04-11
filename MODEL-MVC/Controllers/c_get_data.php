@@ -91,6 +91,26 @@ error_log("Session dans c_get_data.php - user_id: $userId, role: $userType"); //
 $getDateController = new GetDateController();
 $response = $getDateController->getUserData($userId, $userType);
 
+<<<<<<< HEAD
+=======
+if (isset($_GET['context']) && $_GET['context'] === 'students') {
+    $promoYear = $_GET['promo_year'] ?? null;
+    if ($promoYear) {
+        try {
+            $response = $getDateController->getStudentsByPromo($promoYear);
+            header('Content-Type: application/json');
+            echo json_encode($response);
+        } catch (Exception $e) {
+            error_log("Erreur lors de la récupération des élèves : " . $e->getMessage());
+            echo json_encode(["error" => "Erreur interne du serveur."]);
+        }
+    } else {
+        echo json_encode(["error" => "Année de promotion manquante."]);
+    }
+    exit();
+}
+
+>>>>>>> 2cf7f661e9cf94b45a51e412d0219ed2cf79eece
 error_log("Réponse envoyée : " . json_encode($response)); // Log de la réponse envoyée
 
 header('Content-Type: application/json');
