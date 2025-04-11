@@ -73,6 +73,18 @@ SQL;
   <link rel="stylesheet" href="/projetWEB/MODEL-MVC/Public/css/ajout.css">
 </head>
 <body>
+<nav class="navbar">
+            <div class="nav-logo">
+                <a href="/projetWEB/MODEL-MVC/Views/acceuil/acceuil.php">
+                    <img src="/projetWEB/MODEL-MVC/Public/image/logo.png" alt="Logo du Site">
+                </a>
+            </div>
+            <ul class="nav-right">
+    <li>
+        <a href="/projetWEB/MODEL-MVC/Controllers/c_deconnexion.php?redirect=connexion">DÉCONNEXION</a>
+    </li>
+</ul>
+        </nav>
 <div class="container">
   <h2>Créer une Offre de Stage</h2>
 
