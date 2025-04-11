@@ -80,6 +80,7 @@ class GetDateController {
 session_start();
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
     error_log("Utilisateur non connecté."); // Log si l'utilisateur n'est pas connecté
+    header('Content-Type: application/json');
     echo json_encode(["error" => "Utilisateur non connecté."]);
     exit();
 }
@@ -101,9 +102,11 @@ if (isset($_GET['context']) && $_GET['context'] === 'students') {
             echo json_encode($response);
         } catch (Exception $e) {
             error_log("Erreur lors de la récupération des élèves : " . $e->getMessage());
+            header('Content-Type: application/json');
             echo json_encode(["error" => "Erreur interne du serveur."]);
         }
     } else {
+        header('Content-Type: application/json');
         echo json_encode(["error" => "Année de promotion manquante."]);
     }
     exit();

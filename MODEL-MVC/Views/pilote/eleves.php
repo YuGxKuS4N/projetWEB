@@ -31,7 +31,9 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'pilote') {
         if (!response.ok) {
           throw new Error(`Erreur HTTP : ${response.status}`);
         }
-        return response.json();
+        return response.json().catch(() => {
+          throw new Error("La réponse n'est pas un JSON valide.");
+        });
       })
       .then(data => {
         const container = document.getElementById('students-container');
