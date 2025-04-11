@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . '/../Config/config.php';
 require_once __DIR__ . '/../Config/Database.php';
-require_once __DIR__ . '/c_connexion.php'; // Inclure le contrôleur de connexion pour récupérer l'utilisateur connecté
 
 class GetDateController {
     private $db;
@@ -13,6 +12,8 @@ class GetDateController {
     }
 
     public function getUserData($userId, $userType) {
+        error_log("Début de getUserData - userId: $userId, userType: $userType"); // Log de début
+
         $sql = '';
         switch ($userType) {
             case 'stagiaire':
@@ -25,11 +26,13 @@ class GetDateController {
                 $sql = "SELECT * FROM Entreprise WHERE id_entreprise = ?";
                 break;
             default:
+                error_log("Type d'utilisateur invalide : $userType"); // Log d'erreur
                 return ["error" => "Type d'utilisateur invalide."];
         }
 
         $stmt = $this->conn->prepare($sql);
         if (!$stmt) {
+            error_log("Erreur de préparation de la requête : " . $this->conn->error); // Log d'erreur SQL
             return ["error" => "Erreur de préparation de la requête : " . $this->conn->error];
         }
 
@@ -38,8 +41,10 @@ class GetDateController {
         $result = $stmt->get_result();
 
         if ($row = $result->fetch_assoc()) {
+            error_log("Données utilisateur trouvées : " . json_encode($row)); // Log des données récupérées
             return $row;
         } else {
+            error_log("Aucune donnée trouvée pour userId: $userId, userType: $userType"); // Log si aucune donnée
             return ["error" => "Utilisateur non trouvé."];
         }
     }
@@ -48,6 +53,7 @@ class GetDateController {
 // Vérifier si l'utilisateur est connecté
 session_start();
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
+    error_log("Utilisateur non connecté."); // Log si l'utilisateur n'est pas connecté
     echo json_encode(["error" => "Utilisateur non connecté."]);
     exit();
 }
@@ -55,10 +61,12 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
 $userId = $_SESSION['user_id'];
 $userType = $_SESSION['role'];
 
-// Initialiser le contrôleur
+error_log("Session - userId: $userId, userType: $userType"); // Log des valeurs de session
+
 $getDateController = new GetDateController();
 $response = $getDateController->getUserData($userId, $userType);
 
-// Retourner les données au format JSON
+error_log("Réponse envoyée : " . json_encode($response)); // Log de la réponse envoyée
+
 header('Content-Type: application/json');
 echo json_encode($response);
