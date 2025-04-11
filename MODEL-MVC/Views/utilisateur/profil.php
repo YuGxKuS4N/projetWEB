@@ -10,15 +10,16 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
 $url = "http://86.71.46.25:200/projetWEB/MODEL-MVC/Controllers/c_get_data.php";
 $ch = curl_init($url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-$data = curl_exec($ch);
-$error = curl_error($ch);
+curl_setopt($ch, CURLOPT_HEADER, true); // Inclure les en-têtes dans la réponse
+$response = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 curl_close($ch);
 
-if ($data === false) {
-    error_log("Erreur CURL : $error"); // Log d'erreur CURL
-    $userData = ["error" => "Impossible de récupérer les données utilisateur."];
+if ($httpCode !== 200) {
+    error_log("Erreur HTTP : $httpCode"); // Log de l'erreur HTTP
+    $userData = ["error" => "Erreur lors de la récupération des données utilisateur (HTTP $httpCode)."];
 } else {
-    error_log("Données récupérées via CURL : $data"); // Log des données récupérées
+    $data = substr($response, strpos($response, "\r\n\r\n") + 4); // Extraire le corps de la réponse
     $userData = json_decode($data, true);
 
     if (json_last_error() !== JSON_ERROR_NONE) {
