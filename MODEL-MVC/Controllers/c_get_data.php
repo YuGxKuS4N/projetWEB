@@ -1,17 +1,16 @@
 <?php
+session_start();
 require_once __DIR__ . '/c_connexion.php';
 require_once __DIR__ . '/../Config/config.php';
 require_once __DIR__ . '/../Config/Database.php';
 
 // Vérifiez si l'utilisateur est connecté via la session
-
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
     error_log("Utilisateur non connecté.");
     header('Content-Type: application/json');
     echo json_encode(["error" => "Utilisateur non connecté."]);
     exit();
 }
-
 
 // Récupérez les informations de l'utilisateur connecté
 $userId = $_SESSION['user_id'];
@@ -43,6 +42,11 @@ class GetDateController {
         }
 
         $stmt = $this->conn->prepare($sql);
+        if (!$stmt) {
+            error_log("Erreur de préparation de la requête : " . $this->conn->error);
+            return ["error" => "Erreur interne. Veuillez réessayer plus tard."];
+        }
+
         $stmt->bind_param("i", $userId);
         $stmt->execute();
         $result = $stmt->get_result();

@@ -1,35 +1,22 @@
 <?php
+session_start();
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
+    error_log("Redirection : utilisateur non connecté.");
+    header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php");
+    exit();
+}
 
+// Inclure directement c_get_data.php pour récupérer les données utilisateur
+ob_start();
+include __DIR__ . '/../../Controllers/c_get_data.php';
+$data = ob_get_clean();
 
+// Décoder la réponse JSON
+$userData = json_decode($data, true);
 
-// Appel au contrôleur pour récupérer les données utilisateur
-$url = "http://86.71.46.25:200/projetWEB/MODEL-MVC/Controllers/c_get_data.php";
-$ch = curl_init($url);
-
-// Inclure les cookies de session dans l'appel CURL
-$cookieFile = tempnam(sys_get_temp_dir(), 'CURLCOOKIE');
-curl_setopt($ch, CURLOPT_COOKIEJAR, $cookieFile);
-curl_setopt($ch, CURLOPT_COOKIEFILE, $cookieFile);
-
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-$data = curl_exec($ch);
-$error = curl_error($ch);
-curl_close($ch);
-
-// Supprimer le fichier temporaire des cookies
-unlink($cookieFile);
-
-if ($data === false) {
-    error_log("Erreur CURL : $error");
-    $userData = ["error" => "Impossible de récupérer les données utilisateur. Erreur CURL : $error"];
-} else {
-    error_log("Données récupérées via CURL : $data");
-    $userData = json_decode($data, true);
-
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        error_log("Erreur JSON : " . json_last_error_msg());
-        $userData = ["error" => "Erreur lors du décodage des données utilisateur."];
-    }
+if (json_last_error() !== JSON_ERROR_NONE) {
+    error_log("Erreur JSON : " . json_last_error_msg());
+    $userData = ["error" => "Erreur lors du décodage des données utilisateur."];
 }
 ?>
 <!DOCTYPE html>
