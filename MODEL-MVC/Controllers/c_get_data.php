@@ -29,13 +29,13 @@ class GetDataController {
     public function getUserData($userId, $userType) {
         $sql = '';
         switch ($userType) {
-            case 'etudiant': // Anciennement 'stagiaire'
+            case 'Etudiant': // Anciennement 'stagiaire'
                 $sql = "SELECT * FROM Etudiant WHERE id_etudiant = ?";
                 break;
-            case 'pilote':
+            case '¨Pilote':
                 $sql = "SELECT * FROM Pilote WHERE id_pilote = ?";
                 break;
-            case 'entreprise':
+            case 'Entreprise':
                 $sql = "SELECT * FROM Entreprise WHERE id_entreprise = ?";
                 break;
             default:
