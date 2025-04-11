@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 /**
  * Contrôleur pour gérer la connexion des utilisateurs.
  * 
@@ -111,4 +111,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 error_log("Fin du script c_connexion.php"); // Journal de débogage
+
+function isUserConnected() {
+    return isset($_SESSION['user_id']) && isset($_SESSION['role']);
+}
+
+function getConnectedUser() {
+    if (isUserConnected()) {
+        return [
+            'user_id' => $_SESSION['user_id'],
+            'role' => $_SESSION['role']
+        ];
+    }
+    return null;
+}
+
+
 ?>
