@@ -20,13 +20,14 @@ error_reporting(E_ALL);
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-
+/* 
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
     // Rediriger vers la page de connexion si non connecté
     header("Location: ../creation_compte/connexion.php");
     exit();
-}
+} */ 
+
 // Récupérez les informations de l'utilisateur connecté
 $userId = $_SESSION['user_id'];
 $userType = $_SESSION['role'];
