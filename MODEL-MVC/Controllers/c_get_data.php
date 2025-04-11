@@ -2,11 +2,11 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-require_once __DIR__ . '/c_connexion.php'; // Inclusion du fichier connexion
+require_once __DIR__ . '/c_connexion.php';
 require_once __DIR__ . '/../Config/config.php';
 require_once __DIR__ . '/../Config/Database.php';
 
-// Vérifiez si l'utilisateur est connecté
+// Vérifier la connexion de l'utilisateur
 if (!isUserConnected()) {
     error_log("Utilisateur non connecté.");
     header('Content-Type: application/json');
@@ -14,25 +14,23 @@ if (!isUserConnected()) {
     exit();
 }
 
-// Récupérez les informations de l'utilisateur connecté
 $user = getConnectedUser();
 $userId = $user['user_id'];
 $userType = $user['role'];
 
-class GetDateController {
-    private $db;
+class GetDataController {
     private $conn;
 
     public function __construct() {
-        $this->db = new Database();
-        $this->conn = $this->db->connect();
+        $db = new Database();
+        $this->conn = $db->connect();
     }
 
     public function getUserData($userId, $userType) {
         $sql = '';
         switch ($userType) {
-            case 'stagiaire':
-                $sql = "SELECT * FROM Stagiaire WHERE id_stagiaire = ?";
+            case 'etudiant': // Anciennement 'stagiaire'
+                $sql = "SELECT * FROM Etudiant WHERE id_etudiant = ?";
                 break;
             case 'pilote':
                 $sql = "SELECT * FROM Pilote WHERE id_pilote = ?";
@@ -50,7 +48,6 @@ class GetDateController {
         $result = $stmt->get_result();
 
         if ($row = $result->fetch_assoc()) {
-            // Fournir des valeurs par défaut pour les colonnes nulles
             foreach ($row as $key => $value) {
                 if (is_null($value)) {
                     $row[$key] = "Non défini";
@@ -63,8 +60,9 @@ class GetDateController {
     }
 }
 
-$getDateController = new GetDateController();
-$response = $getDateController->getUserData($userId, $userType);
+$controller = new GetDataController();
+$response = $controller->getUserData($userId, $userType);
 
 header('Content-Type: application/json');
 echo json_encode($response);
+?>

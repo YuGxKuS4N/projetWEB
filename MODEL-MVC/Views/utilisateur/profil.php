@@ -1,26 +1,25 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
-    error_log("Redirection : utilisateur non connecté."); // Log si l'utilisateur n'est pas connecté
+    error_log("Redirection : utilisateur non connecté.");
     header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php");
     exit();
 }
 
-// Inclure directement c_get_data.php pour récupérer les données utilisateur
+// Inclure c_get_data.php pour récupérer les données
 ob_start();
 include __DIR__ . '/../../Controllers/c_get_data.php';
 $data = ob_get_clean();
 
-// Décoder la réponse JSON
+// Décoder les données JSON
 $userData = json_decode($data, true);
 
 if (json_last_error() !== JSON_ERROR_NONE) {
-    error_log("Erreur JSON : " . json_last_error_msg()); // Log d'erreur JSON
+    error_log("Erreur JSON : " . json_last_error_msg());
     $userData = ["error" => "Erreur lors du décodage des données utilisateur."];
 }
-
-error_log("Données utilisateur après décodage : " . print_r($userData, true)); // Log des données après décodage
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -50,8 +49,11 @@ error_log("Données utilisateur après décodage : " . print_r($userData, true))
             <?php else: ?>
                 <?php foreach ($userData as $key => $value): ?>
                     <div class="profile-field">
-                        <label for="<?php echo htmlspecialchars($key); ?>"><?php echo htmlspecialchars($key); ?></label>
-                        <input type="text" id="<?php echo htmlspecialchars($key); ?>" value="<?php echo htmlspecialchars($value ?? 'Non défini'); ?>" readonly>
+                        <label for="<?php echo htmlspecialchars($key); ?>">
+                            <?php echo htmlspecialchars(ucwords(str_replace('_', ' ', $key))); ?>
+                        </label>
+                        <input type="text" id="<?php echo htmlspecialchars($key); ?>" 
+                               value="<?php echo htmlspecialchars($value ?? 'Non défini'); ?>" readonly>
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>
