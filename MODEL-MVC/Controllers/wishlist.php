@@ -52,6 +52,7 @@ class WishlistController {
 
 session_start();
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'stagiaire') {
+    header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'Accès non autorisé.']);
     exit();
 }
@@ -61,6 +62,7 @@ $stageId = $data['stageId'] ?? null;
 $action = $data['action'] ?? null;
 
 if (!$stageId || !$action) {
+    header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'Paramètres manquants.']);
     exit();
 }
