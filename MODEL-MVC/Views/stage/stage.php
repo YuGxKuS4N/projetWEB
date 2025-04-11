@@ -26,7 +26,7 @@ $lieu = $_GET['lieu'] ?? '';
 $duree = $_GET['duree'] ?? '';
 $profil = $_GET['profil'] ?? '';
 
-$sql = "SELECT id_offre, titre, description, duree, lieu, date_debut, secteur_activite FROM Offre_Stage WHERE (titre LIKE ? OR secteur_activite LIKE ?)";
+$sql = "SELECT * FROM Offre_Stage WHERE (titre LIKE ? OR secteur_activite LIKE ?)";
 $params = ["%$search%", "%$search%"];
 $types = "ss";
 
@@ -113,13 +113,9 @@ $offres = $result->fetch_all(MYSQLI_ASSOC);
                             <p><strong>Durée :</strong> <?php echo htmlspecialchars($offre['duree']); ?> mois</p>
                             <p><strong>Lieu :</strong> <?php echo htmlspecialchars($offre['lieu']); ?></p>
                             <p>
-                                <?php if (isset($offre['id_offre'])): ?>
-                                    <button onclick="window.location.href='/projetWEB/MODEL-MVC/Views/stage/postuler.php?id=<?php echo htmlspecialchars($offre['id_offre']); ?>'">
-                                        Postuler
-                                    </button>
-                                <?php else: ?>
-                                    <p>Erreur : ID de l'offre manquant.</p>
-                                <?php endif; ?>
+                                <button onclick="window.location.href='/projetWEB/MODEL-MVC/Views/stage/postuler.php?id=<?php echo htmlspecialchars((int)$offre['id_offre']); ?>'">
+                                    Postuler
+                                </button>
                             </p>
                         </div>
                     <?php endforeach; ?>
