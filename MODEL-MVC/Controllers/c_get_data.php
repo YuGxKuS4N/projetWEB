@@ -2,7 +2,6 @@
 session_start(); // Démarrage de la session
 require_once __DIR__ . '/../Config/config.php';
 require_once __DIR__ . '/../Config/Database.php';
-require_once __DIR__ . '/c_connexion.php'; // Inclusion du fichier connexion pour gérer les sessions
 
 class GetDateController {
     private $db;

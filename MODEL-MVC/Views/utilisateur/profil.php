@@ -1,7 +1,5 @@
 <?php
 session_start();
-error_log("Session dans profil.php - user_id: " . ($_SESSION['user_id'] ?? 'non défini') . ", role: " . ($_SESSION['role'] ?? 'non défini'));
-
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
     error_log("Redirection : utilisateur non connecté."); // Log si l'utilisateur n'est pas connecté
     header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php");
