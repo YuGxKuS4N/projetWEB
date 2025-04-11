@@ -7,7 +7,7 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
 }
 
 // Appel au contrôleur pour récupérer les données utilisateur
-$url = "http://86.71.46.25:200/projetWEB/MODEL-MVC/Controllers/c_get_date.php";
+$url = "http://86.71.46.25:200/projetWEB/MODEL-MVC/Controllers/c_get_data.php";
 $ch = curl_init($url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $data = curl_exec($ch);
@@ -20,9 +20,14 @@ if ($data === false) {
 } else {
     error_log("Données récupérées via CURL : $data"); // Log des données récupérées
     $userData = json_decode($data, true);
+
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        error_log("Erreur JSON : " . json_last_error_msg()); // Log d'erreur JSON
+        $userData = ["error" => "Erreur lors du décodage des données utilisateur."];
+    }
 }
 
-error_log("Données utilisateur après décodage : " . json_encode($userData)); // Log des données après décodage
+error_log("Données utilisateur après décodage : " . print_r($userData, true)); // Log des données après décodage
 ?>
 <!DOCTYPE html>
 <html lang="fr">
