@@ -29,6 +29,74 @@ class CandidatureController {
         $this->conn = $this->db->connect();
     }
 
+    private function saveFileToServer($file, $uploadDirectory, &$errors) {
+        $maxSize = 2 * 1024 * 1024; // 2 Mo
+        $allowedExtensions = ['pdf'];
+
+        // Vérifier les erreurs de téléversement
+        if ($file['error'] !== UPLOAD_ERR_OK) {
+            switch ($file['error']) {
+                case UPLOAD_ERR_INI_SIZE:
+                case UPLOAD_ERR_FORM_SIZE:
+                    $errors[] = "Le fichier " . $file['name'] . " dépasse la taille maximale autorisée.";
+                    break;
+                case UPLOAD_ERR_PARTIAL:
+                    $errors[] = "Le fichier " . $file['name'] . " n'a été que partiellement téléchargé.";
+                    break;
+                case UPLOAD_ERR_NO_FILE:
+                    $errors[] = "Aucun fichier n'a été téléchargé.";
+                    break;
+                case UPLOAD_ERR_NO_TMP_DIR:
+                    $errors[] = "Le dossier temporaire est manquant.";
+                    break;
+                case UPLOAD_ERR_CANT_WRITE:
+                    $errors[] = "Échec de l'écriture du fichier " . $file['name'] . " sur le disque.";
+                    break;
+                case UPLOAD_ERR_EXTENSION:
+                    $errors[] = "Une extension PHP a arrêté le téléversement du fichier " . $file['name'] . ".";
+                    break;
+                default:
+                    $errors[] = "Erreur inconnue lors du téléversement du fichier " . $file['name'] . ".";
+            }
+            return null;
+        }
+
+        // Vérifier si le fichier est valide
+        if (!isset($file['tmp_name']) || empty($file['tmp_name'])) {
+            $errors[] = "Aucun fichier n'a été téléchargé.";
+            return null;
+        }
+
+        if ($file['size'] > $maxSize) {
+            $errors[] = "Le fichier " . $file['name'] . " est trop volumineux. La taille maximale est de 2 Mo.";
+            return null;
+        }
+
+        $fileInfo = pathinfo($file['name']);
+        $fileExtension = strtolower($fileInfo['extension']);
+        if (!in_array($fileExtension, $allowedExtensions)) {
+            $errors[] = "Le fichier " . $file['name'] . " doit être au format PDF.";
+            return null;
+        }
+
+        // Créer le répertoire si nécessaire
+        if (!file_exists($uploadDirectory)) {
+            mkdir($uploadDirectory, 0755, true);
+        }
+
+        // Générer un nom de fichier unique
+        $fileName = uniqid() . '_' . basename($file['name']);
+        $filePath = $uploadDirectory . $fileName;
+
+        // Déplacer le fichier téléchargé
+        if (!move_uploaded_file($file['tmp_name'], $filePath)) {
+            $errors[] = "Erreur lors de l'enregistrement du fichier " . $file['name'] . ".";
+            return null;
+        }
+
+        return $filePath;
+    }
+
     public function submitCandidature($etudiantId, $stageId, $cvFile, $motivationFile) {
         $errors = [];
         $dateCandidature = date('Y-m-d'); // Date actuelle
@@ -44,13 +112,16 @@ class CandidatureController {
             return ["errors" => ["L'offre de stage spécifiée n'existe pas ou n'a pas d'entreprise associée."]];
         }
 
-        $idEntreprise = $resultEntreprise->fetch_assoc()['id_entreprise_fk'];
+        $idEntreprise = $resultEntreprise->fetch_assoc()['id_entreprise_fk'] ?? null;
 
-        // Téléverser le CV
-        $cvPath = $this->uploadFile($cvFile, '../../Public/uploads/cv/', $errors);
+        if (empty($idEntreprise)) {
+            return ["errors" => ["Aucune entreprise associée à cette offre de stage."]];
+        }
 
-        // Téléverser la lettre de motivation
-        $motivationPath = $this->uploadFile($motivationFile, '../../Public/uploads/motivation/', $errors);
+        // Enregistrer les fichiers sur le serveur
+        $uploadDirectory = __DIR__ . '/../../Public/uploads/candidatures/';
+        $cvPath = $this->saveFileToServer($cvFile, $uploadDirectory, $errors);
+        $motivationPath = $motivationFile ? $this->saveFileToServer($motivationFile, $uploadDirectory, $errors) : null;
 
         if (!empty($errors)) {
             return ["errors" => $errors];
@@ -76,36 +147,6 @@ class CandidatureController {
         }
     }
 
-    private function uploadFile($file, $uploadDirectory, &$errors) {
-        $uploadDirectory = __DIR__ . '/../../Public/uploads/' . basename($uploadDirectory); // Utiliser un chemin absolu
-        $maxSize = 2 * 1024 * 1024; // 2 Mo
-        $allowedExtensions = ['pdf'];
-
-        if ($file['size'] > $maxSize) {
-            $errors[] = "Le fichier " . $file['name'] . " est trop volumineux. La taille maximale est de 2 Mo.";
-            return null;
-        }
-
-        $fileInfo = pathinfo($file['name']);
-        $fileExtension = strtolower($fileInfo['extension']);
-        if (!in_array($fileExtension, $allowedExtensions)) {
-            $errors[] = "Le fichier " . $file['name'] . " doit être au format PDF.";
-            return null;
-        }
-
-        if (!file_exists($uploadDirectory)) {
-            mkdir($uploadDirectory, 0755, true); // Crée le répertoire s'il n'existe pas
-        }
-
-        $uploadPath = $uploadDirectory . uniqid() . '_' . basename($file['name']);
-        if (!move_uploaded_file($file['tmp_name'], $uploadPath)) {
-            $errors[] = "Erreur lors du téléversement du fichier " . $file['name'] . ".";
-            return null;
-        }
-
-        return $uploadPath;
-    }
-
     public function getCandidaturesByEntreprise($entrepriseId) {
         $sql = <<<SQL
             SELECT c.id_candidature, s.prenom, s.nom, c.cv_path, c.motivation_path, o.titre
@@ -125,7 +166,6 @@ SQL;
             $candidatures[] = $row;
         }
 
-        error_log("Candidatures récupérées : " . print_r($candidatures, true)); // Log des candidatures
         return $candidatures;
     }
 }
@@ -140,6 +180,21 @@ if (!isset($_SESSION['user_id'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $etudiantId = $_SESSION['user_id']; // Récupérer l'ID du stagiaire connecté
     $stageId = intval($_POST['stage_id']);
+
+    // Vérifier si le fichier CV a été téléchargé
+    if (!isset($_FILES['cv']) || $_FILES['cv']['error'] !== UPLOAD_ERR_OK) {
+        error_log("Erreur de téléchargement du fichier CV : " . json_encode($_FILES['cv']));
+        error_log("Paramètres reçus : " . json_encode($_POST));
+        echo json_encode(["errors" => ["Le fichier CV est manquant ou n'a pas été téléchargé correctement."]]);
+        exit();
+    }
+
+    // Vérifier si le fichier de motivation est optionnel ou correctement téléchargé
+    if (isset($_FILES['motivation']) && $_FILES['motivation']['error'] !== UPLOAD_ERR_OK && $_FILES['motivation']['error'] !== UPLOAD_ERR_NO_FILE) {
+        error_log("Erreur de téléchargement du fichier de motivation : " . json_encode($_FILES['motivation']));
+        echo json_encode(["errors" => ["Le fichier de motivation est manquant ou n'a pas été téléchargé correctement."]]);
+        exit();
+    }
 
     // Journaliser les données reçues pour le débogage
     error_log("Données reçues : " . json_encode($_POST));
