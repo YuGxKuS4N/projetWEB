@@ -23,7 +23,8 @@ class CandidatureController {
         $motivationPath = $this->uploadFile($motivationFile, '../../Public/uploads/motivation/', $errors);
 
         if (!empty($errors)) {
-            return ["errors" => $errors];
+            echo json_encode(["errors" => $errors]);
+            return;
         }
 
         // Enregistrer la candidature dans la base de données
@@ -37,14 +38,15 @@ SQL;
         $stmt = $this->conn->prepare($sql);
         if (!$stmt) {
             error_log("Erreur de préparation de la requête SQL : " . $this->conn->error);
-            return ["errors" => ["Erreur interne du serveur."]];
+            echo json_encode(["errors" => ["Erreur interne du serveur."]]);
+            return;
         }
         $stmt->bind_param("iissss", $etudiantId, $stageId, $dateCandidature, $stageId, $cvPath, $motivationPath);
 
         if ($stmt->execute()) {
-            return ["success" => "Votre candidature a été envoyée avec succès."];
+            echo json_encode(["success" => "Votre candidature a été envoyée avec succès."]);
         } else {
-            return ["errors" => ["Erreur lors de l'enregistrement de la candidature."]];
+            echo json_encode(["errors" => ["Erreur lors de l'enregistrement de la candidature."]]);
         }
     }
 
@@ -81,7 +83,7 @@ SQL;
 
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['user_id'])) {
-    header("Location: /projetWEB/MODEL-MVC/Views/creation_compte/connexion.php");
+    echo json_encode(["errors" => ["Utilisateur non connecté."]]);
     exit();
 }
 
@@ -93,20 +95,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $database = new Database();
     $candidatureController = new CandidatureController($database);
 
-    $response = $candidatureController->submitCandidature(
+    $candidatureController->submitCandidature(
         $etudiantId,
         $stageId,
         $_FILES['cv'],
         $_FILES['motivation'] ?? null
     );
-
-    // Rediriger vers postuler.php avec les messages de succès ou d'erreur
-    if (isset($response['success'])) {
-        header("Location: /projetWEB/MODEL-MVC/Views/stage/postuler.php?id=$stageId&success=" . urlencode($response['success']));
-    } else {
-        $errorMessage = implode(", ", $response['errors']);
-        header("Location: /projetWEB/MODEL-MVC/Views/stage/postuler.php?id=$stageId&error=" . urlencode($errorMessage));
-    }
-    exit();
 }
 ?>
