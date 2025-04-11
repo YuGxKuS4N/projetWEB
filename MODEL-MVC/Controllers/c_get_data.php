@@ -13,8 +13,8 @@ error_log("Session role : " . (isset($_SESSION['role']) ? $_SESSION['role'] : "N
 // Vérifiez si c_connexion.php est bien inclus
 error_log("c_connexion.php inclus avec succès.");
 
-if (!isUserConnected()) {
-    error_log("Utilisateur non connecté."); // Log si l'utilisateur n'est pas connecté
+if (!function_exists('isUserConnected') || !isUserConnected()) {
+    error_log("Utilisateur non connecté ou fonction isUserConnected non définie.");
     header('Content-Type: application/json');
     echo json_encode(["error" => "Utilisateur non connecté."]);
     exit();
@@ -31,6 +31,11 @@ class GetDateController {
     public function __construct() {
         $this->db = new Database();
         $this->conn = $this->db->connect();
+        if (!$this->conn) {
+            error_log("Erreur de connexion à la base de données.");
+            echo json_encode(["error" => "Erreur de connexion à la base de données."]);
+            exit();
+        }
     }
 
     public function getUserData($userId, $userType) {
